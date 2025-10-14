@@ -1,27 +1,40 @@
 name: backmerge-main-into-develop
 on:
   release:
-    types: [published]   # or: push: { branches: [main] }
+    types: [published]
+  workflow_dispatch:
+
 permissions:
   contents: write
   pull-requests: write
+
 jobs:
   backmerge:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
-      - run: |
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git identity
+        run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create backmerge branch
+        run: |
           git fetch origin
-          git switch -c backmerge/${{ github.run_id }} origin/develop
+          git checkout -B backmerge/${{ github.run_id }} origin/develop
           git merge --no-ff origin/main -m "chore(backmerge): sync main -> develop after release"
           git push -u origin HEAD
-      - run: |
+
+      - name: Open PR with gh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           gh pr create \
             --base develop \
+            --head backmerge/${{ github.run_id }} \
             --title "chore(backmerge): sync main -> develop after release" \
-            --body  "Back-merging release-please changes from main." \
-            --label docs --label chore
-        env: { GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
+            --body "Back-merging release-please changes (CHANGELOG/version) from main."
+          gh pr edit --add-label docs --add-label chore
