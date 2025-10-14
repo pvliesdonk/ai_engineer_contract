@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-
 """
 pr_from_diff_TEMPLATE.py — Create a GitHub PR from an embedded unified diff
-Version: 1.0.0
-Generated: 2025-10-14 08:48:39 UTC
+Version: 1.1.0
+Generated: 2025-10-14 09:40:21 UTC
 
 USAGE
 -----
-1) Ensure prerequisites on your machine:
+1) Prereqs on your machine:
    - git (>= 2.30)
    - GitHub CLI (gh) authenticated for Git operations (`gh auth status`)
 2) Edit this file to set:
@@ -15,23 +14,17 @@ USAGE
    - REPO = "<your-repo-name>"
    - PR_TITLE, PR_BODY
    - BRANCH_NAME (optional; will auto-generate if empty)
-   - DIFF_CONTENT (paste a valid unified diff)
+   - DIFF_CONTENT (paste a valid unified diff) OR DIFF_B64 with DIFF_SHA256
    - Optional: FILE_BLOBS for adding new files via base64 (text or binary)
 3) Run:
    python pr_from_diff_TEMPLATE.py
 
-The script will:
-- clone the repo to /mnt/scratch/…
-- create a branch from origin/develop
-- apply the embedded diff (and optional file blobs)
-- commit, push, and open a PR against develop
-
-NOTES
------
-- The DIFF must be a valid *unified diff* against the current origin/develop.
-- If your change introduces new files, prefer including them in the diff.
-  For binaries or when diff is inconvenient, place base64 in FILE_BLOBS.
-- The script is intentionally strict; failures abort with a helpful message.
+Flow:
+- clone to /mnt/scratch/…
+- create branch from origin/develop
+- ensure labels exist (auto-create if missing)
+- apply diff (normalized to LF) and/or FILE_BLOBS
+- commit, push, open PR against develop
 
 LICENSE
 -------
@@ -40,6 +33,7 @@ Public domain / CC0. Adapt as needed.
 
 from __future__ import annotations
 import base64
+import hashlib
 import os
 import shutil
 import subprocess
@@ -47,11 +41,11 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 OWNER = "pvliesdonk"
-REPO  = "<REPO_NAME_HERE>"  # TODO: set your repository name (no owner)
-BASE_BRANCH = "develop"     # PR base
+REPO  = "<REPO_NAME_HERE>"   # TODO: set your repository name (no owner)
+BASE_BRANCH = "develop"      # PR base
 PR_TITLE = "feat: <edit me> short, imperative summary"
 PR_BODY  = """
 # Summary
@@ -70,31 +64,31 @@ Explain what/why in 2–4 sentences.
 # Optional: give your branch a predictable name; otherwise auto-slugged.
 BRANCH_NAME = ""  # e.g., "feat/config-loader"
 
-# Paste a valid unified diff between the triple quotes. Leave empty to abort.
+# Provide EITHER a raw diff or a base64-encoded diff with expected sha256.
 DIFF_CONTENT = r"""
 # --- PASTE YOUR UNIFIED DIFF HERE ---
-# Example (remove this example when pasting real diff):
-# diff --git a/README.md b/README.md
-# index e69de29..4b825dc 100644
-# --- a/README.md
-# +++ b/README.md
-# @@
-# +# Project
-# +Temporary demo line added by pr_from_diff_TEMPLATE.py
 """
+DIFF_B64 = ""       # base64-encoded unified diff (preferred if content is delicate)
+DIFF_SHA256 = ""    # expected sha256 hex digest of the decoded diff payload
 
-# Optional file blobs: map of repo-relative path -> base64-encoded file content.
-# If DIFF_CONTENT already covers new files, you probably don't need this.
-FILE_BLOBS = {}
-# Example:
-# FILE_BLOBS = {
-#   "docs/new_diagram.png": "<base64…>",
-#   "examples/seed.txt": base64.b64encode(b"hello\n").decode("ascii"),
-# }
+# Optional file blobs: repo-relative path -> base64-encoded file content.
+FILE_BLOBS: Dict[str, str] = {}
 
-# Labels and reviewers are optional. Adjust to your workflow.
+# Labels and reviewers. Missing labels are created automatically.
 PR_LABELS = ["from-ai", "needs-review"]
-PR_REVIEWERS = []  # GitHub usernames, e.g., ["pvliesdonk"]
+LABEL_COLORS = {
+    "from-ai": "5319e7",         # purple
+    "needs-review": "d93f0b",    # orange
+    "blocked": "b60205",         # red
+    "security": "000000",        # black
+    "breaking-change": "e11d21", # red
+    "docs": "0e8a16",            # green
+    "chore": "c5def5",           # light blue
+    "content": "1d76db",         # blue
+    "design": "fbca04",          # yellow
+    "asset": "bfdadc",           # teal
+}
+PR_REVIEWERS: List[str] = []     # e.g., ["pvliesdonk"]
 
 SCRATCH_DIR = Path("/mnt/scratch")
 TIMESTAMP = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
@@ -139,7 +133,6 @@ def clone_repo():
         sys.exit(f"ERROR: failed to clone repo {repo_slug()}\n{r.err or r.out}")
 
 def prepare_branch() -> str:
-    # Checkout and sync base
     r = run(["git", "fetch", "--all", "--prune"], cwd=WORKDIR)
     if r.code != 0:
         sys.exit(f"ERROR: git fetch failed\n{r.err or r.out}")
@@ -152,7 +145,6 @@ def prepare_branch() -> str:
     if r.code != 0:
         sys.exit(f"ERROR: failed to reset to origin/{BASE_BRANCH}\n{r.err or r.out}")
 
-    # Create branch
     branch = BRANCH_NAME.strip() or auto_branch_name(PR_TITLE)
     r = run(["git", "switch", "-c", branch], cwd=WORKDIR)
     if r.code != 0:
@@ -167,23 +159,59 @@ def auto_branch_name(title: str) -> str:
         slug = "changes"
     return f"ai/{slug[:40]}-{TIMESTAMP}"
 
+# ---- Label management ----
+
+def ensure_labels():
+    res = run(["gh", "label", "list", "--json", "name"], cwd=WORKDIR)
+    existing = set()
+    if res.code == 0 and res.out.strip():
+        try:
+            import json
+            data = json.loads(res.out)
+            existing = {it["name"] for it in data if "name" in it}
+        except Exception:
+            existing = {line.split()[0] for line in res.out.splitlines() if line.strip()}
+    for name in PR_LABELS:
+        if name in existing:
+            continue
+        color = LABEL_COLORS.get(name, "bfdadc")
+        desc = f"Auto-created by PR script — label '{name}'"
+        r = run(["gh", "label", "create", name, "--color", color, "--description", desc], cwd=WORKDIR)
+        if r.code != 0:
+            print(f"WARNING: failed to create label '{name}':\n{r.err or r.out}", file=sys.stderr)
+
+# ---- Diff handling ----
+
+def normalized_diff_bytes() -> bytes:
+    if DIFF_B64.strip():
+        diff = base64.b64decode(DIFF_B64)
+        if DIFF_SHA256:
+            import hashlib
+            h = hashlib.sha256(diff).hexdigest()
+            if h.lower() != DIFF_SHA256.lower():
+                sys.exit(f"ERROR: DIFF_SHA256 mismatch: expected {DIFF_SHA256}, got {h}")
+        return diff.replace(b"\r\n", b"\n")
+    elif DIFF_CONTENT.strip() and not DIFF_CONTENT.strip().startswith("# --- PASTE"):
+        return DIFF_CONTENT.replace("\r\n", "\n").encode("utf-8")
+    else:
+        return b""
+
 def apply_diff_and_blobs():
-    if DIFF_CONTENT.strip() and not DIFF_CONTENT.strip().startswith("# --- PASTE"):
+    diff_bytes = normalized_diff_bytes()
+    if diff_bytes:
         diff_file = WORKDIR / "changes.diff"
-        diff_file.write_text(DIFF_CONTENT, encoding="utf-8")
+        diff_file.write_bytes(diff_bytes)
         r = run(["git", "apply", "--index", "--whitespace=fix", str(diff_file)], cwd=WORKDIR)
         if r.code != 0:
-            # Try with patch as a fallback (can be more tolerant)
-            r2 = run(["patch", "-p1", "-N", "-r", "rejections.log"], cwd=WORKDIR)
+            r2 = run(["patch", "-p1", "-N", "-r", "rejections.log", "-i", str(diff_file)], cwd=WORKDIR)
             if r2.code != 0:
                 sys.exit("ERROR: failed to apply diff via git apply and patch.\n"
                          f"git apply:\n{r.err or r.out}\npatch:\n{r2.err or r2.out}")
     else:
-        # No diff? If no file blobs either, abort.
         if not FILE_BLOBS:
-            sys.exit("ERROR: No DIFF_CONTENT provided and FILE_BLOBS is empty. "
-                     "Edit this script and paste a unified diff in DIFF_CONTENT.")
-    # Write file blobs if any
+            sys.exit("ERROR: No DIFF provided and FILE_BLOBS is empty. "
+                     "Edit this script and provide DIFF_CONTENT or DIFF_B64.")
+
     for path, b64 in FILE_BLOBS.items():
         target = WORKDIR / path
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -194,7 +222,6 @@ def apply_diff_and_blobs():
             sys.exit(f"ERROR: git add failed for {path}\n{r.err or r.out}")
 
 def commit_and_push(branch: str):
-    # Ensure new/modified files are staged
     run(["git", "add", "-A"], cwd=WORKDIR)
     r = run(["git", "status", "--porcelain"], cwd=WORKDIR)
     if r.code != 0:
@@ -212,7 +239,6 @@ def commit_and_push(branch: str):
         sys.exit(f"ERROR: git push failed\n{r.err or r.out}")
 
 def create_pr(branch: str):
-    # Build CLI args
     args = ["gh", "pr", "create", "--base", BASE_BRANCH, "--head", branch,
             "--title", PR_TITLE, "--body", PR_BODY]
     for label in PR_LABELS:
@@ -232,6 +258,7 @@ def main():
                  f"Create it first (e.g., `gh repo create {repo_slug()} --public`).")
     clone_repo()
     branch = prepare_branch()
+    ensure_labels()
     apply_diff_and_blobs()
     commit_and_push(branch)
     create_pr(branch)

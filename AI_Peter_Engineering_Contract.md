@@ -1,6 +1,6 @@
-# AI × Peter — Engineering Contract & Working Agreement (v1.0.0)
+# AI × Peter — Engineering Contract & Working Agreement (v1.1.0)
 
-**Effective:** 2025-10-14 08:48:39 UTC  
+**Effective:** 2025-10-14 09:40:21 UTC  
 **Owner:** Peter van Liesdonk (GitHub: `pvliesdonk`)  
 **Scope:** This contract governs how we (you = AI assistant; I = Peter) collaborate on software and docs.
 Embed this file as a *Project Prompt* so the assistant always follows it.
@@ -66,7 +66,7 @@ Reasoning, tradeoffs, alternatives considered.
 ## 5) Access Modes
 
 - **Direct GitHub access available** (e.g., via MCP or IDE plugin): create branches and PRs directly in `pvliesdonk/{repo_name}` following this contract.
-- **No direct access:** emulate the same flow by delivering a **single-file PR script** (see §6) that uses the GitHub CLI (`gh`) and `git` to:
+- **No direct access:** emulate the same flow by delivering a **single-file PR script** (see §6, §11, §12) that uses the GitHub CLI (`gh`) and `git` to:
   - clone `pvliesdonk/{repo_name}` to `/mnt/scratch/…`,
   - branch off **`origin/develop`**,
   - apply the embedded **unified diff** (and optional file blobs),
@@ -82,9 +82,10 @@ When you don’t have direct write access, you must deliver a script that:
 - **rebases** on `origin/develop` before committing,
 - creates a **feature branch** (e.g., `feat/…`, `fix/…`),
 - pushes to `origin` and opens a PR with a proper title/body/labels,
+- **ensures labels exist** on GitHub (create missing labels before PR creation),
 - exits non-zero with clear messaging on any error so it’s easy to diagnose.
 
-A reference implementation is provided in `pr_from_diff_TEMPLATE.py` (included alongside this file).
+A reference implementation is provided in `pr_from_diff_TEMPLATE.py` (maintained alongside this file).
 
 ## 7) Security & Secrets
 
@@ -109,6 +110,33 @@ A reference implementation is provided in `pr_from_diff_TEMPLATE.py` (included a
 - If a step is ambiguous or blocks progress, propose **two concrete options** with tradeoffs and pick a default.
 - If we lose conversation context, recover from the repo state and this contract.
 
+## 11) Artifact Delivery & Script Sharing
+
+- **Ready-to-run scripts must always be offered as a downloadable file** in chat.
+- **Short scripts** (≈120 lines or fewer, or trivially readable) **may also be shown inline** for transparency.
+- **Longer scripts** can be **hidden from view** (summarized) to keep the chat readable, but **must still include a download link**.
+- When the chat platform supports attachments, **attach the file**; otherwise provide a direct download link or commit it to the repo and link the PR.
+- For every script artifact, include a one-paragraph synopsis and *exact invocation command(s)*.
+
+## 12) Robust Delimiters & Escaping (NEW)
+
+When delivering embedded content (diffs, JSON, Markdown, shell snippets, config), the script **must**:
+- Use **raw triple-quoted strings** (e.g., `r"""..."""`) to avoid backslash-escape surprises.
+- Normalize **line endings to LF** before applying diffs.
+- For binaries or fragile text, prefer **base64** blobs in a `FILE_BLOBS` mapping.
+- For heredocs, use **single-quoted** form (`<<'EOF'`) to avoid shell interpolation.
+- Avoid templating collisions by using clearly unique sentinels such as:  
+  `===== BEGIN_UNIFIED_DIFF (sha256:…) =====` / `===== END_UNIFIED_DIFF =====`.
+- Include an optional **`--verify`/preflight** step that checks a provided **sha256** or byte length of the embedded payloads before applying.
+- Treat all file writes as **UTF‑8** unless explicitly binary.
+
+## 13) Non‑Programming Projects (Docs, Specs, Assets) (NEW)
+
+This contract applies **unchanged** to repos that are primarily documentation or assets:
+- Use the same branching, PR, and review flow.
+- Validation steps adapt to the medium: e.g., link-checkers, Markdownlint, MkDocs/mdBook builds, table-of-contents integrity, and artifact previews.
+- Labels should reflect the work type (e.g., `docs`, `content`, `design`, `asset`), but the **process remains the same**.
+
 ---
 
 ### Appendix A — Minimal Command Cheatsheet
@@ -123,10 +151,16 @@ git push -u origin HEAD
 gh pr create --base develop --title "feat: <title>" --body-file pr.md --label from-ai --label needs-review
 ```
 
-### Appendix B — Labels we may use
+### Appendix B — Labels we may use (auto-created if absent)
 
-- `from-ai`, `needs-review`, `blocked`, `security`, `breaking-change`, `docs`, `chore`
+- `from-ai`, `needs-review`, `blocked`, `security`, `breaking-change`, `docs`, `chore`, `content`, `design`, `asset`
 
 ---
+
+### Changelog
+
+- **v1.1.0** — Added §12 “Robust Delimiters & Escaping”; Added auto-label creation requirement; Added §13 “Non‑Programming Projects” clarifying same flow for docs/assets.
+- **v1.0.1** — Added §11 “Artifact Delivery & Script Sharing” (downloadable scripts, inline for short ones).
+- **v1.0.0** — Initial version.
 
 **This contract supersedes prior ad-hoc arrangements; updates will be versioned in this file.**
