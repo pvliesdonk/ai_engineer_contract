@@ -3,6 +3,21 @@
 All notable changes to this project are documented here. Versions follow tags in `pvliesdonk/ai_engineer_contract`.
 The project uses Conventional Commits and release-please.
 
+
+## [1.5.0] - Branch defaults + TODO stubs
+### Documentation
+- Keep `develop` as the default base branch; allow `BASE_BRANCH=development` override.
+- Require explicit TODO markers and `NotImplemented`-style failures for stubs.
+### Features
+- `pr_from_diff_TEMPLATE.py` v1.1.1: support `BASE_BRANCH` env override.
+### Chore
+- `repo_bootstrap_TEMPLATE.py` v1.2.1: add `DEV_BRANCH` env override.
+- Add release-please configuration and workflow.
+
+## [1.4.1] - Alias of 1.4.0
+### Documentation
+- Rename/organize without semantic change.
+
 ## [1.4.0] - Download-by-default + Auto-upgrade + Sync
 ### Documentation
 - Always provide deliverables as downloads.
