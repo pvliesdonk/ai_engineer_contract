@@ -4,21 +4,11 @@ All notable changes to this project are documented here. Versions follow tags in
 The project uses Conventional Commits and release-please.
 
 
-## [1.5.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v1.2.0...ai_engineer_contract-v1.5.0) (2025-10-14)
 
-
-### Features
-
-* **tools:** add pr_from_diff_TEMPLATE.py v1.1.0 ([c4f30c3](https://github.com/pvliesdonk/ai_engineer_contract/commit/c4f30c33cac56b32eea463a1d2bd3827ded5f087))
-* **tools:** add sync_canonical_contract_and_tools_TEMPLATE.py v1.1.0 ([c4f30c3](https://github.com/pvliesdonk/ai_engineer_contract/commit/c4f30c33cac56b32eea463a1d2bd3827ded5f087))
-* **tools:** pr_from_diff_TEMPLATE.py v1.1.1 — support BASE_BRANCH env override ([67f4980](https://github.com/pvliesdonk/ai_engineer_contract/commit/67f4980c006fb24c7b5ef0d29e3939967d24c464))
-
-
+## [1.6.0] - Advice-only + Commit Proposals
 ### Documentation
-
-* **contract:** enforce always-download; auto-upgrade in chat; repo sync PRs ([c4f30c3](https://github.com/pvliesdonk/ai_engineer_contract/commit/c4f30c33cac56b32eea463a1d2bd3827ded5f087))
-* **contract:** rename/organize without semantic changes ([8faeb95](https://github.com/pvliesdonk/ai_engineer_contract/commit/8faeb955877fbca30a798271954e5ad7a0e50222))
-* **contract:** set develop as default; add BASE_BRANCH override; require TODO stubs ([67f4980](https://github.com/pvliesdonk/ai_engineer_contract/commit/67f4980c006fb24c7b5ef0d29e3939967d24c464))
+- Add advice-only mode: when the user asks specifically for advice, return guidance/snippets without packaging deliverables.
+- Require the AI to propose 1–3 Conventional Commit messages after each deliverable.
 
 ## [1.5.0] - Branch defaults + TODO stubs
 ### Documentation
