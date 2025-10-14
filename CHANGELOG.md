@@ -5,6 +5,13 @@ The project uses Conventional Commits and release-please.
 
 
 
+## [1.6.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v1.5.0...ai_engineer_contract-v1.6.0) (2025-10-14)
+
+
+### Miscellaneous Chores
+
+* updated changelog ([5c4e0b8](https://github.com/pvliesdonk/ai_engineer_contract/commit/5c4e0b89a2e29175045e615317d11b08681250b7))
+
 ## [1.6.0] - Advice-only + Commit Proposals
 ### Documentation
 - Add advice-only mode: when the user asks specifically for advice, return guidance/snippets without packaging deliverables.
