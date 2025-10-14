@@ -3,17 +3,21 @@
 All notable changes to this project are documented here. Versions follow tags in `pvliesdonk/ai_engineer_contract`.
 The project uses Conventional Commits and release-please.
 
-## [1.2.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v1.0.0...ai_engineer_contract-v1.2.0) (2025-10-14)
-
-
-### Features
-
-* **tools:** add repo_bootstrap_TEMPLATE.py v1.2.0 ([d9e1960](https://github.com/pvliesdonk/ai_engineer_contract/commit/d9e1960f2c095965e1232b63a0128bb7ddf56090))
-
-
+## [1.4.0] - Download-by-default + Auto-upgrade + Sync
 ### Documentation
+- Always provide deliverables as downloads.
+- Auto-upgrade to the latest contract/tool in the current chat.
+- Auto-PR to sync repositories with the latest contract and tools.
+### Features
+- Add `sync_canonical_contract_and_tools_TEMPLATE.py` v1.1.0.
 
-* **contract:** add robust escaping, label auto-create, non-code parity ([7d56bd4](https://github.com/pvliesdonk/ai_engineer_contract/commit/7d56bd449a67282304d2c7d2a8c01b25155715e5))
+## [1.3.0] - Canonical distribution
+### Documentation
+- Define canonical repository and distribution rules for contract + tools.
+### Features
+- Add `pr_from_diff_TEMPLATE.py` v1.1.0.
+### Chore
+- Move helper scripts into `tools/` directory.
 
 ## [1.2.0] - Bootstrap
 ### Documentation
