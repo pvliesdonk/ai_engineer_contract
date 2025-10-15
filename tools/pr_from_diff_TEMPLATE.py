@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import base64, hashlib, os, shutil, subprocess, sys, json
+import argparse, base64, hashlib, json, os, shutil, subprocess, sys, re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
 OWNER = "pvliesdonk"
-REPO  = "<REPO_NAME_HERE>"
-BASE_BRANCH = os.environ.get("BASE_BRANCH", "develop")
+REPO  = "<REPO_NAME_HERE>"         # name-only; override with --repo
 PR_TITLE = "feat: <edit me> short, imperative summary"
 PR_BODY  = "# Summary\n<why/changes/validation/risk>"
-BRANCH_NAME = ""
-DIFF_CONTENT = r""
-DIFF_B64 = ""
-DIFF_SHA256 = ""
-FILE_BLOBS: Dict[str, str] = {}
+BRANCH_NAME = ""                   # auto if empty
+DIFF_CONTENT = r""                 # raw unified diff (utf-8)
+DIFF_B64 = ""                      # base64-encoded diff
+DIFF_SHA256 = ""                   # optional integrity check of DIFF_B64
+FILE_BLOBS: Dict[str, str] = {}    # {"path": base64-content}
 PR_LABELS = ["from-ai", "needs-review"]
-LABEL_COLORS = {"from-ai":"5319e7","needs-review":"d93f0b","blocked":"b60205","security":"000000","breaking-change":"e11d21","docs":"0e8a16","chore":"c5def5","content":"1d76db","design":"fbca04","asset":"bfdadc"}
+LABEL_COLORS = {"from-ai":"5319e7","needs-review":"d93f0b","blocked":"b60205","security":"000000","breaking-change":"e11d21","docs":"0e8a16","chore":"c5def5","content":"1d76db","design":"fbca04","asset":"bfdadc","deviation-approved":"5319e7"}
 PR_REVIEWERS: List[str] = []
 
 SCRATCH_DIR = Path("/mnt/scratch")
@@ -41,30 +40,29 @@ def ensure_tools():
         if run([t,"--version"]).code!=0:
             sys.exit(f"ERROR: {t} not found.")
 
-def repo_slug()->str:
-    if "/" in REPO:
+def repo_slug(repo: str)->str:
+    if "/" in repo:
         sys.exit("ERROR: REPO must be name-only, not owner/name.")
-    return f"{OWNER}/{REPO}"
+    return f"{OWNER}/{repo}"
 
-def gh_repo_exists()->bool:
-    return run(["gh","repo","view",repo_slug()]).code==0
+def gh_repo_exists(repo: str)->bool:
+    return run(["gh","repo","view",repo_slug(repo)]).code==0
 
-def clone_repo():
+def clone_repo(repo: str):
     WORKDIR.parent.mkdir(parents=True,exist_ok=True)
     if WORKDIR.exists():
         shutil.rmtree(WORKDIR)
-    r=run(["gh","repo","clone",repo_slug(),str(WORKDIR)])
+    r=run(["gh","repo","clone",repo_slug(repo),str(WORKDIR)])
     if r.code!=0:
         sys.exit(f"ERROR: clone failed\n{r.err or r.out}")
 
-def prepare_branch()->str:
+def prepare_branch(base_branch: str)->str:
     for c in (["git","fetch","--all","--prune"],
-              ["git","checkout",BASE_BRANCH],
-              ["git","reset","--hard",f"origin/{BASE_BRANCH}"]):
+              ["git","checkout",base_branch],
+              ["git","reset","--hard",f"origin/{base_branch}"]):
         r=run(c,cwd=WORKDIR)
         if r.code!=0:
             sys.exit(f"ERROR: {' '.join(c)}\n{r.err or r.out}")
-    import re
     slug=re.sub(r"[^a-z0-9]+","-",PR_TITLE.lower()).strip("-") or "changes"
     branch=(BRANCH_NAME.strip() or f"ai/{slug[:40]}-{TIMESTAMP}")
     if run(["git","switch","-c",branch],cwd=WORKDIR).code!=0:
@@ -103,7 +101,9 @@ def apply_diff_and_blobs():
         df=WORKDIR/"changes.diff"
         df.write_bytes(d)
         if run(["git","apply","--index","--whitespace=fix",str(df)],cwd=WORKDIR).code!=0:
-            if run(["patch","-p1","-N","-r","rejections.log","-i",str(df)],cwd=WORKDIR).code!=0:
+            if run(["patch","-","-p1","-N","-r","rejections.log"],cwd=WORKDIR).code==0:
+                pass
+            else:
                 sys.exit("ERROR: cannot apply diff")
     elif not FILE_BLOBS:
         sys.exit("ERROR: no changes to apply")
@@ -123,8 +123,8 @@ def commit_and_push(branch:str):
     if run(["git","push","-u","origin",branch],cwd=WORKDIR).code!=0:
         sys.exit("ERROR: push failed")
 
-def create_pr(branch:str):
-    args=["gh","pr","create","--base",BASE_BRANCH,"--head",branch,"--title",PR_TITLE,"--body",PR_BODY]
+def create_pr(base_branch:str, branch:str):
+    args=["gh","pr","create","--base",base_branch,"--head",branch,"--title",PR_TITLE,"--body",PR_BODY]
     for lab in PR_LABELS:
         args+=["--label",lab]
     if PR_REVIEWERS:
@@ -135,17 +135,36 @@ def create_pr(branch:str):
     print(r.out.strip())
 
 def main():
+    parser=argparse.ArgumentParser(description="Create a PR from embedded diff or blobs.")
+    parser.add_argument("--owner", default=OWNER)
+    parser.add_argument("--repo", default=REPO, help="name-only")
+    parser.add_argument("--base-branch", default=os.environ.get("BASE_BRANCH","develop"))
+    parser.add_argument("--dry-run", action="store_true")
+    args=parser.parse_args()
+
+    global OWNER, REPO
+    OWNER, REPO = args.owner, (args.repo or REPO)
+
     ensure_tools()
-    SCRATCH_DIR.mkdir(parents=True,exist_ok=True)
-    if not gh_repo_exists():
-        sys.exit(f"ERROR: repo '{repo_slug()}' not accessible")
-    clone_repo()
-    branch=prepare_branch()
+    if not gh_repo_exists(REPO):
+        sys.exit(f"ERROR: repo '{repo_slug(REPO)}' not accessible")
+    if args.dry_run:
+        print("DRY-RUN PLAN")
+        print(f"- Repo: {repo_slug(REPO)}")
+        print(f"- Base branch: {args.base-branch if hasattr(args,'base-branch') else args.base_branch}")
+        print(f"- PR title: {PR_TITLE}")
+        print(f"- Labels: {PR_LABELS}")
+        print(f"- Diff bytes: {len(normalized_diff_bytes())}")
+        print(f"- File blobs: {list(FILE_BLOBS.keys())}")
+        return
+
+    clone_repo(REPO)
+    branch=prepare_branch(args.base_branch)
     ensure_labels()
     apply_diff_and_blobs()
     commit_and_push(branch)
-    create_pr(branch)
-    print(f"SUCCESS: Opened PR from '{branch}' into '{BASE_BRANCH}' for {repo_slug()}")
+    create_pr(args.base_branch, branch)
+    print(f"SUCCESS: Opened PR from '{branch}' into '{args.base_branch}' for {repo_slug(REPO)}")
 
 if __name__=="__main__":
     main()
