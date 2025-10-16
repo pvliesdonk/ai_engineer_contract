@@ -5,6 +5,13 @@ The project uses Conventional Commits and release-please.
 
 
 
+## [2.0.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.0.0-rc.1...ai_engineer_contract-v2.0.0) (2025-10-16)
+
+
+### Miscellaneous Chores
+
+* prepare GA ([#20](https://github.com/pvliesdonk/ai_engineer_contract/issues/20)) ([4da7b48](https://github.com/pvliesdonk/ai_engineer_contract/commit/4da7b48bcf712e1940ad502140ba2f3a08faa26b))
+
 ## [2.0.0-rc.1](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v1.6.4...ai_engineer_contract-v2.0.0-rc.1) (2025-10-16)
 
 
