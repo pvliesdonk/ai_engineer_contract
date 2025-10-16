@@ -64,3 +64,4 @@ Scope: Entire repository.
 - Contract path: `docs/design/ENGINEERING_CONTRACT.md`.
 - Design roots: `docs/design/`; KB root: `docs/kb/`.
 - Run markdown lint via CI; keep docs consistent with changes.
+- Syncing canonical contract (consumers): use `tools/sync_canonical_contract_and_tools_TEMPLATE.py` with `--dry-run` and pin to a release tag; avoid `--force` unless necessary. See `docs/kb/howtos/sync-canonical.md` and `ai/sync.config.json`.
