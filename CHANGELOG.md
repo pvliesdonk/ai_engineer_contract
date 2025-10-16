@@ -4,6 +4,14 @@ All notable changes to this project are documented here. Versions follow tags in
 The project uses Conventional Commits and release-please.
 
 
+## [2.1.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.0.1...ai_engineer_contract-v2.1.0) (2025-10-16)
+
+
+### Features
+
+* **sync:** config-driven sync with provenance + docs ([#38](https://github.com/pvliesdonk/ai_engineer_contract/issues/38)) ([6e286c6](https://github.com/pvliesdonk/ai_engineer_contract/commit/6e286c6abd930c3a77dd7606f837ce8ef44d5fee))
+* **tools:** implement sync_canonical_contract_and_tools_TEMPLATE.py with gh-based fetch, contract-only by default, optional template-tools sync; dry-run support\n\nFixes [#24](https://github.com/pvliesdonk/ai_engineer_contract/issues/24) ([#37](https://github.com/pvliesdonk/ai_engineer_contract/issues/37)) ([ea7821d](https://github.com/pvliesdonk/ai_engineer_contract/commit/ea7821d1cf5019ab12a513179252c6edb3ef46ed))
+
 ## [2.0.1](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.0.0...ai_engineer_contract-v2.0.1) (2025-10-16)
 
 ### Documentation
