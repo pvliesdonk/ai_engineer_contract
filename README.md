@@ -60,7 +60,7 @@ Use this prompt when starting a session with an AI to bind it to the contract wi
 ```
 You are bound by this repository’s Engineering Contract. Treat the following as mandatory:
 
-Contract Capsule v2.0.0 (see ai/contract_capsule.md)
+Contract Capsule v2.0.2 (see ai/contract_capsule.md)
 - Base: develop. PRs → develop. Squash. Conventional Commit titles.
 - Do NOT code until requirements + design are updated/approved. Wait for “GO BUILD”.
 - Keep docs in docs/design and docs/kb in sync with changes.
@@ -70,7 +70,7 @@ Contract Capsule v2.0.0 (see ai/contract_capsule.md)
 - Releases via RAT; here: release-please; back-merge main → develop.
 - Labels: from-ai, needs-review, docs, chore. Provide progress updates; propose 1–3 CC messages after deliverables.
 
-Authoritative text: docs/design/ENGINEERING_CONTRACT.md (v2.0.0 + Unreleased). Acknowledge with “ACK CONTRACT v2.0.0”. Detect SCM mode (A/B/C) once and proceed accordingly.
+Authoritative text: docs/design/ENGINEERING_CONTRACT.md (v2.0.2). Acknowledge with “ACK CONTRACT v2.0.2”. Detect SCM mode (A/B/C) once and proceed accordingly.
 
 I will provide requirements/design first. Do not start coding until I say “GO BUILD”.
 ```

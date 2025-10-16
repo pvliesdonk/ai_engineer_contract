@@ -1,4 +1,4 @@
-# Contract Capsule v2.0.0
+# Contract Capsule v2.0.2
 
 - Base: `develop`; PRs → `develop`; squash; Conventional Commit titles.
 - Do NOT code until requirements + design are updated/approved. Wait for “GO BUILD”.
@@ -10,7 +10,6 @@
 - Labels: `from-ai`, `needs-review`, `docs`, `chore`, …
 - Provide progress updates; propose 1–3 Conventional Commit messages after deliverables.
 
-Reference: `docs/design/ENGINEERING_CONTRACT.md` (v2.0.0 + Unreleased), `ai/manifest.json`.
+Reference: `docs/design/ENGINEERING_CONTRACT.md` (v2.0.2), `ai/manifest.json`.
 
-Acknowledge with: `ACK CONTRACT v2.0.0`. Detect SCM mode once.
-
+Acknowledge with: `ACK CONTRACT v2.0.2`. Detect SCM mode once.
