@@ -1,0 +1,54 @@
+# AGENTS.md — AI Agent Instructions (repo-wide)
+
+This file defines how coding agents should operate in this repository. It follows the agents.md convention: a root `AGENTS.md` applies to the entire repo; more deeply nested `AGENTS.md` files may refine/override within their subtree; direct instructions from a human always take precedence.
+
+Scope: Entire repository.
+
+## High‑Level Rules
+
+- Base branch: `develop` (sole development branch). `main` is for releases.
+- Branching: create topic branches from `origin/develop` using `feat/<slug>`, `fix/<slug>`, `docs/<slug>`, `chore/<slug>`, `refactor/<slug>`, `test/<slug>`.
+- PRs: target `develop`. Squash‑merge after review/approval. Keep diffs small and focused.
+- Conventional Commits: required for PR titles. Use `!` for breaking changes.
+- Releases: managed by release automation (release‑please). Release PRs target `main`. After a release, back‑merge `main → develop` to carry changelog/version.
+
+## Files & Layout
+
+- Contract: `docs/design/ENGINEERING_CONTRACT.md` (authoritative engineering contract). Keep it updated and link to it in PRs.
+- Design docs: `docs/design/` (requirements, architecture, ADRs, roadmap). Knowledge base/wiki: `docs/kb/` with an `index.md`.
+- AI manifest: `ai/manifest.json` (paths, base branch, labels, doc versioning scheme).
+- Doc versioning: use `date+rev` in YAML front matter for design/kb documents; releases use SemVer.
+
+## Tooling & CI
+
+- Use `git` and `gh` for operations (clone/branch/push/PR/labels). Prefer release‑please for versioning and changelog.
+- Linting: Markdown lint runs in CI (markdownlint‑cli2). Follow `.markdownlint-cli2.yaml` and `.markdownlintignore`.
+- Validate Python helper scripts by byte‑compiling them (`python -m py_compile tools/*.py`) when applicable.
+
+## Labels & Management
+
+- Ensure these labels exist (auto‑create if missing): `from-ai`, `needs-review`, `docs`, `chore`, `security`, `blocked`, `planning`, `needs-design-ref`, `breaking-change`, `content`, `design`, `asset`, `deviation-approved`.
+- Link PRs to issues; reference relevant design docs. If design impact exists and the doc isn’t ready, add `needs-design-ref` and follow up with the doc.
+
+## Security & Secrets
+
+- Do not commit secrets. Use `.env.example`; real secrets must remain out of the repo/CI logs. Redact tokens in PRs and outputs.
+
+## Session Modes (awareness)
+
+- SCM‑A (Full‑Stack Agent): may create branches/PRs/issues/labels; merge to `develop` only after explicit chat approval; releases to `main` are manual.
+- SCM‑B (IDE Co‑Driver): edits files, proposes ready‑to‑run commands, but cannot push; provide precise instructions/scripts.
+- SCM‑C (Chat‑Only): use single‑file templates in `tools/` to open PRs (copy‑paste friendly flows).
+
+## Communication & Process
+
+- Be concise. Provide progress updates and explicit next steps. Propose 1–3 Conventional Commit messages for meaningful deliverables.
+- For fragile payloads, use robust delimiters (heredocs/base64) and verify with checksums when warranted.
+- Deviations from this policy require approval and the `deviation-approved` label; document rationale and rollback plan.
+
+## Quick Reference (for agents)
+
+- Base: `develop`; PR target: `develop`; release PR target: `main`.
+- Contract path: `docs/design/ENGINEERING_CONTRACT.md`.
+- Design roots: `docs/design/`; KB root: `docs/kb/`.
+- Run markdown lint via CI; keep docs consistent with changes.
