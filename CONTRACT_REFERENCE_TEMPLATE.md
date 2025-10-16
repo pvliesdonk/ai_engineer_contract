@@ -2,7 +2,7 @@
 
 This repository intentionally **references** the canonical contract instead of duplicating it.
 
-- Canonical contract: https://github.com/pvliesdonk/ai_engineer_contract/blob/main/ENGINEERING_CONTRACT.md
+- Canonical contract: https://github.com/pvliesdonk/ai_engineer_contract/blob/main/docs/design/ENGINEERING_CONTRACT.md
 - Tools: https://github.com/pvliesdonk/ai_engineer_contract/tree/main/tools
 
 ## Local Rules
