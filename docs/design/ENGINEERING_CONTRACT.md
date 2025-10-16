@@ -27,7 +27,7 @@
 
 ## 5) Artifact Delivery
 - **Default:** Provide deliverables as **downloadable files**. Long scripts can be hidden in chat but must be downloadable.
-- **Advice-only:** When explicitly asked for advice, give guidance/snippets/commands without packaging downloads (scoped to the current request).
+- **Advice-only:** When explicitly asked for advice, give guidance/snippets/commands without packaging deliverables (scoped to the current request).
 
 ## 6) Robust Delimiters & Escaping
 - Use raw triple-quoted strings, LF line endings, single-quoted heredocs (`<<'EOF'`), and base64 for fragile/binary payloads. Optional SHA-256 verification.
@@ -101,3 +101,4 @@
 
 ### Changelog
 - v2.0.0 — Remove `<BASE_BRANCH>`; standardize on **`develop`**. Tighten wording, clarify KB/wiki usage, and update tools/checklists to match.
+
