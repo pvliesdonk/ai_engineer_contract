@@ -1,4 +1,4 @@
-# ENGINEERING_CONTRACT.md (AI × Peter) — v2.0.0
+# ENGINEERING_CONTRACT.md (AI × Peter) — v2.0.2
 
 > Breaking change: `<BASE_BRANCH>` is removed. The development branch is **always `develop`**.
 
@@ -120,9 +120,9 @@
 - Provide/update **`ai/manifest.json`** so tools find contract, design root, roadmap, KB root, labels, and versioning schemes.
 
 ### Changelog
+- v2.0.2 — Clarify dual-role hosting vs instance; add AI CI tool selection guidance; add minimal contract capsule and binding prompt.
+- v2.0.1 — Add pre-implementation discipline, milestone branch guidance, and early CI setup recommendation.
 - v2.0.0 — Remove `<BASE_BRANCH>`; standardize on **`develop`**. Tighten wording, clarify KB/wiki usage, and update tools/checklists to match.
-- Unreleased — Add pre-implementation discipline, milestone branch guidance, and early CI setup recommendation.
- - Unreleased — Clarify dual-role hosting vs instance; add AI CI tool selection guidance.
 
 ## 24) AGENTS.md Convention
 
