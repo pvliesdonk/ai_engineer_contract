@@ -51,4 +51,15 @@ Canonical engineering contract for AI × Peter. Key points:
 - Markdown lint via `markdownlint-cli2` using `.markdownlint-cli2.yaml` and `.markdownlintignore`.
 - Python helper scripts byte-compiled in CI.
 - Release automation via release-please; backmerge workflow keeps `develop` in sync after releases.
- - Early CI: When bootstrapping a new repo, set up minimal CI immediately (lint/format, byte-compile, and language-appropriate smoke checks). The AI should select CI tools based on the generated stack (see contract for guidance).
+- Early CI: When bootstrapping a new repo, set up minimal CI immediately (lint/format, byte-compile, and language-appropriate smoke checks). The AI should select CI tools based on the generated stack (see contract for guidance).
+
+## Release Trigger (Repo-specific)
+
+- This repository uses release-please on `main`. For docs-only or non-bump-eligible changes, use the helper to force a version bump with a Release-As footer:
+
+```
+python tools/trigger_release.py 2.0.3 --type docs --reason "Publish latest contract clarifications"
+```
+
+- For breaking contract changes, pass `--breaking` (adds `!` and BREAKING CHANGE footer) and pick a MAJOR version.
+- See docs/kb/howtos/trigger-release.md for details.
