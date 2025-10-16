@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import os
 import re
@@ -21,16 +22,15 @@ REPO = "<REPO_NAME_HERE>"
 # Base branch for the target repo (honor env override for portability)
 BASE_BRANCH = os.getenv("BASE_BRANCH", "develop")
 
-# Canonical source
+# Canonical source (defaults; may be overridden by ai/sync.config.json or CLI)
 SRC_OWNER = "pvliesdonk"
 SRC_REPO = "ai_engineer_contract"
-SRC_REF = "main"
+SRC_REF = "latest"  # "latest" uses latest GitHub release tag, else a ref like "main" or a tag/sha
 
-PR_TITLE = "docs(contract): sync canonical contract/tools"
-PR_BODY = (
+PR_TITLE = "docs(contract): sync canonical (from {ref})"
+PR_BODY_TMPL = (
     "# Summary\n"
-    "Sync canonical ENGINEERING_CONTRACT.md and optional canonical tools from"
-    f" {SRC_OWNER}/{SRC_REPO}@{SRC_REF} into this repository.\n\n"
+    "Sync canonical ENGINEERING_CONTRACT.md and optional canonical tools from {src_owner}/{src_repo}@{ref}.\n\n"
     "# Notes\n"
     "- Contract only by default; pass --include-tools to also update *TEMPLATE* tools.\n"
     "- Avoids overwriting non-template local tools.\n"
@@ -73,11 +73,36 @@ def list_dir(owner: str, repo: str, path: str, ref: str) -> list[dict]:
     sys.exit(f"ERROR: cannot list {owner}/{repo}:{path}@{ref}")
 
 
+def latest_release_tag(owner: str, repo: str) -> str:
+    try:
+        data = gh_api(f"repos/{owner}/{repo}/releases/latest")
+        return data.get("tag_name")
+    except SystemExit:
+        # Fallback: latest tag
+        tags = gh_api(f"repos/{owner}/{repo}/tags")
+        if isinstance(tags, list) and tags:
+            return tags[0].get("name")
+        sys.exit("ERROR: cannot resolve latest release/tag")
+
+
+def sha256(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def parse_synced_sha(text: str) -> str | None:
+    # Look for markers like: <!-- synced_from: owner/repo@ref sha=abcdef -->
+    m = re.search(r"synced_from: .*? sha=([0-9a-f]{8,64})", text)
+    return m.group(1) if m else None
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Sync canonical contract and optional tools")
     ap.add_argument("--owner", default=OWNER, help="Target owner")
     ap.add_argument("--repo", default=REPO, help="Target repo")
     ap.add_argument("--include-tools", action="store_true", help="Also sync canonical *TEMPLATE* tools")
+    ap.add_argument("--include-capsule", action="store_true", help="Also sync ai/contract_capsule.md")
+    ap.add_argument("--source-ref", default=None, help="Override source ref (tag/sha/branch). Default comes from config or 'latest'")
+    ap.add_argument("--force", action="store_true", help="Overwrite even if target shows a different synced sha")
     ap.add_argument("--dry-run", action="store_true", help="Do not push/PR; print planned changes")
     a = ap.parse_args()
 
@@ -85,6 +110,29 @@ def main() -> None:
     for t in ("git", "gh"):
         if run([t, "--version"], check=False).returncode != 0:
             sys.exit(f"ERROR: {t} not found")
+
+    # Load config if present
+    cfg_path = Path("ai/sync.config.json")
+    cfg = {}
+    if cfg_path.exists():
+        try:
+            cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+        except Exception:
+            cfg = {}
+
+    src_owner = (cfg.get("sourceRepo") or f"{SRC_OWNER}/{SRC_REPO}")
+    if "/" in src_owner:
+        c_owner, c_repo = src_owner.split("/", 1)
+    else:
+        c_owner, c_repo = SRC_OWNER, SRC_REPO
+    ref_cfg = cfg.get("sourceRef", SRC_REF)
+    ref = a.source_ref or ref_cfg
+    if ref == "latest":
+        ref = latest_release_tag(c_owner, c_repo)
+
+    sync_contract = bool(cfg.get("syncContract", True))
+    sync_tools_patterns = cfg.get("syncTools", ["*_TEMPLATE.py"])
+    include_capsule = a.include_capsule or bool(cfg.get("includeCapsule", False))
 
     # Prepare workspace
     work = SCRATCH / f"sync_{a.owner}_{a.repo}_{TS}"
@@ -101,42 +149,89 @@ def main() -> None:
         sys.exit("ERROR: branch create failed")
 
     changed = False
-    planned: list[str] = []
+    planned: list[tuple[str, str, int]] = []  # path, sha, size
 
     # Sync contract
-    target_contract = work / "docs" / "design" / "ENGINEERING_CONTRACT.md"
-    target_contract.parent.mkdir(parents=True, exist_ok=True)
-    new_contract = fetch_content(SRC_OWNER, SRC_REPO, "docs/design/ENGINEERING_CONTRACT.md", SRC_REF)
-    old_contract = target_contract.read_bytes() if target_contract.exists() else b""
-    if new_contract != old_contract:
-        target_contract.write_bytes(new_contract)
-        run(["git", "add", str(target_contract.relative_to(work))], cwd=str(work))
-        changed = True
-        planned.append("ENGINEERING_CONTRACT.md")
+    if sync_contract:
+        target_contract = work / "docs" / "design" / "ENGINEERING_CONTRACT.md"
+        target_contract.parent.mkdir(parents=True, exist_ok=True)
+        content = fetch_content(c_owner, c_repo, "docs/design/ENGINEERING_CONTRACT.md", ref)
+        src_sha = sha256(content)[:12]
+        footer = f"\n\n<!-- synced_from: {c_owner}/{c_repo}@{ref} sha={src_sha} ts={TS} -->\n"
+        new_contract = content + footer.encode("utf-8")
+        old_contract = target_contract.read_bytes() if target_contract.exists() else b""
+        if new_contract != old_contract:
+            # Overwrite safety if old has a different synced sha
+            if old_contract:
+                old_sha = parse_synced_sha(old_contract.decode("utf-8", errors="ignore"))
+                if old_sha and old_sha != src_sha and not a.force:
+                    sys.exit("refusing to overwrite contract with different synced sha; use --force to proceed")
+            target_contract.write_bytes(new_contract)
+            run(["git", "add", str(target_contract.relative_to(work))], cwd=str(work))
+            changed = True
+            planned.append(("docs/design/ENGINEERING_CONTRACT.md", src_sha, len(new_contract)))
 
     # Optionally sync canonical tool templates (*_TEMPLATE.py only)
-    if a.include_tools:
-        entries = list_dir(SRC_OWNER, SRC_REPO, "tools", SRC_REF)
+    if a.include_tools and sync_tools_patterns:
+        entries = list_dir(c_owner, c_repo, "tools", ref)
         for entry in entries:
             name = entry.get("name", "")
-            if not name.endswith("_TEMPLATE.py"):
+            if not any(re.fullmatch(p.replace("*", ".*"), name) for p in sync_tools_patterns):
                 continue  # avoid overwriting local non-template tools
-            content = fetch_content(SRC_OWNER, SRC_REPO, f"tools/{name}", SRC_REF)
+            content = fetch_content(c_owner, c_repo, f"tools/{name}", ref)
+            src_sha = sha256(content)[:12]
+            header = (
+                f"# Synced from {c_owner}/{c_repo}@{ref} sha={src_sha} ts={TS}\n"
+                f"# Do not edit directly if you plan to re-sync; local changes may be overwritten.\n"
+            ).encode("utf-8")
+            if content.startswith(b"#!/"):
+                # preserve shebang on first line
+                first, rest = content.split(b"\n", 1)
+                body = first + b"\n" + header + rest
+            else:
+                body = header + content
             dest = work / "tools" / name
             dest.parent.mkdir(parents=True, exist_ok=True)
             old = dest.read_bytes() if dest.exists() else b""
-            if content != old:
-                dest.write_bytes(content)
+            if body != old:
+                if old:
+                    old_sha = parse_synced_sha(old.decode("utf-8", errors="ignore"))
+                    if old_sha and old_sha != src_sha and not a.force:
+                        sys.exit(f"refusing to overwrite {name} with different synced sha; use --force to proceed")
+                dest.write_bytes(body)
                 run(["git", "add", str(dest.relative_to(work))], cwd=str(work))
                 changed = True
-                planned.append(f"tools/{name}")
+                planned.append((f"tools/{name}", src_sha, len(body)))
+
+    # Optionally sync capsule
+    if include_capsule:
+        cap_src = fetch_content(c_owner, c_repo, "ai/contract_capsule.md", ref)
+        cap_sha = sha256(cap_src)[:12]
+        footer = f"\n\n<!-- synced_from: {c_owner}/{c_repo}@{ref} sha={cap_sha} ts={TS} -->\n"
+        cap_new = cap_src + footer.encode("utf-8")
+        cap_tgt = work / "ai" / "contract_capsule.md"
+        cap_tgt.parent.mkdir(parents=True, exist_ok=True)
+        cap_old = cap_tgt.read_bytes() if cap_tgt.exists() else b""
+        if cap_new != cap_old:
+            if cap_old:
+                old_sha = parse_synced_sha(cap_old.decode("utf-8", errors="ignore"))
+                if old_sha and old_sha != cap_sha and not a.force:
+                    sys.exit("refusing to overwrite capsule with different synced sha; use --force to proceed")
+            cap_tgt.write_bytes(cap_new)
+            run(["git", "add", str(cap_tgt.relative_to(work))], cwd=str(work))
+            changed = True
+            planned.append(("ai/contract_capsule.md", cap_sha, len(cap_new)))
 
     if a.dry_run:
         print("DRY RUN")
         print("Base branch:", BASE_BRANCH)
+        print("Source:", f"{c_owner}/{c_repo}@{ref}")
+        if not planned:
+            print("No changes.")
+            return
         print("Planned changes:")
-        for p in planned:
-            print("-", p)
+        for path, sha, size in planned:
+            print(f"- {path} (sha={sha}, size={size} bytes)")
         return
 
     if not changed:
@@ -156,6 +251,7 @@ def main() -> None:
     }.items():
         run(["gh", "label", "create", name, "--color", color, "--description", f"Auto-created label - {name}", "--force"], cwd=str(work), check=False)
 
+    body = PR_BODY_TMPL.format(src_owner=c_owner, src_repo=c_repo, ref=ref)
     args = [
         "gh",
         "pr",
@@ -165,9 +261,9 @@ def main() -> None:
         "--head",
         branch,
         "--title",
-        PR_TITLE,
+        PR_TITLE.format(ref=ref),
         "--body",
-        PR_BODY,
+        body,
     ]
     r = run(args, cwd=str(work), check=False)
     if r.returncode != 0:
