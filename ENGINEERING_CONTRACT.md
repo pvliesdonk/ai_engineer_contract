@@ -1,9 +1,9 @@
-# ENGINEERING_CONTRACT.md (AI × Peter) — v1.6.4
+# ENGINEERING_CONTRACT.md (AI × Peter) — v1.7.0
 
 Owner: Peter van Liesdonk (`pvliesdonk`)
 Purpose: Consistent, auditable collaboration on software and docs.
 
-This is the canonical contract. Keep a copy at the repo root and reflect it in the ChatGPT Project prompt.
+This is the canonical contract. Keep a copy in each project (see §11) and reflect it in the ChatGPT Project prompt.
 
 ---
 
@@ -61,18 +61,19 @@ We use a **Release Automation Tool (RAT)** to generate versions, tags, release n
 
 ## 11) Canonical Source & Distribution
 - Canonical repo: `pvliesdonk/ai_engineer_contract`.
-- Every new repo must include the **latest** `ENGINEERING_CONTRACT.md` and `tools/`.
+- In each **consumer project**, keep the contract next to design docs at **`docs/design/ENGINEERING_CONTRACT.md`** (preferred), linking back to the canonical version. A thin pointer file at repo root is allowed if your doc system requires it.
+- Every new repo must include the **latest** contract and (optionally) `tools/`.
 - Distribution choices: link to canonical, copy at creation, or sync via tool/subtree (avoid submodules unless strictly needed).
 
 ## 12) Labels
 - Commits/PRs must include appropriate labels. Scripts **auto-create** missing labels via `gh label create`.
-- **Definitive list:** `from-ai`, `needs-review`, `docs`, `chore`, `security`, `blocked`, `breaking-change`, `content`, `design`, `asset`, `deviation-approved`.
+- **Definitive list:** `from-ai`, `needs-review`, `docs`, `chore`, `security`, `blocked`, `planning`, `breaking-change`, `content`, `design`, `asset`, `deviation-approved`.
 
 ## 13) Auto-Upgrade in Chat
 - When a newer contract or tool appears in the current chat/project, the AI must immediately use the newest version.
 
 ## 14) Auto-Update Repositories
-- When newer contract/tools exist in chat, the AI opens a PR that updates `ENGINEERING_CONTRACT.md` and **replaces only canonical** `tools/canonical/*` files (unless the user opts out). Preserve `tools/local/*`; if conflicts exist, surface them explicitly in the PR body.
+- When newer contract/tools exist in chat, the AI opens a PR that updates `ENGINEERING_CONTRACT.md` and (if used) **replaces only canonical** `tools/canonical/*` files (unless the user opts out). Preserve `tools/local/*`; if conflicts exist, surface them explicitly in the PR body.
 
 ## 15) TODOs & Not-Implemented Stubs
 - When stubbing behavior in code, **always** include explicit TODO markers and fail fast:
@@ -104,18 +105,25 @@ We use a **Release Automation Tool (RAT)** to generate versions, tags, release n
   6) **Dry-run** mode or equivalent preview where feasible.
 - If bring-your-own tooling is used, the PR must state **which tool** ran and confirm it satisfies the above. Canonical tools may live under `tools/canonical/*`; local extensions under `tools/local/*` to avoid sync collisions.
 
+## 20) **Requirements & Design Phase (Before Building)**
+- Before implementation, run a **requirements gathering + design phase** resulting in design documentation stored under **`docs/design/`** in the project.
+- Minimum required docs (can be split across files):
+  - **`docs/design/requirements.md`** — scope, goals, non-goals, stakeholders, constraints, assumptions, acceptance criteria.
+  - **`docs/design/architecture.md`** — high-level architecture, components, interfaces/APIs, data model, risks, trade-offs, open questions.
+  - **Decision records** — `docs/design/decision-log/ADR-YYYYMMDD-<slug>.md` per significant decision.
+- Optional but encouraged: `test-plan.md`, `roadmap.md`, diagrams (link sources), and references.
+- Each PR must update relevant design docs when behavior or scope changes.
+- When pre-existing docs exist, **update in place** rather than rewrite; link to sources.
+
+## 21) **Issue & Project Management (AI is allowed)**
+- The AI may create **GitHub Issues**, **labels**, **milestones**, and **Projects** (classic or v2) to track planned work.
+- Issues must reference design docs (section/anchor or ADR) and include: **Problem**, **Acceptance Criteria**, **Design Link**, **Estimate (if any)**, **Labels**.
+- The AI may create missing labels/milestones/projects when reasonable; prefer existing taxonomy.
+- Link PRs to issues (e.g., `Fixes #123`). Don’t assign humans unless asked; using milestones/projects for grouping is preferred.
+
 ---
 
 ### Changelog
-- v1.6.4 — Clarify advice-only scope; define `<BASE_BRANCH>`; prefer Release PR; narrow back-merge scope; approver+label for deviations; optional tooling requirements; canonical vs local tools; consolidate labels.
-- v1.6.3 — Deviation Protocol + Tooling Policy (optional by design).
-- v1.6.2 — Tool-agnostic releases; keep back-merge rule; clarify changelog ownership.
-- v1.6.1 — Document back-merge main→base and changelog ownership.
-- v1.6.0 — Advice-only mode; propose Conventional Commit messages after each deliverable.
-- v1.5.0 — `develop` default + `BASE_BRANCH` override; TODO stubs required.
-- v1.4.0 — Always-download rule; auto-upgrade in chat; auto-sync repos.
-- v1.3.0 — Canonical distribution + tools.
-- v1.2.0 — Repo bootstrap (license confirmation, CONTRIBUTING, labels).
-- v1.1.0 — Robust escaping; auto-labels; non-code parity.
-- v1.0.1 — Deliverables downloadable.
-- v1.0.0 — Initial.
+- v1.7.0 — Add **Requirements & Design Phase** (mandatory before build), **Issue & Project Management** permissions, and place the contract alongside design docs in projects.
+- v1.6.4 — Clarify advice-only scope; define `<BASE_BRANCH>`; prefer Release PR; narrow back-merge scope; approver+label for deviations; optional tooling; canonical vs local tools; labels consolidated.
+- (See repository history for earlier versions.)
