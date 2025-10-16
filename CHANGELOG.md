@@ -4,6 +4,37 @@ All notable changes to this project are documented here. Versions follow tags in
 The project uses Conventional Commits and release-please.
 
 
+## [2.0.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.0.1...ai_engineer_contract-v2.0.0) (2025-10-16)
+
+
+### Features
+
+* **tools:** add --base-branch and --dry-run; unify env knob; prep canonical/local handling for repo_bootstrap ([bdea11c](https://github.com/pvliesdonk/ai_engineer_contract/commit/bdea11cea55d288a82a15ce3c191902a0d90b340))
+* **tools:** add --base-branch and --dry-run; unify env knob; prep canonical/local handling in pr_from_diff ([b8b0b1d](https://github.com/pvliesdonk/ai_engineer_contract/commit/b8b0b1decf93b9c0651b97c42939e8dd17e8b0a5))
+* **tools:** add --base-branch and --dry-run; unify env knob; prep canonical/local handling sync_contract ([ca9fb02](https://github.com/pvliesdonk/ai_engineer_contract/commit/ca9fb02dc6990de6431a46d757a80971956cd5f4))
+* **tools:** add pr_from_diff_TEMPLATE.py v1.1.0 ([c4f30c3](https://github.com/pvliesdonk/ai_engineer_contract/commit/c4f30c33cac56b32eea463a1d2bd3827ded5f087))
+* **tools:** add repo_bootstrap_TEMPLATE.py v1.2.0 ([d9e1960](https://github.com/pvliesdonk/ai_engineer_contract/commit/d9e1960f2c095965e1232b63a0128bb7ddf56090))
+* **tools:** add sync_canonical_contract_and_tools_TEMPLATE.py v1.1.0 ([c4f30c3](https://github.com/pvliesdonk/ai_engineer_contract/commit/c4f30c33cac56b32eea463a1d2bd3827ded5f087))
+* **tools:** pr_from_diff_TEMPLATE.py v1.1.1 — support BASE_BRANCH env override ([67f4980](https://github.com/pvliesdonk/ai_engineer_contract/commit/67f4980c006fb24c7b5ef0d29e3939967d24c464))
+
+
+### Documentation
+
+* **contract:** add robust escaping, label auto-create, non-code parity ([7d56bd4](https://github.com/pvliesdonk/ai_engineer_contract/commit/7d56bd449a67282304d2c7d2a8c01b25155715e5))
+* **contract:** clarify back-merge rule and changelog ownership ([268e771](https://github.com/pvliesdonk/ai_engineer_contract/commit/268e7710a1f6b38fa91b61688cc4d7ebff069515))
+* **contract:** enforce always-download; auto-upgrade in chat; repo sync PRs ([c4f30c3](https://github.com/pvliesdonk/ai_engineer_contract/commit/c4f30c33cac56b32eea463a1d2bd3827ded5f087))
+* **contract:** rename/organize without semantic changes ([8faeb95](https://github.com/pvliesdonk/ai_engineer_contract/commit/8faeb955877fbca30a798271954e5ad7a0e50222))
+* **contract:** set develop as default; add BASE_BRANCH override; require TODO stubs ([67f4980](https://github.com/pvliesdonk/ai_engineer_contract/commit/67f4980c006fb24c7b5ef0d29e3939967d24c464))
+
+
+### Miscellaneous Chores
+
+* prepare GA ([#20](https://github.com/pvliesdonk/ai_engineer_contract/issues/20)) ([4da7b48](https://github.com/pvliesdonk/ai_engineer_contract/commit/4da7b48bcf712e1940ad502140ba2f3a08faa26b))
+* prepare rc1 ([#13](https://github.com/pvliesdonk/ai_engineer_contract/issues/13)) ([986eba1](https://github.com/pvliesdonk/ai_engineer_contract/commit/986eba1a7466767ebe55b99ad29e37fe84a4af20))
+* release ([0f7d570](https://github.com/pvliesdonk/ai_engineer_contract/commit/0f7d5703b4ff7f220fb0c379d077f36a8eaf9d97))
+* release ([3ac8617](https://github.com/pvliesdonk/ai_engineer_contract/commit/3ac8617ac2d44dd71a27bddcf48247fa9564eebf))
+* updated changelog ([5c4e0b8](https://github.com/pvliesdonk/ai_engineer_contract/commit/5c4e0b89a2e29175045e615317d11b08681250b7))
+
 ## [2.0.1](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.0.0...ai_engineer_contract-v2.0.1) (2025-10-16)
 
 ### Documentation
