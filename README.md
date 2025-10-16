@@ -1,32 +1,17 @@
 # ai_engineer_contract
 
 ## 1) Summary
-This repository hosts the **canonical AI × Peter Engineering Contract** and reference tools. The contract standardizes:
-- Branching (Git-Flow with `<BASE_BRANCH>` = `develop` by default; releases on `main`).
-- **Conventional Commits** and PR quality.
-- **Release automation** (tool-agnostic) with a back-merge from `main → <BASE_BRANCH>`.
-- **Deliverables** are downloadable by default; **advice-only** is allowed when explicitly requested.
-- **Deviation Protocol** for exceptions (ask permission with justification & rollback).
-- **Tooling Policy** (optional; bring-your-own allowed if it meets capability requirements).
-- **Requirements & Design Phase** before building, with docs in `docs/design/`.
-- **Issue & Project Management**: the AI can create issues/labels/milestones/projects and must reference design docs.
+Canonical engineering contract for AI × Peter. Key points:
+- **`develop`** is the only development branch. `main` is releases.
+- Git-Flow style PRs; Conventional Commits; release automation (tool-agnostic).
+- Deliverables as downloads; advice-only on request.
+- Design-first: docs in `docs/design/`; KB/wiki in `docs/kb/` with an index.
+- Docs use **date+rev**; releases use **SemVer**.
+- Plan by **Milestones/Release Trains**, reconcile shipped tags in `docs/design/delivery-map.yml`.
+- Self-contained & machine-readable (YAML front matter + `ai/manifest.json`).
 
-👉 Any AI or script landing here should **apply this contract** when a project points to it.
-
-## 2) How to use the contract
-- **In your project repo:**
-  - Keep a copy at **`docs/design/ENGINEERING_CONTRACT.md`** linking back to the canonical version here.
-  - Maintain design docs in `docs/design/` (`requirements.md`, `architecture.md`, ADRs).
-- **Optionally sync** latest contract/tools via the helper (opens a PR against `<BASE_BRANCH>`):
-  ```bash
-  # default (targets 'develop')
-  python tools/sync_canonical_contract_and_tools_TEMPLATE.py
-
-  # if your repo uses 'development' instead of 'develop'
-  BASE_BRANCH=development python tools/sync_canonical_contract_and_tools_TEMPLATE.py
-  ```
-- **Open work as issues** linked to design sections/ADRs; group with labels, milestones, and a Project.
-- **PRs**: branch from `origin/<BASE_BRANCH>`, rebase before opening, squash-merge with a Conventional Commit title, and include **Summary / Why / Changes / Validation / Risk & Rollback / Notes**.
-- **Releases**: use a Release Automation Tool (e.g., release-please, semantic-release). After merging the release PR to `main`, back-merge into `<BASE_BRANCH>`.
-
-See the full contract in `ENGINEERING_CONTRACT.md` for authoritative details.
+## 2) How to use
+- Keep this contract at **`docs/design/ENGINEERING_CONTRACT.md`** and link back to canonical repo.
+- For KB/wiki work, store content under **`docs/kb/`** with an `index.md` and structured links.
+- Open issues for work items; link PRs to issues; reference design docs where applicable.
+- Use the script templates in `tools/` when operating in **SCM-C** (chat-only). In SCM-A, the AI can commit/push/PR directly (merge to `develop` needs chat approval; releases to `main` are manual).
