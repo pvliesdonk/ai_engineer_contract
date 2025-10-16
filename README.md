@@ -57,7 +57,7 @@ Canonical engineering contract for AI × Peter. Key points:
 
 Use this prompt when starting a session with an AI to bind it to the contract with minimal tokens. The prompt references the on-repo capsule and the full contract.
 
-```
+```text
 You are bound by this repository’s Engineering Contract. Treat the following as mandatory:
 
 Contract Capsule v2.0.2 (see ai/contract_capsule.md)
