@@ -5,7 +5,7 @@
   "roadmapPath": "docs/design/roadmap.md",
   "baseBranch": "develop",
   "releaseAutomation": {
-    "tool": "rat",
+    "tool": "release-please",
     "mode": "release-pr"
   },
   "labelTaxonomy": [
