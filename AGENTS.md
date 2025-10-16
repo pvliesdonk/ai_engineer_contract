@@ -23,6 +23,7 @@ Scope: Entire repository.
 
 - Use `git` and `gh` for operations (clone/branch/push/PR/labels). Prefer release‑please for versioning and changelog.
 - Linting: Markdown lint runs in CI (markdownlint‑cli2). Follow `.markdownlint-cli2.yaml` and `.markdownlintignore`.
+- Markdown formatting: satisfy common rules locally to avoid CI failures — add a blank line before and after headings (MD022) and before/after lists (MD032).
 - Validate Python helper scripts by byte‑compiling them (`python -m py_compile tools/*.py`) when applicable.
 
 ## Labels & Management
