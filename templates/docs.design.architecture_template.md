@@ -1,5 +1,10 @@
 # Architecture
 
+## Intent
+- Use this template to document system architecture under `docs/design/`.
+- Keep it tool-agnostic; include YAML front matter with `doc_type: architecture` and `doc_version: YYYY-MM-DD.rN`.
+- Commit diagram sources (Mermaid/PlantUML/Graphviz) alongside the doc.
+
 ## Context
 - Problem statement
 - Constraints
