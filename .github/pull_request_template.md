@@ -2,6 +2,6 @@
 # Why
 # Changes
 # Validation
-# Design Link
+# Design Link (if design-impacting)
 # Risk & Rollback
 # Notes

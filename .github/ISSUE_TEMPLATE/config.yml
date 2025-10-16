@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Read the Engineering Contract
+    url: ../docs/design/ENGINEERING_CONTRACT.md
+    about: Please read the contract before filing issues.
