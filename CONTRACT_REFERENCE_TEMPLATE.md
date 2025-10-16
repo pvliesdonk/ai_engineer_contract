@@ -1,6 +1,7 @@
 # Engineering Contract (Canonical Reference)
 
 ## Intent
+
 - Use this template when a repository references the canonical contract instead of duplicating it.
 - Keep the repository’s automation tool-agnostic where possible; describe repo-specific tooling separately.
 - Provide easy paths to sync the canonical contract and tools when desired.

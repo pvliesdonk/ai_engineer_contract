@@ -5,6 +5,7 @@ title: Knowledge Base Index
 ---
 
 ## Intent
+
 - This section is an example knowledge base structure that implements the contract’s guidance.
 - Some links may be placeholders; stub pages are provided to illustrate organization.
 
@@ -13,6 +14,7 @@ title: Knowledge Base Index
 Welcome! Start here. Organize topics with stable slugs and headings.
 
 ## Sections
+
 - [Getting Started](./getting-started.md)
 - [Architecture Deep Dives](./architecture/README.md)
 - [How-Tos](./howtos/README.md)
