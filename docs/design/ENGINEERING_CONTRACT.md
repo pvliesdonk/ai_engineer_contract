@@ -71,7 +71,14 @@
 - After every deliverable, propose 1–3 candidate Conventional Commit messages and a PR title.
 
 ## 16) Changelog & Release Notes
+
 - The **RAT** is the source of truth for release notes and `CHANGELOG.md` (if enabled). Don’t edit generated changelog entries by hand. If no RAT, PRs must update `CHANGELOG.md`.
+- Documentation as a core deliverable (SemVer semantics): when documentation is part of the shipped product (e.g., this contract), use Conventional Commits to drive SemVer:
+  - Breaking normative change: `docs(contract)!: …` and include a `BREAKING CHANGE:` footer; release = MAJOR.
+  - New normative capability/allowance: `feat(contract): …`; release = MINOR.
+  - Clarification or non-normative bug fix: `fix(contract): …`; release = PATCH.
+  - Editorial/formatting only: `docs(contract): …` (may not trigger a release). If you need a tag, add a `Release-As: x.y.z` footer.
+  - Note: Some release tools hide `docs:` by default and do not bump versions for it. Prefer `feat:`/`fix:` when the change is normative and should bump.
 
 ## 17) Deviation Protocol
 - Request permission to deviate: include reason, scope/impact, alternatives, rollback. Approval by **Peter** or a **CODEOWNER**. Label `deviation-approved`; document in the PR and changelog if user-visible.
