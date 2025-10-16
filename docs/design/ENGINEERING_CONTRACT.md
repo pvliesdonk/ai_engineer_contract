@@ -47,11 +47,14 @@
 
 ## 10) New Repo Bootstrap
 - Confirm LICENSE (usually **MIT**). Create `LICENSE`, `README.md`, `CONTRIBUTING.md`, minimal `.gitignore`. Create/push `main` and `develop`. Ensure default labels exist.
+- Set up minimal CI immediately (e.g., markdown lint, script byte-compile, basic format/type checks) so the very first commits are validated.
+ - AI selects CI tools based on the stack being introduced. At minimum include lint/format checks and a smoke run where applicable.
 
 ## 11) Canonical Source & Distribution
 - Canonical repo: `pvliesdonk/ai_engineer_contract`. Keep the contract in consumer projects at `docs/design/ENGINEERING_CONTRACT.md` with a link back here.
 - Include the latest contract and (optionally) `tools/` in new repos. You may sync updates via PR.
 - Include a root `AGENTS.md` that summarizes how AI agents should operate in the repo (see section 24).
+ - Dual role note: This repository both hosts the generic, tool-agnostic contract and implements it for itself. Consumers should follow the contract text; workflows here (e.g., release-please) are examples, not mandates.
 
 ## 12) Labels
 - Commits/PRs should have labels. Scripts **auto-create** missing labels via `gh label create`.
@@ -78,6 +81,7 @@
   - `requirements.md`, `architecture.md`, `decision-log/ADR-YYYYMMDD-<slug>.md`
   - Optional: `test-plan.md`, `roadmap.md`, diagrams (commit sources).
 - Update docs with each PR that changes behavior/scope.
+- Never eagerly start programming. Complete requirements and design first and get explicit go-ahead before implementation.
 
 ## 19) Issue & Project Management (AI allowed)
 - The AI may create issues/labels/milestones/projects. **Design-impacting work must link to design docs**, otherwise label `needs-design-ref` and add the doc before implementation.
@@ -86,11 +90,26 @@
 ## 20) Planning vs Releases
 - Plan by **Milestones** (`M1`, `M2`, …) and optional **Release Trains** (`RYYYY.MM`, `RYYYYQn`), not by future SemVer.
 - Record the *actual* shipped tags **after** release in `docs/design/delivery-map.yml`.
+ - Develop milestones on dedicated branches. Pull issues into the milestone branch via PRs. Avoid parallel work on potentially conflicting issues; if multiple issues converge on the same milestone, chain branches (base follow-up branches on the predecessor) to minimize conflict.
 
 ## 21) Branching Discipline
 - All work happens on a topic branch off `origin/develop` (`feat/<slug>`, `fix/<slug>`, etc.).
 - Keep **many small commits**. Squash-merge into `develop`.
 - Keep branches **rebased** on `origin/develop`. Do **not** delete topic branches until the change is released and back-merged (`main` → `develop`).
+ - Prefer serializing changes that touch the same codepaths to reduce merge conflicts. When concurrency is required, coordinate base branches to create a linear chain.
+
+## 25) CI Tool Selection Guidance (AI)
+
+- The AI chooses minimal CI appropriate to the stack introduced by the change. Examples (non-exhaustive):
+  - Python: ruff/flake8, black (or equivalent formatter) in check mode, `python -m py_compile tools/*.py`, and `pytest -q` smoke if tests exist.
+  - Node/TypeScript: eslint, prettier check, `tsc --noEmit` if TypeScript, and `npm test -s` smoke where present.
+  - Shell: shellcheck.
+  - Docs-only: markdownlint.
+  - Go: golangci-lint, `go test ./...`.
+  - Rust: `cargo fmt -- --check`, `cargo clippy -- -D warnings`, `cargo test`.
+  - Terraform: `terraform fmt -check`, `terraform validate` (with init).
+  - Dockerfiles: hadolint.
+- Integrate CI as early as possible (bootstrap or first meaningful PR). Keep checks fast and additive over time.
 
 ## 22) Merge-Readiness Suggestions
 - **PR → develop** is ready when: branch rebased; CI green; design link (or `needs-design-ref` + follow-up); complete PR body; Conventional Commit title; no blocking labels; changelog handled (RAT/manual).
@@ -102,6 +121,8 @@
 
 ### Changelog
 - v2.0.0 — Remove `<BASE_BRANCH>`; standardize on **`develop`**. Tighten wording, clarify KB/wiki usage, and update tools/checklists to match.
+- Unreleased — Add pre-implementation discipline, milestone branch guidance, and early CI setup recommendation.
+ - Unreleased — Clarify dual-role hosting vs instance; add AI CI tool selection guidance.
 
 ## 24) AGENTS.md Convention
 
@@ -112,4 +133,3 @@
   - Direct instructions from a human (issue/PR/chat) take precedence over `AGENTS.md` files.
 - Content should cover: base branch (`develop`), PR/merge rules, Conventional Commits, release process (`develop → main` via release automation + backmerge), docs locations (`docs/design`, `docs/kb`), labels, CI expectations, and security/secrets policy.
 - Keep `AGENTS.md` short, actionable, and consistent with this contract. Link to `docs/design/ENGINEERING_CONTRACT.md` for details.
-

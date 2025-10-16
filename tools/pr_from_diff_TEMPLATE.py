@@ -1,6 +1,6 @@
-\
 #!/usr/bin/env python3
-# Single-file PR generator (diff- or blob-based) targeting 'develop'.
+# Intent: Template script to open a PR against 'develop' using a provided diff or file blobs.
+# Tool-agnostic by design; expects authenticated gh + git when used as-is.
 from __future__ import annotations
 import argparse, base64, json, os, re, subprocess, sys
 from pathlib import Path

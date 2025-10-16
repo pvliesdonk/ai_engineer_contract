@@ -2,10 +2,11 @@
   "contractPath": "docs/design/ENGINEERING_CONTRACT.md",
   "designRoot": "docs/design",
   "kbRoot": "docs/kb",
+  "role": "canonical-host",
   "roadmapPath": "docs/design/roadmap.md",
   "baseBranch": "develop",
   "releaseAutomation": {
-    "tool": "rat",
+    "tool": "release-please",
     "mode": "release-pr"
   },
   "labelTaxonomy": [
