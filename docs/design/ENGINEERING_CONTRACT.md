@@ -51,6 +51,7 @@
 ## 11) Canonical Source & Distribution
 - Canonical repo: `pvliesdonk/ai_engineer_contract`. Keep the contract in consumer projects at `docs/design/ENGINEERING_CONTRACT.md` with a link back here.
 - Include the latest contract and (optionally) `tools/` in new repos. You may sync updates via PR.
+- Include a root `AGENTS.md` that summarizes how AI agents should operate in the repo (see section 24).
 
 ## 12) Labels
 - Commits/PRs should have labels. Scripts **auto-create** missing labels via `gh label create`.
@@ -101,4 +102,14 @@
 
 ### Changelog
 - v2.0.0 — Remove `<BASE_BRANCH>`; standardize on **`develop`**. Tighten wording, clarify KB/wiki usage, and update tools/checklists to match.
+
+## 24) AGENTS.md Convention
+
+- Add an `AGENTS.md` at the repository root to define agent behavior for this codebase.
+- Scope and precedence:
+  - A root `AGENTS.md` applies to the entire repository tree.
+  - A nested `AGENTS.md` applies to its subtree and overrides rules from higher levels when in conflict.
+  - Direct instructions from a human (issue/PR/chat) take precedence over `AGENTS.md` files.
+- Content should cover: base branch (`develop`), PR/merge rules, Conventional Commits, release process (`develop → main` via release automation + backmerge), docs locations (`docs/design`, `docs/kb`), labels, CI expectations, and security/secrets policy.
+- Keep `AGENTS.md` short, actionable, and consistent with this contract. Link to `docs/design/ENGINEERING_CONTRACT.md` for details.
 
