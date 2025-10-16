@@ -5,6 +5,32 @@ The project uses Conventional Commits and release-please.
 
 
 
+## [2.0.0-rc.1](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v1.6.4...ai_engineer_contract-v2.0.0-rc.1) (2025-10-16)
+
+
+### Miscellaneous Chores
+
+* prepare rc1 ([#13](https://github.com/pvliesdonk/ai_engineer_contract/issues/13)) ([986eba1](https://github.com/pvliesdonk/ai_engineer_contract/commit/986eba1a7466767ebe55b99ad29e37fe84a4af20))
+
+## [1.6.4](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v1.6.0...ai_engineer_contract-v1.6.4) (2025-10-15)
+
+
+### Features
+
+* **tools:** add --base-branch and --dry-run; unify env knob; prep canonical/local handling for repo_bootstrap ([bdea11c](https://github.com/pvliesdonk/ai_engineer_contract/commit/bdea11cea55d288a82a15ce3c191902a0d90b340))
+* **tools:** add --base-branch and --dry-run; unify env knob; prep canonical/local handling in pr_from_diff ([b8b0b1d](https://github.com/pvliesdonk/ai_engineer_contract/commit/b8b0b1decf93b9c0651b97c42939e8dd17e8b0a5))
+* **tools:** add --base-branch and --dry-run; unify env knob; prep canonical/local handling sync_contract ([ca9fb02](https://github.com/pvliesdonk/ai_engineer_contract/commit/ca9fb02dc6990de6431a46d757a80971956cd5f4))
+
+
+### Documentation
+
+* **contract:** clarify back-merge rule and changelog ownership ([268e771](https://github.com/pvliesdonk/ai_engineer_contract/commit/268e7710a1f6b38fa91b61688cc4d7ebff069515))
+
+
+### Miscellaneous Chores
+
+* release ([0f7d570](https://github.com/pvliesdonk/ai_engineer_contract/commit/0f7d5703b4ff7f220fb0c379d077f36a8eaf9d97))
+
 ## [1.6.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v1.5.0...ai_engineer_contract-v1.6.0) (2025-10-14)
 
 

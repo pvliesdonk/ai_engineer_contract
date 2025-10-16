@@ -1,0 +1,30 @@
+{
+  "contractPath": "docs/design/ENGINEERING_CONTRACT.md",
+  "designRoot": "docs/design",
+  "kbRoot": "docs/kb",
+  "roadmapPath": "docs/design/roadmap.md",
+  "baseBranch": "develop",
+  "releaseAutomation": {
+    "tool": "rat",
+    "mode": "release-pr"
+  },
+  "labelTaxonomy": [
+    "from-ai",
+    "needs-review",
+    "docs",
+    "chore",
+    "security",
+    "blocked",
+    "planning",
+    "needs-design-ref",
+    "breaking-change",
+    "content",
+    "design",
+    "asset",
+    "deviation-approved"
+  ],
+  "docVersioning": {
+    "scheme": "date+rev",
+    "field": "doc_version"
+  }
+}

@@ -1,0 +1,24 @@
+name: Task / chore / CI
+description: Work that does not change product design (docs, chores, CI, refactors).
+labels: ["chore"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What needs doing?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: Bullet points of outcomes that must be true
+      placeholder: "- …"
+    validations:
+      required: true
+  - type: textarea
+    id: refs
+    attributes:
+      label: References
+      description: Optional links to PRs, logs, or secondary docs
