@@ -3,6 +3,7 @@
 ## 1) Summary
 
 Canonical engineering contract for AI × Peter. Key points:
+
 - **`develop`** is the only development branch. `main` is releases.
 - Git-Flow style PRs; Conventional Commits; release automation (tool-agnostic).
 - Deliverables as downloads; advice-only on request.
