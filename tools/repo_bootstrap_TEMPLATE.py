@@ -1,6 +1,6 @@
-\
 #!/usr/bin/env python3
-# Bootstrap a new repo with main + develop, labels, LICENSE/README/CONTRIBUTING; tool-agnostic.
+# Intent: Template script to bootstrap a new repository with main + develop branches,
+# labels, LICENSE/README/CONTRIBUTING. Tool-agnostic; adapt to your org's defaults.
 from __future__ import annotations
 import subprocess, sys, json
 from pathlib import Path

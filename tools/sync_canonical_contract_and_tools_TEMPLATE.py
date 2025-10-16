@@ -1,6 +1,6 @@
-\
 #!/usr/bin/env python3
-# Open a PR that syncs the canonical ENGINEERING_CONTRACT.md and optional tools into this repo (base = develop).
+# Intent: Template to open a PR that syncs the canonical ENGINEERING_CONTRACT.md
+# and optional tools into this repo (base = develop). Tool-agnostic.
 from __future__ import annotations
 import argparse, base64, subprocess, sys
 from pathlib import Path
