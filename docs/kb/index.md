@@ -4,6 +4,10 @@ doc_version: 2025-01-01.r1
 title: Knowledge Base Index
 ---
 
+## Intent
+- This section is an example knowledge base structure that implements the contract’s guidance.
+- Some links may be placeholders; stub pages are provided to illustrate organization.
+
 # Knowledge Base
 
 Welcome! Start here. Organize topics with stable slugs and headings.
