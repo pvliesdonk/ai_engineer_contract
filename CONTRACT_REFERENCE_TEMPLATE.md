@@ -27,3 +27,32 @@ BASE_BRANCH=development python tools/sync_canonical_contract_and_tools_TEMPLATE.
 ```
 
 This opens a PR replacing `ENGINEERING_CONTRACT.md` and `tools/*` with the latest versions from the canonical repository.
+
+### Advanced (pin to a release tag, include tools/capsule)
+
+```bash
+# Pin to the latest canonical release tag (default), dry-run only
+python tools/sync_canonical_contract_and_tools_TEMPLATE.py --dry-run
+
+# Pin to a specific ref/tag and include canonical tool templates
+python tools/sync_canonical_contract_and_tools_TEMPLATE.py --source-ref ai_engineer_contract-v2.0.2 --include-tools
+
+# Also sync the minimal AI capsule (optional)
+python tools/sync_canonical_contract_and_tools_TEMPLATE.py --include-capsule
+
+# Force overwrite if a different synced sha is detected in the target (use with care)
+python tools/sync_canonical_contract_and_tools_TEMPLATE.py --force
+```
+
+Configuration file (optional): `ai/sync.config.json`
+
+```json
+{
+  "sourceRepo": "pvliesdonk/ai_engineer_contract",
+  "sourceRef": "latest",
+  "syncContract": true,
+  "syncTools": ["*_TEMPLATE.py"],
+  "includeCapsule": false,
+  "exclude": []
+}
+```
