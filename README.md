@@ -12,6 +12,14 @@ Canonical engineering contract for AI × Peter. Key points:
 - Plan by **Milestones/Release Trains**, reconcile shipped tags in `docs/design/delivery-map.yml`.
 - Self-contained & machine-readable (YAML front matter + `ai/manifest.json`).
 
+## Dual Role: Contract + Host Repo
+
+- This repository serves two purposes:
+  - Generic, tool-agnostic engineering contract distribution (consumed by other repos).
+  - A specific instance implementing the contract for this repository (e.g., release-please workflows).
+- Consumers should treat `docs/design/ENGINEERING_CONTRACT.md` as generic guidance; the workflows here are examples of one valid implementation, not mandates.
+- Contract remains tool-agnostic (refers to a Release Automation Tool, RAT); this repo instance uses release-please.
+
 ## 2) How to use
 
 - Keep this contract at **`docs/design/ENGINEERING_CONTRACT.md`** and link back to the canonical repo.
@@ -43,3 +51,4 @@ Canonical engineering contract for AI × Peter. Key points:
 - Markdown lint via `markdownlint-cli2` using `.markdownlint-cli2.yaml` and `.markdownlintignore`.
 - Python helper scripts byte-compiled in CI.
 - Release automation via release-please; backmerge workflow keeps `develop` in sync after releases.
+ - Early CI: When bootstrapping a new repo, set up minimal CI immediately (lint/format, byte-compile, and language-appropriate smoke checks). The AI should select CI tools based on the generated stack (see contract for guidance).

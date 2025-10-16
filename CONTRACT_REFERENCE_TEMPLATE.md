@@ -1,6 +1,10 @@
 # Engineering Contract (Canonical Reference)
 
-This repository intentionally **references** the canonical contract instead of duplicating it.
+## Intent
+
+- Use this template when a repository references the canonical contract instead of duplicating it.
+- Keep the repository’s automation tool-agnostic where possible; describe repo-specific tooling separately.
+- Provide easy paths to sync the canonical contract and tools when desired.
 
 - Canonical contract: [docs/design/ENGINEERING_CONTRACT.md](https://github.com/pvliesdonk/ai_engineer_contract/blob/main/docs/design/ENGINEERING_CONTRACT.md)
 - Tools: [tools/](https://github.com/pvliesdonk/ai_engineer_contract/tree/main/tools)
