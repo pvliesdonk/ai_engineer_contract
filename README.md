@@ -1,6 +1,7 @@
 # ai_engineer_contract
 
 ## 1) Summary
+
 Canonical engineering contract for AI × Peter. Key points:
 - **`develop`** is the only development branch. `main` is releases.
 - Git-Flow style PRs; Conventional Commits; release automation (tool-agnostic).
@@ -11,6 +12,7 @@ Canonical engineering contract for AI × Peter. Key points:
 - Self-contained & machine-readable (YAML front matter + `ai/manifest.json`).
 
 ## 2) How to use
+
 - Keep this contract at **`docs/design/ENGINEERING_CONTRACT.md`** and link back to canonical repo.
 - For KB/wiki work, store content under **`docs/kb/`** with an `index.md` and structured links.
 - Open issues for work items; link PRs to issues; reference design docs where applicable.
