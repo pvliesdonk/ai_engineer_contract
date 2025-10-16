@@ -1,0 +1,44 @@
+name: example-rust-ci
+
+# Intent: Example Rust CI workflow. This file is under 'examples/' to avoid
+# running by default. To enable, move it to '.github/workflows/rust-ci.yml'.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  rust-ci:
+    name: Rust Format/Clippy/Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect Rust project
+        id: detect
+        run: |
+          if [ -f Cargo.toml ] || ls */Cargo.toml >/dev/null 2>&1; then
+            echo "has_rust=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_rust=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions-rs/toolchain@v1
+        if: steps.detect.outputs.has_rust == 'true'
+        with:
+          toolchain: stable
+          override: true
+          profile: minimal
+          components: rustfmt, clippy
+
+      - name: Format check
+        if: steps.detect.outputs.has_rust == 'true'
+        run: cargo fmt --all -- --check
+
+      - name: Clippy (deny warnings)
+        if: steps.detect.outputs.has_rust == 'true'
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Test
+        if: steps.detect.outputs.has_rust == 'true'
+        run: cargo test --all --quiet
+
