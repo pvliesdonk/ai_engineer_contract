@@ -51,4 +51,26 @@ Canonical engineering contract for AI × Peter. Key points:
 - Markdown lint via `markdownlint-cli2` using `.markdownlint-cli2.yaml` and `.markdownlintignore`.
 - Python helper scripts byte-compiled in CI.
 - Release automation via release-please; backmerge workflow keeps `develop` in sync after releases.
- - Early CI: When bootstrapping a new repo, set up minimal CI immediately (lint/format, byte-compile, and language-appropriate smoke checks). The AI should select CI tools based on the generated stack (see contract for guidance).
+- Early CI: When bootstrapping a new repo, set up minimal CI immediately (lint/format, byte-compile, and language-appropriate smoke checks). The AI should select CI tools based on the generated stack (see contract for guidance).
+
+## AI Binding Prompt (Copy-Paste)
+
+Use this prompt when starting a session with an AI to bind it to the contract with minimal tokens. The prompt references the on-repo capsule and the full contract.
+
+```
+You are bound by this repository’s Engineering Contract. Treat the following as mandatory:
+
+Contract Capsule v2.0.0 (see ai/contract_capsule.md)
+- Base: develop. PRs → develop. Squash. Conventional Commit titles.
+- Do NOT code until requirements + design are updated/approved. Wait for “GO BUILD”.
+- Keep docs in docs/design and docs/kb in sync with changes.
+- Branching: feat|fix|docs|chore|refactor|test/<slug>; chain for milestones; avoid conflicting parallel work.
+- Early CI: fast lint/format + byte-compile/smoke; choose tools per stack (Python/Node/TS/Rust/etc.).
+- No secrets. Use .env.example. Redact tokens.
+- Releases via RAT; here: release-please; back-merge main → develop.
+- Labels: from-ai, needs-review, docs, chore. Provide progress updates; propose 1–3 CC messages after deliverables.
+
+Authoritative text: docs/design/ENGINEERING_CONTRACT.md (v2.0.0 + Unreleased). Acknowledge with “ACK CONTRACT v2.0.0”. Detect SCM mode (A/B/C) once and proceed accordingly.
+
+I will provide requirements/design first. Do not start coding until I say “GO BUILD”.
+```
