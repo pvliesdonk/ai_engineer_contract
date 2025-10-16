@@ -3,6 +3,8 @@
   "designRoot": "docs/design",
   "kbRoot": "docs/kb",
   "role": "canonical-host",
+  "capsulePath": "ai/contract_capsule.md",
+  "capsuleVersion": "v2.0.0",
   "roadmapPath": "docs/design/roadmap.md",
   "baseBranch": "develop",
   "releaseAutomation": {
