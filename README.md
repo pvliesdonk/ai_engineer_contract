@@ -53,6 +53,10 @@ Canonical engineering contract for AI × Peter. Key points:
 - Release automation via release-please; backmerge workflow keeps `develop` in sync after releases.
 - Early CI: When bootstrapping a new repo, set up minimal CI immediately (lint/format, byte-compile, and language-appropriate smoke checks). The AI should select CI tools based on the generated stack (see contract for guidance).
 
+## Feedback & Questions
+
+- Have questions or suggestions about the contract? Please open an issue on the canonical repo with labels `feedback` and/or `question`, and reference the relevant section (e.g., `docs/design/ENGINEERING_CONTRACT.md:Heading`).
+
 ## AI Binding Prompt (Copy-Paste)
 
 Use this prompt when starting a session with an AI to bind it to the contract with minimal tokens. The prompt references the on-repo capsule and the full contract.
