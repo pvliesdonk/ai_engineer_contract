@@ -55,6 +55,12 @@
 - Keep the comment updated if the approach changes; link the PR and reference the comment in the PR body.
 - Use labels from the taxonomy (e.g., `from-ai`, `needs-review`, `docs`, `chore`).
 
+### Feedback & Questions
+
+- AIs and consumers SHOULD open issues on the canonical repository for ambiguities, questions, or improvement proposals.
+- Use labels: `feedback` and `question` (and others as appropriate).
+- Include concrete references (file path + heading) and a minimal reproduction or example PR where helpful.
+
 ## 9) Programming-Adjacent Projects (Docs/KBase/Wiki)
 
 - The same PR/review flow applies. Validation adapts (link checkers, Markdownlint, doc build if any).

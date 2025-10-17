@@ -42,6 +42,8 @@ Scope: Entire repository.
 - Ensure these labels exist (auto‑create if missing): `from-ai`, `needs-review`, `docs`, `chore`, `security`, `blocked`, `planning`, `needs-design-ref`, `breaking-change`, `content`, `design`, `asset`, `deviation-approved`.
 - Link PRs to issues; reference relevant design docs. If design impact exists and the doc isn’t ready, add `needs-design-ref` and follow up with the doc.
 
+- Feedback channel: when ambiguity is detected in the canonical contract or tools, open an issue on the canonical repo with labels `feedback`/`question`, referencing the exact doc section.
+
 ## Security & Secrets
 
 - Do not commit secrets. Use `.env.example`; real secrets must remain out of the repo/CI logs. Redact tokens in PRs and outputs.
