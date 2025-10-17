@@ -188,3 +188,16 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
   - Direct instructions from a human (issue/PR/chat) take precedence over `AGENTS.md` files.
 - Content should cover: base branch (`develop`), PR/merge rules, Conventional Commits, release process (`develop → main` via release automation + backmerge), docs locations (`docs/design`, `docs/kb`), labels, CI expectations, and security/secrets policy.
 - Keep `AGENTS.md` short, actionable, and consistent with this contract. Link to `docs/design/ENGINEERING_CONTRACT.md` for details.
+
+## 26) CI Phase Gates
+
+- Enforce the repository phase using a root `phase.yaml` and CI path allowlists.
+  - `phase: requirements|design|plan|build`
+  - Optional `allowed_paths:` overrides default allowlists per phase.
+- Defaults:
+  - requirements/design: `docs/**`, `AGENTS.md`, `ai/**`, `phase.yaml`
+  - plan: above + `.github/**`
+  - build: unrestricted
+- CI fails PRs that touch disallowed paths for the current phase.
+- Temporary deviation: add the `deviation-approved` label and include rationale and rollback in the PR body.
+- Advancing the phase is an auditable one-file change: update `phase.yaml` in a separate PR.

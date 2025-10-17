@@ -26,6 +26,12 @@ Scope: Entire repository.
 
 ## Tooling & CI
 
+### Phase Gates
+
+- The repo uses `phase.yaml` and `.github/workflows/phase-gate.yml` to enforce path allowlists per phase.
+- Defaults: requirements/design allow `docs/**`, `AGENTS.md`, `ai/**`, `phase.yaml`; plan adds `.github/**`; build is unrestricted.
+- To advance phases, submit a separate PR updating `phase.yaml`. For temporary deviations, add `deviation-approved` with rationale.
+
 - Use `git` and `gh` for operations (clone/branch/push/PR/labels). Prefer release‑please for versioning and changelog.
 - Linting: Markdown lint runs in CI (markdownlint‑cli2). Follow `.markdownlint-cli2.yaml` and `.markdownlintignore`.
 - Markdown formatting: satisfy common rules locally to avoid CI failures — add a blank line before and after headings (MD022) and before/after lists (MD032).
