@@ -38,6 +38,14 @@
 ## 8) Communication
 - Concise progress logs; deterministic scripts; pin versions where sensible.
 
+### Issue Hygiene & Proposal Tracking
+- Always open issues for next steps and discrete work items; link related design/KB sections.
+- When picking up an issue, add a top comment titled “Proposed solution” that summarizes:
+  - Scope and approach, validation/acceptance criteria, risks/rollback, and labels.
+  - Any contract/process implications (e.g., phase vs harness alignment) and planned CI checks.
+- Keep the comment updated if the approach changes; link the PR and reference the comment in the PR body.
+- Use labels from the taxonomy (e.g., `from-ai`, `needs-review`, `docs`, `chore`).
+
 ## 9) Programming-Adjacent Projects (Docs/KBase/Wiki)
 - The same PR/review flow applies. Validation adapts (link checkers, Markdownlint, doc build if any).
 - **Docs live under `docs/`**. For knowledge bases, prefer **`docs/kb/`** with an **`index.md`** (front matter + TOC).
