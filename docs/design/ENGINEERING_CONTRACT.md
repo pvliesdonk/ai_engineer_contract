@@ -78,8 +78,18 @@
 
 ## 12) Labels
 
-- Commits/PRs should have labels. Scripts **auto-create** missing labels via `gh label create`.
-- Suggested labels: `from-ai`, `needs-review`, `docs`, `chore`, `security`, `blocked`, `planning`, `needs-design-ref`, `breaking-change`, `content`, `design`, `asset`, `deviation-approved`.
+- Commits/PRs should have labels. Agents SHALL auto-create missing labels at PR time.
+- Scripts SHOULD create missing labels via `gh label create` (idempotent) and MAY add repo-specific labels like `ci`, `feedback`.
+- Suggested labels: `from-ai`, `needs-review`, `docs`, `chore`, `security`, `blocked`, `planning`, `needs-design-ref`, `breaking-change`, `content`, `design`, `asset`, `deviation-approved`, `feedback`.
+
+Example (idempotent) label creation
+
+```bash
+gh label create from-ai --color 5319e7 --description "Auto-created label - from-ai" --force
+gh label create needs-review --color d93f0b --description "Auto-created label - needs-review" --force
+gh label create ci --color 5319e7 --description "Auto-created label - ci" --force
+gh label create feedback --color 1d76db --description "Feedback and questions" --force
+```
 
 ## 13) Auto-Upgrade in Chat & Repos
 
