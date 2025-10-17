@@ -1,0 +1,6 @@
+phase: design
+allowed_paths:
+  - docs/**
+  - AGENTS.md
+  - ai/**
+  - phase.yaml
