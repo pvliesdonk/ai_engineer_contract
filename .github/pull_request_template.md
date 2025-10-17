@@ -11,3 +11,8 @@
 # Risk & Rollback
 
 # Notes
+
+## Linked Issues
+
+- Fixes #<issue-id>
+- Refs #<issue-id>
