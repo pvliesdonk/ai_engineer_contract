@@ -29,4 +29,3 @@ markdownlint-cli2 --fix "**/*.md" "!**/node_modules/**" "!**/.git/**"
 - Ensure `.markdownlint-cli2.yaml` and `.markdownlintignore` are present and match CI.
 - Quote globs to avoid shell expansion issues.
 - Consider pre-commit hooks for markdownlint to shorten feedback loops.
-
