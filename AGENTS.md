@@ -59,6 +59,7 @@ Scope: Entire repository.
 - Deviations from this policy require approval and the `deviation-approved` label; document rationale and rollback plan.
 
 ### Issue Hygiene & Proposal Tracking
+
 - Open issues for next steps and link to relevant design/KB sections.
 - When working an issue, post a “Proposed solution” comment summarizing scope, approach, acceptance criteria, risks/rollback, and CI considerations (e.g., phase vs harness alignment). Update it if plans change and reference it from the PR body.
 

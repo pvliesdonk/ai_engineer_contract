@@ -54,4 +54,3 @@ python tools/sync_canonical_contract_and_tools_TEMPLATE.py --force
   "exclude": []
 }
 ```
-

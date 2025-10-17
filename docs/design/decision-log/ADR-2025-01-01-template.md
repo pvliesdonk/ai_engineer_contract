@@ -5,5 +5,6 @@ status: Proposed
 ---
 
 ## Intent
+
 - Example ADR template file living under `docs/design/decision-log/` to illustrate structure.
 - Replace placeholders with real context/decision/consequences when creating an ADR.
