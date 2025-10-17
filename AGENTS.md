@@ -37,6 +37,11 @@ Scope: Entire repository.
   - Docs-only: markdownlint.
   - Add others as needed (Go: golangci-lint; Rust: cargo fmt/clippy/test; Terraform: fmt/validate; Docker: hadolint).
 
+### Phase Gates
+- The repo uses `phase.yaml` and `.github/workflows/phase-gate.yml` to enforce path allowlists per phase.
+- Defaults: requirements/design allow `docs/**`, `AGENTS.md`, `ai/**`, `phase.yaml`; plan adds `.github/**`; build is unrestricted.
+- To advance phases, submit a separate PR updating `phase.yaml`. For temporary deviations, add `deviation-approved` with rationale.
+
 ## Labels & Management
 
 - Ensure these labels exist (auto‑create if missing): `from-ai`, `needs-review`, `docs`, `chore`, `security`, `blocked`, `planning`, `needs-design-ref`, `breaking-change`, `content`, `design`, `asset`, `deviation-approved`.
