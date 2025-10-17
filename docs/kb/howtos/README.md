@@ -8,3 +8,6 @@ title: How-Tos
 
 This is a placeholder section for task-oriented documentation.
 Add guides for setup, workflows, and common operations.
+
+- [Phase Gates: advance and troubleshoot](./phase-gates.md)
+- [Typical CI issues (markdownlint) and fixes](./typical-ci-issues.md)
