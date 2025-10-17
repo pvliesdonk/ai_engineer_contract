@@ -1,4 +1,5 @@
 # Release Readiness Checklist (develop → main)
+
 - [ ] Meaningful changes since last tag.
 - [ ] CI green on `develop`.
 - [ ] Release notes (RAT output or curated) ready.
