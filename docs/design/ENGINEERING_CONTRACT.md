@@ -132,6 +132,26 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - Update docs with each PR that changes behavior/scope.
 - Never eagerly start programming. Complete requirements and design first and get explicit go-ahead before implementation.
 
+### Pre-Build Allowed Work
+
+- **Allowed:** Documentation authoring (requirements, architecture, roadmap, KB), repository administration (labels, milestones, Projects), issue triage, decision logging, and contract-aligned planning artifacts.
+- **Disallowed:** Creating/modifying source code, tests, generated assets, or build/CI scripts; setting up scaffolding that belongs in the implementation phase; introducing binaries or vendored content.
+- **Pro tip:** When in doubt, treat anything that would change runtime behavior or executable code as “wait until GO BUILD”.
+- Add this checklist to any PR that lands before “GO BUILD” (all boxes must be ✅):
+
+```text
+- [ ] Only docs/planning/ops work (no code/tests/assets)
+- [ ] Linked requirements/design docs updated
+- [ ] Decisions captured in docs/design/DECISIONS.md (and YAML if used)
+```
+
+### Decision Elicitation Protocol & Logging
+
+- Ask **one decision at a time**, presenting 1–3 options and clearly marking the recommended default.
+- Confirm the choice, rationale, and owner, then log the outcome in `docs/design/DECISIONS.md`.
+- Optionally create machine-readable entries in `docs/design/decisions/*.yaml` mirroring the log table.
+- Reference decision IDs from issues/PRs and keep the log in sync with design updates and approvals.
+
 ## 19) Issue & Project Management (AI allowed)
 
 - The AI may create issues/labels/milestones/projects. **Design-impacting work must link to design docs**, otherwise label `needs-design-ref` and add the doc before implementation.
@@ -186,8 +206,50 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
   - A root `AGENTS.md` applies to the entire repository tree.
   - A nested `AGENTS.md` applies to its subtree and overrides rules from higher levels when in conflict.
   - Direct instructions from a human (issue/PR/chat) take precedence over `AGENTS.md` files.
-- Content should cover: base branch (`develop`), PR/merge rules, Conventional Commits, release process (`develop → main` via release automation + backmerge), docs locations (`docs/design`, `docs/kb`), labels, CI expectations, and security/secrets policy.
+- **Mandatory sections** (use these headings verbatim):
+  - `## Contract Link & Scope`
+  - `## Planning Sources`
+  - `## GO BUILD Gate`
+  - `## Branching, PRs & Labels`
+  - `## CI & Tooling`
+  - `## Security & Secrets`
+  - `## Session Modes (SCM-A/B/C)`
+- Each section must describe: base branch (`develop`), PR/merge rules (squash into `develop`), Conventional Commit titles, release automation, documentation roots (`docs/design`, `docs/kb`), required labels, CI expectations, secrets handling, and how to escalate/confirm SCM modes.
 - Keep `AGENTS.md` short, actionable, and consistent with this contract. Link to `docs/design/ENGINEERING_CONTRACT.md` for details.
+- Provide the following snippet (update repository-specific details only):
+
+````markdown
+# AGENTS.md — AI Agent Instructions (repo-wide)
+
+## Contract Link & Scope
+- Authoritative contract: [docs/design/ENGINEERING_CONTRACT.md](docs/design/ENGINEERING_CONTRACT.md)
+- Base branch: `develop`; PRs target `develop`; releases via release-please on `main`.
+
+## Planning Sources
+- Requirements/design live in `docs/design/`; knowledge base in `docs/kb/`.
+- Keep `docs/design/requirements.md`, `architecture.md`, `DECISIONS.md`, and ADRs current before coding.
+
+## GO BUILD Gate
+- Do not modify code/tests/assets before explicit “GO BUILD”.
+- Pre-build PRs include the checklist from the contract; focus on docs/planning/ops only.
+
+## Branching, PRs & Labels
+- Branch naming: `feat|fix|docs|chore|refactor|test/<slug>`.
+- Rebase on `origin/develop`; squash-merge after approval.
+- Apply `from-ai`, `needs-review`, plus scope labels (`docs`, `chore`, etc.) as appropriate.
+
+## CI & Tooling
+- Run markdownlint for docs-only changes; follow contract guidance for additional stacks.
+- Keep `ai/manifest.json` and CI workflows in sync with repo capabilities.
+
+## Security & Secrets
+- Never commit secrets; use `.env.example`.
+- Redact tokens in logs/PRs; coordinate with maintainers for secret rotation.
+
+## Session Modes (SCM-A/B/C)
+- Detect mode once per session; confirm capabilities with the human if unclear.
+- SCM-A may push/PR (merge only with approval); SCM-B offers instructions; SCM-C uses templates in `tools/`.
+````
 
 ## 26) CI Phase Gates
 
