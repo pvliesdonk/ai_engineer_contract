@@ -4,6 +4,21 @@ All notable changes to this project are documented here. Versions follow tags in
 The project uses Conventional Commits and release-please.
 
 
+## [2.1.1](https://github.com/pvliesdonk/ai_engineer_contract/compare/a5cf015...ai_engineer_contract-v2.1.1) (2025-10-19)
+
+
+### Documentation
+
+* **contract:** codify release quality bar, SCM guidance, decision logging, and issue hygiene; require auto-creating missing labels ([#66](https://github.com/pvliesdonk/ai_engineer_contract/issues/66)) ([#65](https://github.com/pvliesdonk/ai_engineer_contract/issues/65)) ([bb27e60](https://github.com/pvliesdonk/ai_engineer_contract/commit/bb27e60bf9480b7073f597b3b6e92a9ab710b945)) ([3558552](https://github.com/pvliesdonk/ai_engineer_contract/commit/355855262c6e4396183b1615bf6b70069297c6ac)) ([81a1b22](https://github.com/pvliesdonk/ai_engineer_contract/commit/81a1b222de096889aa78fd3ca23554b672002b75))
+* **contract:** add feedback/questions channel and remind PR authors to link issues ([969decd](https://github.com/pvliesdonk/ai_engineer_contract/commit/969decd5baff83d9d0286b6ffa5ab709593f96a7)) ([d1d46e9](https://github.com/pvliesdonk/ai_engineer_contract/commit/d1d46e9d2cdf6447fc0088dfb28ac4b7c7c2df7f))
+* **kb:** document GitHub Projects integration and common CI fixes ([#64](https://github.com/pvliesdonk/ai_engineer_contract/issues/64)) ([6b1e4f8](https://github.com/pvliesdonk/ai_engineer_contract/commit/6b1e4f8b13b9ef0eb54de9cbeb4ad5e21d025ec1))
+* **repo:** apply markdownlint auto-fixes across docs ([d94d84a](https://github.com/pvliesdonk/ai_engineer_contract/commit/d94d84a6a49333d60aa754db82728792cbdc4116))
+
+### Continuous Integration
+
+* add phase gate workflow driven by `phase.yaml` ([d6e72f5](https://github.com/pvliesdonk/ai_engineer_contract/commit/d6e72f5e77f82db532adc04d5150b958241ecb1f))
+
+
 ## [2.1.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.0.1...ai_engineer_contract-v2.1.0) (2025-10-16)
 
 

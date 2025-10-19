@@ -3,4 +3,9 @@ allowed_paths:
   - docs/**
   - AGENTS.md
   - ai/**
+  - .github/workflows/**
+  - CHANGELOG.md
+  - README.md
+  - CONTRACT_REFERENCE_TEMPLATE.md
+  - ai/check_version_refs.py
   - phase.yaml
