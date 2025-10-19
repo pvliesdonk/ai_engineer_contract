@@ -249,7 +249,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 
 ## CI & Tooling
 - Run markdownlint for docs-only changes; follow contract guidance for additional stacks.
-- Keep `ai/manifest.json` and CI workflows in sync with repo capabilities. Run release-please manually until automation is restored (issue #74).
+- Keep `ai/manifest.json` and CI workflows in sync with repo capabilities. release-please runs automatically on `main`; use workflow dispatch for manual retries if needed.
 
 ## Security & Secrets
 - Never commit secrets; use `.env.example`.
