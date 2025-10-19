@@ -13,14 +13,23 @@ import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Optional, Tuple
 
 
-# Target repo (edit these for your repo when using this template)
-OWNER = "pvliesdonk"
-REPO = "<REPO_NAME_HERE>"
+def manifest_base_branch() -> str:
+    manifest = Path("ai/manifest.json")
+    if manifest.exists():
+        try:
+            data = json.loads(manifest.read_text(encoding="utf-8"))
+            branch = data.get("baseBranch")
+            if branch:
+                return branch
+        except json.JSONDecodeError:
+            pass
+    return "develop"
 
-# Base branch for the target repo (honor env override for portability)
-BASE_BRANCH = os.getenv("BASE_BRANCH", "develop")
+
+DEFAULT_BASE_BRANCH = os.getenv("BASE_BRANCH", manifest_base_branch())
 
 # Canonical source (defaults; may be overridden by ai/sync.config.json or CLI)
 SRC_OWNER = "pvliesdonk"
@@ -38,6 +47,60 @@ PR_BODY_TMPL = (
 
 SCRATCH = Path("/mnt/scratch")
 TS = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+
+
+def parse_slug(url: str) -> Optional[Tuple[str, str]]:
+    value = url.strip()
+    if not value:
+        return None
+    if value.endswith(".git"):
+        value = value[:-4]
+    if value.startswith("git@"):
+        _, _, tail = value.partition(":")
+        value = tail
+    elif "://" in value:
+        _, _, tail = value.partition("github.com/")
+        value = tail
+    if "/" not in value:
+        return None
+    owner, repo = value.split("/", 1)
+    if not owner or not repo:
+        return None
+    return owner, repo
+
+
+def detect_target_slug(cli_owner: Optional[str], cli_repo: Optional[str]) -> Tuple[str, str]:
+    if cli_owner and cli_repo:
+        return cli_owner, cli_repo
+
+    gh_proc = subprocess.run(
+        ["gh", "repo", "view", "--json", "nameWithOwner"],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if gh_proc.returncode == 0 and gh_proc.stdout:
+        try:
+            data = json.loads(gh_proc.stdout)
+            slug = data.get("nameWithOwner")
+            if slug and "/" in slug:
+                owner, repo = slug.split("/", 1)
+                return owner, repo
+        except json.JSONDecodeError:
+            pass
+
+    git_proc = subprocess.run(
+        ["git", "config", "--get", "remote.origin.url"],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if git_proc.returncode == 0:
+        parsed = parse_slug(git_proc.stdout or "")
+        if parsed:
+            return parsed
+
+    sys.exit("ERROR: unable to determine target owner/repo. Provide --owner/--repo or configure git/gh.")
 
 
 def run(cmd: list[str], cwd: str | None = None, check: bool = True) -> subprocess.CompletedProcess:
@@ -97,8 +160,9 @@ def parse_synced_sha(text: str) -> str | None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Sync canonical contract and optional tools")
-    ap.add_argument("--owner", default=OWNER, help="Target owner")
-    ap.add_argument("--repo", default=REPO, help="Target repo")
+    ap.add_argument("--owner", help="Target owner (auto-detected from gh/git when omitted)")
+    ap.add_argument("--repo", help="Target repo (auto-detected when omitted)")
+    ap.add_argument("--base-branch", default=DEFAULT_BASE_BRANCH, help="Base branch for the target repo (default: %(default)s)")
     ap.add_argument("--include-tools", action="store_true", help="Also sync canonical *TEMPLATE* tools")
     ap.add_argument("--include-capsule", action="store_true", help="Also sync ai/contract_capsule.md")
     ap.add_argument("--source-ref", default=None, help="Override source ref (tag/sha/branch). Default comes from config or 'latest'")
@@ -110,6 +174,9 @@ def main() -> None:
     for t in ("git", "gh"):
         if run([t, "--version"], check=False).returncode != 0:
             sys.exit(f"ERROR: {t} not found")
+
+    owner, repo = detect_target_slug(a.owner, a.repo)
+    base_branch = a.base_branch
 
     # Load config if present
     cfg_path = Path("ai/sync.config.json")
@@ -135,11 +202,11 @@ def main() -> None:
     include_capsule = a.include_capsule or bool(cfg.get("includeCapsule", False))
 
     # Prepare workspace
-    work = SCRATCH / f"sync_{a.owner}_{a.repo}_{TS}"
+    work = SCRATCH / f"sync_{owner}_{repo}_{TS}"
     work.mkdir(parents=True, exist_ok=True)
-    if run(["gh", "repo", "clone", f"{a.owner}/{a.repo}", str(work)], check=False).returncode != 0:
+    if run(["gh", "repo", "clone", f"{owner}/{repo}", str(work)], check=False).returncode != 0:
         sys.exit("ERROR: clone failed (check repo permissions)")
-    for c in (["git", "fetch", "--all", "--prune"], ["git", "checkout", BASE_BRANCH], ["git", "reset", "--hard", f"origin/{BASE_BRANCH}"]):
+    for c in (["git", "fetch", "--all", "--prune"], ["git", "checkout", base_branch], ["git", "reset", "--hard", f"origin/{base_branch}"]):
         if run(c, cwd=str(work), check=False).returncode != 0:
             sys.exit("ERROR: git prep failed")
 
@@ -224,7 +291,8 @@ def main() -> None:
 
     if a.dry_run:
         print("DRY RUN")
-        print("Base branch:", BASE_BRANCH)
+        print("Target:", f"{owner}/{repo}")
+        print("Base branch:", base_branch)
         print("Source:", f"{c_owner}/{c_repo}@{ref}")
         if not planned:
             print("No changes.")
@@ -238,7 +306,8 @@ def main() -> None:
         sys.exit("no changes to sync")
 
     # Commit and PR
-    if run(["git", "commit", "-m", PR_TITLE], cwd=str(work), check=False).returncode != 0:
+    commit_title = PR_TITLE.format(ref=ref)
+    if run(["git", "commit", "-m", commit_title], cwd=str(work), check=False).returncode != 0:
         sys.exit("ERROR: commit failed")
     if run(["git", "push", "-u", "origin", branch], cwd=str(work), check=False).returncode != 0:
         sys.exit("ERROR: push failed")
@@ -257,11 +326,11 @@ def main() -> None:
         "pr",
         "create",
         "--base",
-        BASE_BRANCH,
+        base_branch,
         "--head",
         branch,
         "--title",
-        PR_TITLE.format(ref=ref),
+        commit_title,
         "--body",
         body,
     ]
