@@ -4,6 +4,18 @@ All notable changes to this project are documented here. Versions follow tags in
 The project uses Conventional Commits and release-please.
 
 
+## [2.1.2](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.1.1...ai_engineer_contract-v2.1.2) (2025-10-19)
+
+
+### Documentation
+
+* align contract/capsule/docs with v2.1.2 and note release checklist ([#68](https://github.com/pvliesdonk/ai_engineer_contract/issues/68)) ([#69](https://github.com/pvliesdonk/ai_engineer_contract/issues/69))
+
+### Continuous Integration
+
+* guard contract version references in CI ([#68](https://github.com/pvliesdonk/ai_engineer_contract/issues/68))
+
+
 ## [2.1.1](https://github.com/pvliesdonk/ai_engineer_contract/compare/a5cf015...ai_engineer_contract-v2.1.1) (2025-10-19)
 
 
