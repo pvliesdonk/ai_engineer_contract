@@ -1,3 +1,4 @@
+# Instance workflow for pvliesdonk/ai_engineer_contract; adjust for your repository.
 name: phase-gate
 on:
   pull_request:

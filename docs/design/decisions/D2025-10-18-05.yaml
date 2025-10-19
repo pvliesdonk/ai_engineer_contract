@@ -1,0 +1,16 @@
+id: D2025-10-18-05
+date: 2025-10-18
+prompt: How should SCM modes be detected and constrained?
+options:
+  - label: Informal checks
+    summary: Let agents decide case-by-case without formal guidance.
+  - label: Decision tree + permissions matrix
+    summary: Publish detection flow, allowed ops, and confirmation triggers.
+choice: Decision tree + permissions matrix
+rationale: Provides consistent expectations and protects sensitive operations per issue #47.
+references:
+  issues:
+    - 47
+  documents:
+    - docs/design/ENGINEERING_CONTRACT.md
+    - docs/kb/howtos/scm-mode-decision-tree.md

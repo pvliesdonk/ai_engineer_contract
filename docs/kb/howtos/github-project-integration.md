@@ -39,7 +39,7 @@ gh project field-create 3 --owner pvliesdonk --name "Priority" --data-type SINGL
   --single-select-options "P0,P1,P2"
 ```
 
-2. Update the default `Status` field to include a `Review` stage (GraphQL required; CLI cannot edit options directly):
+1. Update the default `Status` field to include a `Review` stage (GraphQL required; CLI cannot edit options directly):
 
 ```bash
 gh api graphql -F fieldId=<statusFieldId> \
@@ -64,7 +64,7 @@ for n in 42 43 44 45 46 47 49 55 57; do
 done
 ```
 
-2. Set `Section`, `Priority`, and `Status` (example for Issue #42):
+1. Set `Section`, `Priority`, and `Status` (example for Issue #42):
 
 ```bash
 gh project item-edit --id <itemId> --project-id PVT_kwHOAVKYys4BF4Sp \
