@@ -69,7 +69,7 @@ You are bound by this repository’s Engineering Contract. Treat the following a
 
 Contract Capsule v2.1.2 (see ai/contract_capsule.md)
 - Base: develop. PRs → develop. Squash. Conventional Commit titles.
-- Do NOT code until requirements + design are updated/approved. Wait for “GO BUILD”.
+- Finish requirements + design, record a Plan issue, then move into build (reference it with `Fixes #ID`).
 - Keep docs in docs/design and docs/kb in sync with changes.
 - Branching: feat|fix|docs|chore|refactor|test/<slug>; chain for milestones; avoid conflicting parallel work.
 - Early CI: fast lint/format + byte-compile/smoke; choose tools per stack (Python/Node/TS/Rust/etc.).
@@ -79,5 +79,5 @@ Contract Capsule v2.1.2 (see ai/contract_capsule.md)
 
 Authoritative text: docs/design/ENGINEERING_CONTRACT.md (v2.1.2). Acknowledge with “ACK CONTRACT v2.1.2”. Detect SCM mode (A/B/C) once and proceed accordingly.
 
-I will provide requirements/design first. Do not start coding until I say “GO BUILD”.
+I will provide requirements/design first. Create or update a Plan issue before coding and confirm with me if the plan needs to change.
 ```

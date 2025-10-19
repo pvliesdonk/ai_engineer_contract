@@ -1,5 +1,5 @@
 doc_type: requirements
-doc_version: 2025-10-18.r2
+doc_version: 2025-10-19.r1
 ---
 
 Governance & Operator Guidance (P0)
@@ -13,7 +13,7 @@ This iteration focuses on codifying the operator guardrails that repeatedly surf
 R1 — Pre-Build Discipline
 ------------------------
 
-- Define explicit categories of work that are allowed before a human issues “GO BUILD”.
+- Define explicit categories of work that are allowed before a Plan issue unlocks implementation.
 - List disallowed activities (e.g., creating code files, scaffolding tests) with illustrative examples.
 - Add a lightweight PR checklist agents must include when submitting pre-build changes.
 - Ensure guidance lives in `docs/design/ENGINEERING_CONTRACT.md` and references the checklist.
@@ -31,7 +31,7 @@ R3 — AGENTS.md Baseline
 -----------------------
 
 - Elevate AGENTS.md content requirements into the engineering contract.
-- Mandate sections covering contract link, planning docs, GO BUILD gate, labels/CI, secrets policy,
+- Mandate sections covering contract link, planning docs, plan/build gate, labels/CI, secrets policy,
   and session-mode handling.
 - Supply a snippet/template agents can copy when authoring repository-specific instructions.
 - Update this repository’s root `AGENTS.md` to comply with the new baseline.

@@ -14,11 +14,11 @@ This file defines how coding agents should operate in this repository. A root `A
 - Knowledge base: `docs/kb/` with `index.md`; keep KB pages synced with shipped behavior.
 - Maintain `docs/design/DECISIONS.md` (and optional `docs/design/decisions/*.yaml`) as decisions are made.
 
-## GO BUILD Gate
+## Plan & Build Gate
 
-- No code/tests/assets before an explicit “GO BUILD”.
-- Pre-build changes are limited to docs/planning/ops work; follow the contract’s allowed/disallowed list.
-- Include the pre-build checklist in every pre-build PR and check all boxes before requesting review.
+- Before editing code/tests/config/docs, record a Plan issue and reference it in the PR (`Fixes #ID` / `Refs #ID`).
+- Pre-build changes are limited to docs/planning/ops work; follow the contract’s allowed/disallowed list and keep the checklist in PRs.
+- Use the `plan-exempt` label only for maintainer-approved micro-fixes and document the rationale in the PR/issue.
 
 ## Branching, PRs & Labels
 
@@ -31,7 +31,7 @@ This file defines how coding agents should operate in this repository. A root `A
 - Phase gates: `phase.yaml` + `.github/workflows/phase-gate.yml` gate paths per phase (requirements/design/docs-only). Advance phases via dedicated PRs; use `deviation-approved` only with documented rationale.
 - Docs-only changes: run markdownlint; Python helpers must pass `python -m py_compile tools/*.py`.
 - Add stack-appropriate lint/test checks when generating new code (see contract for tool selection guidance).
-- Prefer `gh` for repo automation; run release-please manually via workflow dispatch until automation is restored (see docs/issues/2025-10-19-release-please-automation.md).
+- Prefer `gh` for repo automation; run release-please manually via workflow dispatch until automation is restored (see issue #74).
 
 ## Security & Secrets
 

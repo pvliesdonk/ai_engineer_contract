@@ -1,6 +1,6 @@
 id: D2025-10-18-01
 date: 2025-10-18
-prompt: What work may agents perform before receiving “GO BUILD”?
+prompt: What work may agents perform before implementation begins?
 options:
   - label: Allowed pre-build work
     summary: Docs-only edits, repository admin (labels/projects), planning artifacts.
