@@ -4,6 +4,14 @@ All notable changes to this project are documented here. Versions follow tags in
 The project uses Conventional Commits and release-please.
 
 
+## [2.2.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.1.2...ai_engineer_contract-v2.2.0) (2025-10-19)
+
+
+### Features
+
+* enforce plan gating before build ([a6e6b42](https://github.com/pvliesdonk/ai_engineer_contract/commit/a6e6b426041f6c91264d7fc747323146c0d0f2c8))
+* enforce plan issue before build ([3131414](https://github.com/pvliesdonk/ai_engineer_contract/commit/313141487c8a7acf283759efefb26d02c2a6bfec))
+
 ## [2.1.2](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.1.1...ai_engineer_contract-v2.1.2) (2025-10-19)
 
 
