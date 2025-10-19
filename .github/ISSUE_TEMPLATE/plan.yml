@@ -1,0 +1,61 @@
+name: Plan
+description: Capture scope, acceptance criteria, and validation before entering build.
+title: "[Plan] <short description>"
+labels:
+  - plan
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to record the plan or tracking issue that unlocks build work. Link related design docs, list acceptance criteria, and outline validation.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: What change or problem are we planning to address?
+      placeholder: e.g., Guard contract version references in CI
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & Links
+      description: Relevant design docs, ADRs, KB pages, or previous issues.
+      placeholder: |
+        - docs/design/...
+        - ADR-2025-10-18-01
+        - Related issue(s)
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: Enumerate observable outcomes that confirm the plan is complete.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation / Test Strategy
+      description: How will we verify the change (manual steps, scripts, CI jobs)?
+      placeholder: |
+        - `python ...`
+        - `gh workflow run ...`
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks & Mitigations
+      description: Known risks, edge cases, or rollback steps.
+      placeholder: |
+        - Risk:
+        - Mitigation:
+  - type: textarea
+    id: plan_status
+    attributes:
+      label: Plan / Status Notes
+      description: Status updates, handoffs, or approvals. Link to GitHub Project items if used.
+      placeholder: |
+        - Added to Project: <link>
+        - Ready for build

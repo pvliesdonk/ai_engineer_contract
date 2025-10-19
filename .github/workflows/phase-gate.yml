@@ -67,26 +67,40 @@ jobs:
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
           echo "Changed: $CHANGED"
 
-      - name: Check override label
+      - name: Check override labels
         id: labels
         run: |
-          HAS=$(jq -r '[.pull_request.labels[].name] | index("deviation-approved") // empty' "$GITHUB_EVENT_PATH")
-          if [ -n "$HAS" ]; then
-            echo "override=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "override=false" >> "$GITHUB_OUTPUT"
-          fi
+          python - <<'PY'
+          import json, os
+          event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
+          labels = {lbl["name"] for lbl in event.get("pull_request", {}).get("labels", [])}
+          override = "true" if "deviation-approved" in labels else "false"
+          plan_exempt = "true" if "plan-exempt" in labels else "false"
+          out = os.environ.get("GITHUB_OUTPUT")
+          if out:
+            with open(out, "a", encoding="utf-8") as fh:
+              fh.write(f"override={override}\n")
+              fh.write(f"plan_exempt={plan_exempt}\n")
+          print("Labels:", ", ".join(sorted(labels)) or "<none>")
+          PY
 
       - name: Enforce phase gate
         if: steps.labels.outputs.override != 'true'
         env:
           ALLOWED_PATTERNS: ${{ steps.phase.outputs.allowed }}
           CHANGED_FILES: ${{ steps.diff.outputs.changed }}
-        run: |
+          PHASE: ${{ steps.phase.outputs.phase }}
+          PLAN_EXEMPT: ${{ steps.labels.outputs.plan_exempt }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          run: |
           python - <<'PY'
-          import fnmatch, json, os, sys
+          import fnmatch, json, os, re, sys, urllib.error, urllib.request
+
           allowed = json.loads(os.environ.get("ALLOWED_PATTERNS", "[]"))
           changed = os.environ.get("CHANGED_FILES", "").split()
+          phase = os.environ.get("PHASE", "").strip().lower()
+          plan_exempt = os.environ.get("PLAN_EXEMPT", "").lower() == "true"
           if not changed:
             print("No changed files detected vs base; passing")
             sys.exit(0)
@@ -98,5 +112,35 @@ jobs:
             for f in disallowed:
               print("-", f)
             sys.exit(1)
+          if phase == "build" and not plan_exempt:
+            event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
+            body = event.get("pull_request", {}).get("body") or ""
+            issue_ids = sorted({m.group(1) for m in re.finditer(r"#(\d+)", body)})
+            if not issue_ids:
+              print("Build phase requires a referenced Plan issue (e.g. `Fixes #123`).")
+              print("Add the reference or apply the `plan-exempt` label with justification.")
+              sys.exit(1)
+            token = os.environ.get("GITHUB_TOKEN", "")
+            repo = os.environ.get("GITHUB_REPOSITORY", "")
+            if "/" not in repo:
+              print("Unable to determine repository name for issue validation.")
+              sys.exit(1)
+            owner, name = repo.split("/", 1)
+            headers = {"Accept": "application/vnd.github+json"}
+            if token:
+              headers["Authorization"] = f"Bearer {token}"
+            for issue_id in issue_ids:
+              url = f"https://api.github.com/repos/{owner}/{name}/issues/{issue_id}"
+              req = urllib.request.Request(url, headers=headers)
+              try:
+                with urllib.request.urlopen(req) as resp:
+                  if resp.status != 200:
+                    raise urllib.error.HTTPError(url, resp.status, resp.reason, resp.headers, None)
+              except urllib.error.HTTPError as exc:
+                print(f"Failed to load issue #{issue_id}: {exc}")
+                sys.exit(1)
+            print("Plan issues referenced:", ", ".join(f"#{i}" for i in issue_ids))
+          elif phase == "build" and plan_exempt:
+            print("Build phase running under plan-exempt override.")
           print("Phase gate passed")
           PY

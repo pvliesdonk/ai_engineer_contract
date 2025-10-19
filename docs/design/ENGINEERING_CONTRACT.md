@@ -140,11 +140,13 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 
 - **Allowed:** Documentation authoring (requirements, architecture, roadmap, KB), repository administration (labels, milestones, Projects), issue triage, decision logging, and contract-aligned planning artifacts.
 - **Disallowed:** Creating/modifying source code, tests, generated assets, or build/CI scripts; setting up scaffolding that belongs in the implementation phase; introducing binaries or vendored content.
-- **Pro tip:** When in doubt, treat anything that would change runtime behavior or executable code as “wait until GO BUILD”.
-- Add this checklist to any PR that lands before “GO BUILD” (all boxes must be ✅):
+- **Pro tip:** Anything that changes runtime behavior belongs behind a tracked Plan issue before editing code/tests/config/docs.
+- Before leaving the planning phase, open or update a Plan issue (`.github/ISSUE_TEMPLATE/plan.yml`) that captures acceptance criteria and validation. Reference that issue in subsequent PRs (`Fixes #ID`). Use the `plan-exempt` label only for maintainer-approved micro-fixes and document the rationale.
+- Add this checklist to any PR that lands before implementation work begins (all boxes must be ✅):
 
 ```text
 - [ ] Only docs/planning/ops work (no code/tests/assets)
+- [ ] Plan issue (#ID) drafted/updated with acceptance criteria & validation
 - [ ] Linked requirements/design docs updated
 - [ ] Decisions captured in docs/design/DECISIONS.md (and YAML if used)
 ```
@@ -215,7 +217,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - **Mandatory sections** (use these headings verbatim):
   - `## Contract Link & Scope`
   - `## Planning Sources`
-  - `## GO BUILD Gate`
+  - `## Plan & Build Gate`
   - `## Branching, PRs & Labels`
   - `## CI & Tooling`
   - `## Security & Secrets`
@@ -235,9 +237,10 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - Requirements/design live in `docs/design/`; knowledge base in `docs/kb/`.
 - Keep `docs/design/requirements.md`, `architecture.md`, `DECISIONS.md`, and ADRs current before coding.
 
-## GO BUILD Gate
-- Do not modify code/tests/assets before explicit “GO BUILD”.
-- Pre-build PRs include the checklist from the contract; focus on docs/planning/ops only.
+## Plan & Build Gate
+- Build work requires a referenced Plan issue (`Fixes #ID` / `Refs #ID`) unless the PR carries `plan-exempt`.
+- Pre-build PRs follow the contract checklist; focus on docs/planning/ops only.
+- Update the Plan issue when scope or acceptance criteria change.
 
 ## Branching, PRs & Labels
 - Branch naming: `feat|fix|docs|chore|refactor|test/<slug>`.
@@ -246,7 +249,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 
 ## CI & Tooling
 - Run markdownlint for docs-only changes; follow contract guidance for additional stacks.
-- Keep `ai/manifest.json` and CI workflows in sync with repo capabilities.
+- Keep `ai/manifest.json` and CI workflows in sync with repo capabilities. release-please runs automatically on `main`; use workflow dispatch for manual retries if needed.
 
 ## Security & Secrets
 - Never commit secrets; use `.env.example`.

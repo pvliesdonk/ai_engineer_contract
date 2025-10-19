@@ -3,6 +3,7 @@
 - [ ] Branch rebased on `origin/develop`.
 - [ ] CI green (lint/type/tests/build/docs).
 - [ ] Design link present (requirements/architecture/ADR) **or** `needs-design-ref` label + follow-up issue.
+- [ ] Plan issue referenced (`Fixes #ID`) or PR labeled `plan-exempt`.
 - [ ] PR body filled; Conventional Commit title.
 - [ ] No blocking labels or pending change requests.
 - [ ] Changelog handled (RAT or manual entry).
