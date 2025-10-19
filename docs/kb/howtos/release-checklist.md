@@ -9,8 +9,8 @@ title: Release Checklist
 Use this checklist before promoting a release PR or cutting a tag with release-please.
 
 1. **Confirm release automation is ready**
-   - GitHub secret `RELEASE_PLEASE_TOKEN` should contain a PAT or App token with `contents:write`.
-   - The workflow `release-please` triggers automatically on pushes to `main`; keep `workflow_dispatch` as a manual rerun path if needed.
+   - `RELEASE_PLEASE_TOKEN` should point to a PAT/App token with repo write access (a classic PAT with the `repo` scope works best).
+   - The `release-please` workflow runs automatically on pushes to `main`; keep `workflow_dispatch` available for manual retries if needed.
 
 2. **Validate contract version references**
 
