@@ -24,10 +24,14 @@
 
 ## 4) Session Capability Modes (SCM)
 
-- **SCM-A — Full-Stack Agent:** direct access to code, `git`, `gh`, runtimes, and tokens. Do everything automatically (branches, commits, PRs, labels, issues, projects). Merge into **`develop`** after explicit chat approval. **Releases on `main` are always manual** (human presses the button).
-- **SCM-B — IDE Co-Driver:** can edit files but cannot push. Provide ready-to-run scripts/patches and precise commands. Track readiness and tell the human when to merge or open release PRs.
-- **SCM-C — Chat-Only Operator:** minimal environment. Use **single-file Python templates** in `tools/` to open PRs. Optimize for copy-pasteable steps and UI click-paths.
-- Detect mode once per session; ask **once** if uncertain. Mode can be changed on request.
+- **SCM-A — Full-Stack Agent:** direct access to code, `git`, `gh`, runtimes, and tokens. Do everything automatically (branches, commits, PRs, labels, issues, projects). Merge into **`develop`** after explicit chat approval. **Releases on `main` are always manual** (human presses the button). Allowed ops include pushing branches, running CI, creating repos/projects, and editing secrets (with approval).
+- **SCM-B — IDE Co-Driver:** can edit files but cannot push. Provide ready-to-run scripts/patches and precise commands. Track readiness and tell the human when to merge or open release PRs. Allowed ops: local edits, diff generation, command suggestions, documentation updates. Disallowed: pushing, creating repos, mutating secrets.
+- **SCM-C — Chat-Only Operator:** minimal environment. Use **single-file Python templates** in `tools/` to open PRs. Optimize for copy-pasteable steps and UI click-paths. Allowed ops: requirements gathering, design updates, instructions, lightweight docs. Disallowed: any direct filesystem or git changes.
+- Detect mode once per session following this flow:
+  1. **Auto-detect** capabilities (check git push access, filesystem access, `gh` auth). If unclear, ask the human to confirm the mode.
+  2. **Confirm** before performing privileged actions (creating repos, changing default branches, toggling visibility).
+  3. **Log** any mode switch in the conversation and in the PR body if it impacts work.
+- Use the decision tree in `docs/kb/howtos/scm-mode-decision-tree.md` before running operations that require elevated access (e.g., `gh repo create`, secret updates).
 
 ## 5) Artifact Delivery
 
@@ -263,3 +267,34 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - CI fails PRs that touch disallowed paths for the current phase.
 - Temporary deviation: add the `deviation-approved` label and include rationale and rollback in the PR body.
 - Advancing the phase is an auditable one-file change: update `phase.yaml` in a separate PR.
+
+## 27) Quality Bar Enforcement
+
+- Maintain a Quality Bar linter that checks:
+  - Front matter title matches first H1.
+  - Required status fields are present.
+  - No placeholder-only sections remain (e.g., bare “TODO” headings).
+  - Document links resolve (use a link checker).
+  - Citations include identifiers and page spans when quoting physical sources.
+- Adoption cadence:
+  1. Wire the linter locally; run in `warn-only` mode in CI during requirements/design phases.
+  2. Promote to blocking once the repository reaches `phase: build`.
+- Document the chosen implementation (Python/Node) and share remediation guidance in CI output.
+- Reference: `docs/kb/howtos/quality-bar-linter.md`.
+
+## 28) IP Rights & Attestation
+
+- Every repository MUST include an `IP_DISCLAIMER.md` (or equivalent) with the rights attestation template from `docs/kb/howtos/ip-disclaimer.md`.
+- Contributors must state whether extended quotations are allowed and under which licence/terms.
+- Citations require source identifiers:
+  - Physical media: include page spans (e.g., “pp. 12–15”).
+  - Online sources: include permalink + retrieval date.
+- Catalog third-party assets with licence metadata and attribution text.
+- Escalate novel IP questions to the policy contact listed in the disclaimer before merging.
+
+## 29) Dual-Role Transparency
+
+- Distinguish canonical vs instance assets as described in `docs/kb/dual-role.md`.
+- Annotate instance-only workflows and automation with header comments clarifying scope.
+- Keep canonical templates (`tools/*_TEMPLATE.py`, design templates) free of repository-specific defaults; place instance-specific automation under `tools/local/` or equivalent.
+- Update the README and knowledge base when new instance-specific workflows or scripts are introduced.

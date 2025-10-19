@@ -1,4 +1,5 @@
 # .github/workflows/python-scripts-smoke.yml
+# Instance workflow for pvliesdonk/ai_engineer_contract; adjust for your repository.
 name: python-scripts-smoke
 on: [pull_request, push]
 jobs:

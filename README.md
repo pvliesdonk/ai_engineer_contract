@@ -18,7 +18,8 @@ Canonical engineering contract for AI × Peter. Key points:
   - Generic, tool-agnostic engineering contract distribution (consumed by other repos).
   - A specific instance implementing the contract for this repository (e.g., release-please workflows).
 - Consumers should treat `docs/design/ENGINEERING_CONTRACT.md` as generic guidance; the workflows here are examples of one valid implementation, not mandates.
-- Contract remains tool-agnostic (refers to a Release Automation Tool, RAT); this repo instance uses release-please.
+- See [Dual Role – Canonical vs Instance Assets](docs/kb/dual-role.md) for a mapping of distributable vs instance-only files.
+- Contract remains tool-agnostic (refers to a Release Automation Tool, RAT); this repo instance uses release-please with instance workflows annotated accordingly.
 
 ## 2) How to use
 
@@ -26,6 +27,8 @@ Canonical engineering contract for AI × Peter. Key points:
 - For KB/wiki work, store content under **`docs/kb/`** with an `index.md` and structured links.
 - Open issues for work items; link PRs to issues; reference design docs where applicable.
 - Use the script templates in `tools/` when operating in **SCM-C** (chat-only). In SCM-A, the AI can commit/push/PR directly (merge to `develop` needs chat approval; releases to `main` are manual).
+- Tool templates auto-detect the current repo slug via `gh`/`git`; pass `--owner/--repo` if you need to operate against another fork.
+- Refer to [IP Disclaimer & Rights Attestation Template](docs/kb/howtos/ip-disclaimer.md) when adding third-party or quoted material.
 
 ## 3) Agents.md
 

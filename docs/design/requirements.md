@@ -1,5 +1,5 @@
 doc_type: requirements
-doc_version: 2025-10-18.r1
+doc_version: 2025-10-18.r2
 ---
 
 Governance & Operator Guidance (P0)
@@ -35,3 +35,34 @@ R3 — AGENTS.md Baseline
   and session-mode handling.
 - Supply a snippet/template agents can copy when authoring repository-specific instructions.
 - Update this repository’s root `AGENTS.md` to comply with the new baseline.
+
+R4 — Quality Bar Enforcement & SCM Guidance
+-------------------------------------------
+
+- Define a Quality Bar linter spec that checks heading alignment with YAML, status lines,
+  section completeness, link references, and citation presence.
+- Document when the linter should run (warn-only vs mandatory) and how to integrate it into CI.
+- Expand session capability mode (SCM) guidance with detection steps, confirmation prompts,
+  and a matrix of allowed operations per mode.
+- Provide a decision tree for agents to follow before performing SCM-impacting tasks.
+
+R5 — IP Rights & Dual-Role Documentation
+----------------------------------------
+
+- Add a rights attestation template to the IP disclaimer guidance covering quotation allowances,
+  copyright terms, and required citation spans.
+- Provide a reusable `templates/docs.kb.ip_disclaimer_template.md` file mirroring the guidance.
+- Create `docs/kb/dual-role.md` differentiating canonical distribution assets from instance-only
+  workflows, templates, and scripts. Link to it from the README and relevant docs.
+- Annotate instance-only GitHub workflows with header comments explaining their scope.
+- Highlight directory conventions (e.g., `tools/*_TEMPLATE.py` canonical vs potential local-only
+  scripts living under `tools/local/`).
+
+R6 — Tool Template Portability
+------------------------------
+
+- Update `tools/sync_canonical_contract_and_tools_TEMPLATE.py`,
+  `tools/pr_from_diff_TEMPLATE.py`, and `tools/repo_bootstrap_TEMPLATE.py` to derive owner/repo
+  information from the repo manifest or Git remotes by default, while preserving CLI/env overrides.
+- Ensure updated scripts document the overrides and pass `python -m py_compile`.
+- Refresh README/tool docstrings to describe the new behavior.

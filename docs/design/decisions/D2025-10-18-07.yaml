@@ -1,0 +1,16 @@
+id: D2025-10-18-07
+date: 2025-10-18
+prompt: How do we communicate canonical vs instance assets to consumers?
+options:
+  - label: Inline notes only
+    summary: Rely on scattered README mentions.
+  - label: Dedicated mapping
+    summary: Maintain a dual-role KB page and annotate instance workflows.
+choice: Dedicated mapping
+rationale: Gives consumers a single reference and aligns with expectations in issue #55.
+references:
+  issues:
+    - 55
+  documents:
+    - docs/kb/dual-role.md
+    - .github/workflows/
