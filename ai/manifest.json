@@ -4,7 +4,7 @@
   "kbRoot": "docs/kb",
   "role": "canonical-host",
   "capsulePath": "ai/contract_capsule.md",
-  "capsuleVersion": "v2.1.1",
+  "capsuleVersion": "v2.1.2",
   "syncConfigPath": "ai/sync.config.json",
   "roadmapPath": "docs/design/roadmap.md",
   "baseBranch": "develop",

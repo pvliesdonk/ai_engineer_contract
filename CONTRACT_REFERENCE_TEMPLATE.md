@@ -35,7 +35,7 @@ This opens a PR replacing `ENGINEERING_CONTRACT.md` and `tools/*` with the lates
 python tools/sync_canonical_contract_and_tools_TEMPLATE.py --dry-run
 
 # Pin to a specific ref/tag and include canonical tool templates
-python tools/sync_canonical_contract_and_tools_TEMPLATE.py --source-ref ai_engineer_contract-v2.1.1 --include-tools
+python tools/sync_canonical_contract_and_tools_TEMPLATE.py --source-ref ai_engineer_contract-v2.1.2 --include-tools
 
 # Also sync the minimal AI capsule (optional)
 python tools/sync_canonical_contract_and_tools_TEMPLATE.py --include-capsule
