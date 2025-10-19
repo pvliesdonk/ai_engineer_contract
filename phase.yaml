@@ -4,6 +4,7 @@ allowed_paths:
   - AGENTS.md
   - ai/**
   - .github/workflows/**
+  - .github/.release-please-manifest.json
   - CHANGELOG.md
   - README.md
   - CONTRACT_REFERENCE_TEMPLATE.md
