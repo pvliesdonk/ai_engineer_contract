@@ -1,4 +1,4 @@
-# ENGINEERING_CONTRACT.md (AI × Peter) — v2.0.2
+# ENGINEERING_CONTRACT.md (AI × Peter) — v2.1.1
 
 > Breaking change: `<BASE_BRANCH>` is removed. The development branch is **always `develop`**.
 
@@ -199,6 +199,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 
 ### Changelog
 
+- v2.1.1 — Document quality bar expectations, decision logging, and issue hygiene; add feedback channel, PR linked-issue reminder, and SCM phase gate workflow.
 - v2.0.2 — Clarify dual-role hosting vs instance; add AI CI tool selection guidance; add minimal contract capsule and binding prompt.
 - v2.0.1 — Add pre-implementation discipline, milestone branch guidance, and early CI setup recommendation.
 - v2.0.0 — Remove `<BASE_BRANCH>`; standardize on **`develop`**. Tighten wording, clarify KB/wiki usage, and update tools/checklists to match.
