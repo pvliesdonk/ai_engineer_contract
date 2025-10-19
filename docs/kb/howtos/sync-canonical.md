@@ -1,6 +1,6 @@
 ---
 doc_type: kb_page
-doc_version: 2025-01-01.r1
+doc_version: 2025-10-19.r1
 title: Sync Canonical Contract and Tools
 ---
 
@@ -22,7 +22,7 @@ python tools/sync_canonical_contract_and_tools_TEMPLATE.py --dry-run
 
 ```bash
 # Pin to a specific tag/ref
-python tools/sync_canonical_contract_and_tools_TEMPLATE.py --source-ref ai_engineer_contract-v2.1.2
+python tools/sync_canonical_contract_and_tools_TEMPLATE.py --source-ref ai_engineer_contract-v2.2.0
 
 # Include canonical tool templates (*_TEMPLATE.py only)
 python tools/sync_canonical_contract_and_tools_TEMPLATE.py --include-tools

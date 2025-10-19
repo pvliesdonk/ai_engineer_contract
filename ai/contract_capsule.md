@@ -1,4 +1,4 @@
-# Contract Capsule v2.1.2
+# Contract Capsule v2.2.0
 
 - Base: `develop`; PRs → `develop`; squash; Conventional Commit titles.
 - Finish requirements + design, record a Plan issue, then move into build (reference it with `Fixes #ID`).
@@ -11,6 +11,6 @@
 - Labels: `from-ai`, `needs-review`, `docs`, `chore`, …
 - Provide progress updates; propose 1–3 Conventional Commit messages after deliverables.
 
-Reference: `docs/design/ENGINEERING_CONTRACT.md` (v2.1.2), `ai/manifest.json`.
+Reference: `docs/design/ENGINEERING_CONTRACT.md` (v2.2.0), `ai/manifest.json`.
 
-Acknowledge with: `ACK CONTRACT v2.1.2`. Detect SCM mode once.
+Acknowledge with: `ACK CONTRACT v2.2.0`. Detect SCM mode once.
