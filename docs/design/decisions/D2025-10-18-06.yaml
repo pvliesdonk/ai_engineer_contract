@@ -1,0 +1,15 @@
+id: D2025-10-18-06
+date: 2025-10-18
+prompt: What rights attestation details must IP disclaimers include?
+options:
+  - label: Minimal disclaimer
+    summary: Keep existing IP note without explicit rights attestation.
+  - label: Rights template
+    summary: Require attestation of quotation terms, citations with page spans, asset inventory.
+choice: Rights template
+rationale: Supports consistent citation practices and clarifies responsibility, closing issue #49.
+references:
+  issues:
+    - 49
+  documents:
+    - docs/kb/howtos/ip-disclaimer.md

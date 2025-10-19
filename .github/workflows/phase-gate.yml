@@ -1,0 +1,102 @@
+# Instance workflow for pvliesdonk/ai_engineer_contract; adjust for your repository.
+name: phase-gate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Parse phase.yaml
+        id: phase
+        run: |
+          python - <<'PY'
+          import json, os
+          phase_file = "phase.yaml"
+          phase = "design"
+          allowed = None
+          if os.path.exists(phase_file):
+            lines = open(phase_file, encoding="utf-8").read().splitlines()
+            for i, l in enumerate(lines):
+              s = l.strip()
+              if s.startswith("phase:"):
+                phase = s.split(":", 1)[1].strip()
+              if s.startswith("allowed_paths:"):
+                allowed = []
+                for l2 in lines[i+1:]:
+                  st = l2.strip()
+                  if st.startswith("-"):
+                    allowed.append(st.split("-", 1)[1].strip())
+                  elif st == "":
+                    continue
+                  else:
+                    break
+          defaults = {
+            "requirements": ["docs/**", "AGENTS.md", "ai/**", "phase.yaml"],
+            "design": ["docs/**", "AGENTS.md", "ai/**", "phase.yaml"],
+            "plan": ["docs/**", "AGENTS.md", "ai/**", ".github/**", "phase.yaml"],
+            "build": ["**"],
+          }
+          if not allowed:
+            allowed = defaults.get(phase, defaults["design"])
+          allowed = [a.strip('\"\'') for a in allowed]
+          out = os.environ.get("GITHUB_OUTPUT")
+          if out:
+            with open(out, "a") as f:
+              f.write(f"phase={phase}\n")
+              f.write(f"allowed={json.dumps(allowed)}\n")
+          print("Phase:", phase)
+          print("Allowed:", allowed)
+          PY
+
+      - name: List changed files
+        id: diff
+        shell: bash
+        run: |
+          set -e
+          base="${{ github.base_ref }}"
+          if [ -z "$base" ]; then
+            echo "changed=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git fetch origin "$base"
+          CHANGED=$(git diff --name-only "origin/$base...HEAD" | tr '\n' ' ' | sed 's/ *$//')
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "Changed: $CHANGED"
+
+      - name: Check override label
+        id: labels
+        run: |
+          HAS=$(jq -r '[.pull_request.labels[].name] | index("deviation-approved") // empty' "$GITHUB_EVENT_PATH")
+          if [ -n "$HAS" ]; then
+            echo "override=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "override=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Enforce phase gate
+        if: steps.labels.outputs.override != 'true'
+        env:
+          ALLOWED_PATTERNS: ${{ steps.phase.outputs.allowed }}
+          CHANGED_FILES: ${{ steps.diff.outputs.changed }}
+        run: |
+          python - <<'PY'
+          import fnmatch, json, os, sys
+          allowed = json.loads(os.environ.get("ALLOWED_PATTERNS", "[]"))
+          changed = os.environ.get("CHANGED_FILES", "").split()
+          if not changed:
+            print("No changed files detected vs base; passing")
+            sys.exit(0)
+          def match_any(path, patterns):
+            return any(fnmatch.fnmatch(path, p) for p in patterns)
+          disallowed = [f for f in changed if not match_any(f, allowed)]
+          if disallowed:
+            print("Disallowed changes for current phase:")
+            for f in disallowed:
+              print("-", f)
+            sys.exit(1)
+          print("Phase gate passed")
+          PY

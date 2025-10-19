@@ -1,85 +1,214 @@
 #!/usr/bin/env python3
-# Intent: Template script to open a PR against 'develop' using a provided diff or file blobs.
-# Tool-agnostic by design; expects authenticated gh + git when used as-is.
+# Intent: Template script to open a PR using a provided diff or file blobs.
+# Auto-detects owner/repo from the current git remote or gh context; CLI/env overrides remain available.
 from __future__ import annotations
-import argparse, base64, json, os, re, subprocess, sys
-from pathlib import Path
+
+import argparse
+import base64
+import json
+import os
+import re
+import subprocess
+import sys
 from datetime import datetime
+from pathlib import Path
+from typing import Optional, Tuple
 
-OWNER="pvliesdonk"; REPO="<REPO_NAME_HERE>"
-BASE_BRANCH="develop"
-PR_TITLE="feat: <edit me>"; PR_BODY="# Summary\n<why/changes/validation/risk>"
-PR_LABELS=["from-ai","needs-review"]
-LABEL_COLORS={"from-ai":"5319e7","needs-review":"d93f0b","docs":"0e8a16","chore":"c5def5","security":"000000","blocked":"b60205","breaking-change":"e11d21","content":"1d76db","design":"fbca04","asset":"bfdadc","deviation-approved":"5319e7"}
-DIFF_B64=""; DIFF_CONTENT=r""; FILE_BLOBS={}
-SCRATCH=Path("/mnt/scratch"); TS=datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+DEFAULT_BASE_BRANCH = os.getenv("BASE_BRANCH", "develop")
+PR_TITLE = "feat: <edit me>"
+PR_BODY = "# Summary\n<why/changes/validation/risk>"
+PR_LABELS = ["from-ai", "needs-review"]
+LABEL_COLORS = {
+    "from-ai": "5319e7",
+    "needs-review": "d93f0b",
+    "docs": "0e8a16",
+    "chore": "c5def5",
+    "security": "000000",
+    "blocked": "b60205",
+    "breaking-change": "e11d21",
+    "content": "1d76db",
+    "design": "fbca04",
+    "asset": "bfdadc",
+    "deviation-approved": "5319e7",
+}
+DIFF_B64 = ""
+DIFF_CONTENT = r""
+FILE_BLOBS: dict[str, str] = {}
+SCRATCH = Path("/mnt/scratch")
+TS = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 
-def run(cmd, cwd=None):
-    return subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def repo_slug(owner, repo): return f"{owner}/{repo}"
+def run(cmd: list[str], cwd: Optional[str] = None, check: bool = True) -> subprocess.CompletedProcess:
+    proc = subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if check and proc.returncode != 0:
+        sys.exit(proc.stderr or f"command failed: {' '.join(cmd)}")
+    return proc
 
-def ensure_tools():
-    for t in ("git","gh"):
-        if run([t,"--version"]).returncode!=0:
-            sys.exit(f"ERROR: {t} not found")
 
-def normalized_diff():
-    data = (base64.b64decode(DIFF_B64) if DIFF_B64 else DIFF_CONTENT.encode())
+def parse_slug(url: str) -> Optional[Tuple[str, str]]:
+    value = url.strip()
+    if not value:
+        return None
+    if value.endswith(".git"):
+        value = value[:-4]
+    if value.startswith("git@"):
+        _, _, tail = value.partition(":")
+        value = tail
+    elif "://" in value:
+        _, _, tail = value.partition("github.com/")
+        value = tail
+    if "/" not in value:
+        return None
+    owner, repo = value.split("/", 1)
+    if not owner or not repo:
+        return None
+    return owner, repo
+
+
+def detect_repo_slug(cli_owner: Optional[str], cli_repo: Optional[str]) -> Tuple[str, str]:
+    if cli_owner and cli_repo:
+        return cli_owner, cli_repo
+
+    gh_proc = subprocess.run(
+        ["gh", "repo", "view", "--json", "nameWithOwner"],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if gh_proc.returncode == 0:
+        try:
+            data = json.loads(gh_proc.stdout or "{}")
+            slug = data.get("nameWithOwner")
+            if slug and "/" in slug:
+                owner, repo = slug.split("/", 1)
+                return owner, repo
+        except json.JSONDecodeError:
+            pass
+
+    git_proc = subprocess.run(
+        ["git", "config", "--get", "remote.origin.url"],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if git_proc.returncode == 0:
+        parsed = parse_slug(git_proc.stdout or "")
+        if parsed:
+            return parsed
+
+    sys.exit("ERROR: unable to determine owner/repo. Pass --owner/--repo or configure git remote/gh.")
+
+
+def ensure_tools() -> None:
+    for tool in ("git", "gh"):
+        if run([tool, "--version"], check=False).returncode != 0:
+            sys.exit(f"ERROR: {tool} not found")
+
+
+def normalized_diff() -> bytes:
+    data = base64.b64decode(DIFF_B64) if DIFF_B64 else DIFF_CONTENT.encode()
     return data.replace(b"\r\n", b"\n")
 
-def main():
-    ap=argparse.ArgumentParser()
-    ap.add_argument("--owner",default=OWNER); ap.add_argument("--repo",default=REPO)
-    ap.add_argument("--dry-run",action="store_true")
-    a=ap.parse_args()
+
+def repo_slug(owner: str, repo: str) -> str:
+    return f"{owner}/{repo}"
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--owner", help="Target GitHub owner (auto-detected from gh/git when omitted)")
+    parser.add_argument("--repo", help="Target GitHub repository (auto-detected when omitted)")
+    parser.add_argument("--base-branch", default=DEFAULT_BASE_BRANCH, help="Base branch for the PR (default: %(default)s)")
+    parser.add_argument("--dry-run", action="store_true", help="Print planned actions without cloning/pushing")
+    args = parser.parse_args()
 
     ensure_tools()
-    if run(["gh","repo","view",repo_slug(a.owner,a.repo)]).returncode!=0:
+    owner, repo = detect_repo_slug(args.owner, args.repo)
+    base_branch = args.base_branch
+    slug = repo_slug(owner, repo)
+
+    if run(["gh", "repo", "view", slug], check=False).returncode != 0:
         sys.exit("ERROR: cannot view repo (check auth/permissions)")
 
-    if a.dry_run:
-        print("DRY-RUN OK", a.repo, BASE_BRANCH, PR_TITLE, list(FILE_BLOBS)); return
+    if args.dry_run:
+        print("DRY-RUN OK", slug, base_branch, PR_TITLE, list(FILE_BLOBS))
+        return
 
-    work=SCRATCH/f"pr_{a.owner}_{a.repo}_{TS}"; work.mkdir(parents=True, exist_ok=True)
-    if run(["gh","repo","clone",repo_slug(a.owner,a.repo),str(work)]).returncode!=0: sys.exit("clone failed")
-    for c in (["git","fetch","--all","--prune"],["git","checkout",BASE_BRANCH],["git","reset","--hard",f"origin/{BASE_BRANCH}"]):
-        if run(c, cwd=str(work)).returncode!=0: sys.exit("git prep failed")
+    work = SCRATCH / f"pr_{owner}_{repo}_{TS}"
+    work.mkdir(parents=True, exist_ok=True)
+    if run(["gh", "repo", "clone", slug, str(work)], check=False).returncode != 0:
+        sys.exit("clone failed")
 
-    slug=re.sub(r"[^a-z0-9]+","-",PR_TITLE.lower()).strip("-") or "changes"
-    branch=f"ai/{slug[:40]}-{TS}"
-    if run(["git","switch","-c",branch], cwd=str(work)).returncode!=0: sys.exit("branch create failed")
+    for command in (
+        ["git", "fetch", "--all", "--prune"],
+        ["git", "checkout", base_branch],
+        ["git", "reset", "--hard", f"origin/{base_branch}"],
+    ):
+        if run(command, cwd=str(work), check=False).returncode != 0:
+            sys.exit("git prep failed")
 
-    # ensure labels
-    existing=set()
-    out=run(["gh","label","list","--json","name"], cwd=str(work)).stdout
-    try:
-        existing={x["name"] for x in json.loads(out)} if out else set()
-    except Exception:
-        existing=set()
-    for lab in PR_LABELS:
-        if lab not in existing:
-            col=LABEL_COLORS.get(lab,"bfdadc")
-            run(["gh","label","create",lab,"--color",col,"--description",f"Auto-created label - {lab}"], cwd=str(work))
+    slugified_title = re.sub(r"[^a-z0-9]+", "-", PR_TITLE.lower()).strip("-") or "changes"
+    branch = f"ai/{slugified_title[:40]}-{TS}"
+    if run(["git", "switch", "-c", branch], cwd=str(work), check=False).returncode != 0:
+        sys.exit("branch create failed")
 
-    changed=False
+    existing_labels = set()
+    label_list = run(["gh", "label", "list", "--json", "name"], cwd=str(work), check=False)
+    if label_list.returncode == 0 and label_list.stdout:
+        try:
+            existing_labels = {item["name"] for item in json.loads(label_list.stdout)}
+        except json.JSONDecodeError:
+            existing_labels = set()
+
+    for label in PR_LABELS:
+        if label not in existing_labels:
+            color = LABEL_COLORS.get(label, "bfdadc")
+            run(
+                [
+                    "gh",
+                    "label",
+                    "create",
+                    label,
+                    "--color",
+                    color,
+                    "--description",
+                    f"Auto-created label - {label}",
+                ],
+                cwd=str(work),
+                check=False,
+            )
+
+    changed = False
     if DIFF_B64 or DIFF_CONTENT:
-        df=work/"changes.diff"; df.write_bytes(normalized_diff())
-        if run(["git","apply","--index","--whitespace=fix",str(df)], cwd=str(work)).returncode!=0: sys.exit("apply diff failed")
-        changed=True
+        diff_file = work / "changes.diff"
+        diff_file.write_bytes(normalized_diff())
+        if run(["git", "apply", "--index", "--whitespace=fix", str(diff_file)], cwd=str(work), check=False).returncode != 0:
+            sys.exit("apply diff failed")
+        changed = True
 
-    for path,b64 in FILE_BLOBS.items():
-        p=work/path; p.parent.mkdir(parents=True, exist_ok=True); p.write_bytes(base64.b64decode(b64))
-        run(["git","add",path], cwd=str(work)); changed=True
+    for path, b64 in FILE_BLOBS.items():
+        target = work / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(base64.b64decode(b64))
+        run(["git", "add", path], cwd=str(work))
+        changed = True
 
-    if not changed: sys.exit("no changes to commit")
-    if run(["git","commit","-m",PR_TITLE], cwd=str(work)).returncode!=0: sys.exit("commit failed")
-    if run(["git","push","-u","origin",branch], cwd=str(work)).returncode!=0: sys.exit("push failed")
+    if not changed:
+        sys.exit("no changes to commit")
 
-    args=["gh","pr","create","--base",BASE_BRANCH,"--head",branch,"--title",PR_TITLE,"--body",PR_BODY]
-    for lab in PR_LABELS: args+=["--label",lab]
-    r=run(args, cwd=str(work))
-    if r.returncode!=0: sys.exit("pr create failed")
-    print(r.stdout.strip())
+    if run(["git", "commit", "-m", PR_TITLE], cwd=str(work), check=False).returncode != 0:
+        sys.exit("commit failed")
+    if run(["git", "push", "-u", "origin", branch], cwd=str(work), check=False).returncode != 0:
+        sys.exit("push failed")
 
-if __name__=="__main__": main()
+    pr_args = ["gh", "pr", "create", "--base", base_branch, "--head", branch, "--title", PR_TITLE, "--body", PR_BODY]
+    for label in PR_LABELS:
+        pr_args += ["--label", label]
+    result = run(pr_args, cwd=str(work), check=False)
+    if result.returncode != 0:
+        sys.exit("pr create failed")
+    print(result.stdout.strip())
+
+
+if __name__ == "__main__":
+    main()

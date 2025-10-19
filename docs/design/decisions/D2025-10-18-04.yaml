@@ -1,0 +1,16 @@
+id: D2025-10-18-04
+date: 2025-10-18
+prompt: How do we enforce the Quality Bar consistently?
+options:
+  - label: Ad hoc review
+    summary: Rely on reviewers to manually spot gaps each PR.
+  - label: Linter with phased rollout
+    summary: Define checks and run warn-only before promoting to blocking CI.
+choice: Linter with phased rollout
+rationale: Encodes expectations from issue #46 into tooling that scales across repos.
+references:
+  issues:
+    - 46
+  documents:
+    - docs/design/ENGINEERING_CONTRACT.md
+    - docs/kb/howtos/quality-bar-linter.md

@@ -1,0 +1,15 @@
+id: D2025-10-18-01
+date: 2025-10-18
+prompt: What work may agents perform before receiving “GO BUILD”?
+options:
+  - label: Allowed pre-build work
+    summary: Docs-only edits, repository admin (labels/projects), planning artifacts.
+  - label: Disallowed pre-build work
+    summary: Code scaffolding, test harness creation, non-doc file additions.
+choice: Allowed list + disallowed list + PR checklist
+rationale: Clarifies the contract-first workflow and keeps implementers from jumping to code prematurely.
+references:
+  issues:
+    - 42
+  documents:
+    - docs/design/ENGINEERING_CONTRACT.md
