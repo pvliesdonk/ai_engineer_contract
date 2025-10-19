@@ -1,12 +1,11 @@
+# Current phase options: design (default), plan, build
 phase: design
 allowed_paths:
+  # Planning artefacts only; update this file when advancing to `plan` or `build`.
   - docs/**
-  - AGENTS.md
-  - ai/**
-  - .github/workflows/**
-  - .github/.release-please-manifest.json
-  - CHANGELOG.md
   - README.md
+  - AGENTS.md
   - CONTRACT_REFERENCE_TEMPLATE.md
-  - ai/check_version_refs.py
+  - .github/ISSUE_TEMPLATE/**
+  - .github/mergereadiness/**
   - phase.yaml

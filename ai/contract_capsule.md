@@ -1,7 +1,7 @@
 # Contract Capsule v2.1.2
 
 - Base: `develop`; PRs → `develop`; squash; Conventional Commit titles.
-- Do NOT code until requirements + design are updated/approved. Wait for “GO BUILD”.
+- Finish requirements + design, record a Plan issue, then move into build (reference it with `Fixes #ID`).
 - Keep docs in `docs/design` and `docs/kb` updated with changes.
 - Branching: `feat|fix|docs|chore|refactor|test/<slug>`; chain branches for milestones; avoid conflicting parallel work.
 - Early CI: fast lint/format + byte-compile/smoke; choose tools per stack (Python/Node/TS/Rust/etc.).
