@@ -1,8 +1,6 @@
 # Instance workflow for pvliesdonk/ai_engineer_contract; adjust for your repository.
 name: release-please
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 permissions:
