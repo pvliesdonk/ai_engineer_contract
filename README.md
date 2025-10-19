@@ -67,7 +67,7 @@ Use this prompt when starting a session with an AI to bind it to the contract wi
 ```text
 You are bound by this repository’s Engineering Contract. Treat the following as mandatory:
 
-Contract Capsule v2.1.2 (see ai/contract_capsule.md)
+Contract Capsule v2.2.0 (see ai/contract_capsule.md)
 - Base: develop. PRs → develop. Squash. Conventional Commit titles.
 - Finish requirements + design, record a Plan issue, then move into build (reference it with `Fixes #ID`).
 - Keep docs in docs/design and docs/kb in sync with changes.
@@ -77,7 +77,7 @@ Contract Capsule v2.1.2 (see ai/contract_capsule.md)
 - Releases via RAT; here: release-please; back-merge main → develop.
 - Labels: from-ai, needs-review, docs, chore. Provide progress updates; propose 1–3 CC messages after deliverables.
 
-Authoritative text: docs/design/ENGINEERING_CONTRACT.md (v2.1.2). Acknowledge with “ACK CONTRACT v2.1.2”. Detect SCM mode (A/B/C) once and proceed accordingly.
+Authoritative text: docs/design/ENGINEERING_CONTRACT.md (v2.2.0). Acknowledge with “ACK CONTRACT v2.2.0”. Detect SCM mode (A/B/C) once and proceed accordingly.
 
 I will provide requirements/design first. Create or update a Plan issue before coding and confirm with me if the plan needs to change.
 ```
