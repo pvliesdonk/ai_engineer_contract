@@ -31,7 +31,7 @@ This file defines how coding agents should operate in this repository. A root `A
 - Phase gates: `phase.yaml` + `.github/workflows/phase-gate.yml` gate paths per phase (requirements/design/docs-only). Advance phases via dedicated PRs; use `deviation-approved` only with documented rationale.
 - Docs-only changes: run markdownlint; Python helpers must pass `python -m py_compile tools/*.py`.
 - Add stack-appropriate lint/test checks when generating new code (see contract for tool selection guidance).
-- Prefer `gh` for repo automation; release automation handled by release-please.
+- Prefer `gh` for repo automation; run release-please manually via workflow dispatch until automation is restored (see docs/issues/2025-10-19-release-please-automation.md).
 
 ## Security & Secrets
 
