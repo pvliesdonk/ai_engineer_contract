@@ -38,9 +38,9 @@ Prefer `gh` for repo automation; release-please runs automatically on pushes to 
 - Never commit secrets; use `.env.example` for shape. Redact tokens/keys in outputs.
 - Coordinate with maintainers for secret rotation; avoid storing credentials in CI logs or artifacts.
 
-## Session Modes (SCM-A/B/C)
+## Session Modes (A/B/advise-only)
 
 - Detect the active mode once, confirm capabilities with the human if unclear, and document any switch.
 - **SCM-A:** full control (branches/PRs); merge to `develop` only with explicit approval; releases are manual.
 - **SCM-B:** provide ready-to-run edits/scripts; human executes/pushes.
-- **SCM-C:** deliver advise-only packages (issue/PR bodies, reviews, checklists, single-file diffs) using `docs/kb/howtos/scm-c-advise.md`; escalate if work needs automation or multi-file edits.
+- **advise-only (formerly SCM-C):** deliver advise-only packages (issue/PR bodies, reviews, checklists, single-file diffs) using `docs/kb/howtos/advise-only-templates.md`; escalate if work needs automation or multi-file edits.
