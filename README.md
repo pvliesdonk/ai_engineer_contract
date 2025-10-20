@@ -23,6 +23,9 @@ Canonical engineering contract for AI × Peter. Key points:
 
 ## 2) How to use
 
+- Getting started: see `docs/kb/howtos/getting-started.md`.
+- Bind an AI to your repo: see `docs/kb/howtos/binding-prompt.md`.
+
 - Keep this contract at **`docs/design/ENGINEERING_CONTRACT.md`** and link back to the canonical repo.
 - For KB/wiki work, store content under **`docs/kb/`** with an `index.md` and structured links.
 - Open issues for work items; link PRs to issues; reference design docs where applicable.
