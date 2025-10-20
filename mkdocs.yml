@@ -16,6 +16,7 @@ nav:
       - Delivery Map: design/delivery-map.md
       - Decisions: design/DECISIONS.md
   - How-tos:
+      - Binding prompt: kb/howtos/binding-prompt.md
       - Getting Started: kb/howtos/getting-started.md
       - Phase Gates: kb/howtos/phase-gates.md
       - Plan → Build: kb/howtos/plan-to-build.md
