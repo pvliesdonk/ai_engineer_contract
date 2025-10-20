@@ -1,0 +1,6 @@
+# CODEOWNERS — default review ownership
+# Learn more: https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+*           @pvliesdonk
+/docs/      @pvliesdonk
+/tools/     @pvliesdonk
