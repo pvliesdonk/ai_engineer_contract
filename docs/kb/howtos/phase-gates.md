@@ -1,6 +1,6 @@
 ---
 doc_type: kb_page
-doc_version: 2025-10-17.r1
+doc_version: 2025-10-20.r2
 title: Phase Gates — Advance and Troubleshoot
 ---
 
@@ -28,6 +28,12 @@ You may override defaults by listing `allowed_paths` in `phase.yaml`.
 
 - Add label `deviation-approved` to the PR and include a rationale in the PR body.
 - CI will accept the deviation, but reviewers should ensure rollback/mitigation.
+
+## Quick-Escape (when CI blocks your PR)
+
+1) Add a **Plan issue link** (e.g., `Fixes #123`) to the PR body to satisfy the plan-before-build gate.
+2) For **micro-fixes**, apply the `plan-exempt` label and explain the rationale.
+3) If urgent but non-conforming, request a maintainer to apply `deviation-approved` and capture the rationale in the PR.
 
 ## Troubleshooting
 
