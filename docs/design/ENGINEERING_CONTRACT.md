@@ -36,7 +36,7 @@
   3. **Log** any mode switch in the conversation and in the PR body if it impacts work.
 - Use the decision tree in `docs/kb/howtos/scm-mode-decision-tree.md` before running operations that require elevated access (e.g., `gh repo create`, secret updates).
 
-#### SCM deliverables & escalation
+### SCM deliverables & escalation
 
 | Mode  | Primary outputs                                                                 | Escalate when…                                               |
 | ----- | -------------------------------------------------------------------------------- | ------------------------------------------------------------ |
@@ -211,6 +211,7 @@ ai_assist:
     Document families in planning; pin exact SKUs only in deployable config.
     For local models on 8 GB GPUs, prefer Q4_K_M quantizations for stability.
 ```
+
 - Route guidance covers common tasks (`scm_c_advise`, `policy_edit`, `bulk_scaffold`, `long_context`, `bulk_narration`, `bulk_programming`) across OpenAI, Google AI Studio, and local Ollama options so maintainers can tailor usage per scenario.
 
 ## 19) Issue & Project Management (AI allowed)
