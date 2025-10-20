@@ -1,6 +1,6 @@
 ---
 doc_type: kb_howto
-doc_version: 2025-10-20.r1
+doc_version: 2025-10-20.r2
 title: AI Model Recommendation Playbook
 ---
 
@@ -35,9 +35,9 @@ ai_assist:
     For local models on 8 GB GPUs, prefer Q4_K_M quantizations for stability.
 ```
 
-- **OpenAI** — `gpt-5` as the default “smart” model, `gpt-5-thinking` for deep reasoning, `o4-mini` for cheap/fast scaffolds, and `gpt-4.1` for 1M-token context. (<https://openai.com/gpt-5>)
-- **Google AI Studio** — `gemini-2.5-flash` (cost-effective generalist), `gemini-2.5-pro` for thinking/long context, and `gemini-2.5-flash-lite` for high throughput. (<https://ai.google.dev/gemini-api/docs/models>)
-- **Ollama (local)** — tuned for an RTX 4060 (8 GB) using Q4\_K\_M weights: `llama3.1:8b-instruct` (generalist), `deepseek-r1:7b` (reasoning-style), and `mistral:7b-instruct` for fast scaffolds/32k context. (<https://ollama.com/library>)
+- **OpenAI** — gpt-5 as the default “smart” model, gpt-5-thinking for deep reasoning, o4-mini for cheap/fast scaffolds, and gpt-4.1 for 1M-token context.
+- **Google AI Studio** — gemini-2.5-flash (cost-effective generalist), gemini-2.5-pro for thinking/long context, and gemini-2.5-flash-lite for high throughput.
+- **Ollama (local)** — tuned for an RTX 4060 (8 GB) using Q4_K_M weights: llama3.1:8b-instruct (generalist), deepseek-r1:7b (reasoning-style), and mistral:7b-instruct for fast scaffolds/32k context.
 
 ## Task-Based Routes
 
@@ -79,13 +79,22 @@ routes:
   - when: { task: "bulk_programming" }
     openai: gpt-5
     google: gemini-2.5-pro
-    ollama: qwen2.5-coder:7b-q4_K_M
-    notes: "Gemini Pro supports tool usage/1M ctx; Qwen2.5-Coder excels at multi-file code."
+    ollama: llama3.1:8b-instruct-q4_K_M
+    notes: "Prefer stable 8–9B-class locals unless you have >12 GB VRAM; consider DeepSeek Coder Lite if available."
 ```
+
+### Local route notes for 8 GB GPUs
+
+| Lane              | Suggested route                           | Approx VRAM | Context |
+|-------------------|-------------------------------------------|------------:|--------:|
+| Bulk narration    | gemma2:9b-instruct-q4_K_M                 |     ~7–8 GB |   8–16k |
+| Bulk programming  | llama3.1:8b-instruct-q4_K_M               |     ~6–7 GB |   8–16k |
+| Reasoning (light) | deepseek-r1:7b                            |     ~6–7 GB |     8k |
+| Throughput        | mistral:7b-instruct                       |     ~5–6 GB |    32k |
 
 ## Manifest Example
 
-Extend `ai/manifest.json` so automation can detect the approved providers and routes.
+Extend ai/manifest.json so automation can detect the approved providers and routes.
 
 ```json
 {
@@ -116,7 +125,7 @@ Extend `ai/manifest.json` so automation can detect the approved providers and ro
       { "when": { "task": "bulk_scaffold" },    "openai": "o4-mini", "google": "gemini-2.5-flash-lite", "ollama": "mistral:7b-instruct" },
       { "when": { "task": "long_context" },     "openai": "gpt-4.1", "google": "gemini-2.5-pro",       "ollama": "mistral:7b-instruct" },
       { "when": { "task": "bulk_narration" },   "openai": "gpt-5", "google": "gemini-2.5-flash",       "ollama": "gemma2:9b-instruct-q4_K_M" },
-      { "when": { "task": "bulk_programming" }, "openai": "gpt-5", "google": "gemini-2.5-pro",        "ollama": "qwen2.5-coder:7b-q4_K_M" }
+      { "when": { "task": "bulk_programming" }, "openai": "gpt-5", "google": "gemini-2.5-pro",        "ollama": "llama3.1:8b-instruct-q4_K_M" }
     ],
     "review_on_release": true
   }
@@ -126,5 +135,5 @@ Extend `ai/manifest.json` so automation can detect the approved providers and ro
 ## Maintenance Tips
 
 - Review provider lists each release cycle; replace models when new GA versions ship or when org policy changes.
-- Document hardware assumptions for local deployments (for example, 8 GB VRAM for Q4\_K\_M quantizations).
+- Document hardware assumptions for local deployments (for example, 8 GB VRAM for Q4_K_M quantizations).
 - Encourage teams to add telemetry (latency, cost, tool usage) in project-specific docs so recommendations stay data informed.
