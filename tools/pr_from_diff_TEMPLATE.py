@@ -14,7 +14,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple
 
-DEFAULT_BASE_BRANCH = os.getenv("BASE_BRANCH", "develop")
+# Contract v2.2.0: base branch is always 'develop' (no env override).
+DEFAULT_BASE_BRANCH = "develop"
 PR_TITLE = "feat: <edit me>"
 PR_BODY = "# Summary\n<why/changes/validation/risk>"
 PR_LABELS = ["from-ai", "needs-review"]
@@ -118,7 +119,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--owner", help="Target GitHub owner (auto-detected from gh/git when omitted)")
     parser.add_argument("--repo", help="Target GitHub repository (auto-detected when omitted)")
-    parser.add_argument("--base-branch", default=DEFAULT_BASE_BRANCH, help="Base branch for the PR (default: %(default)s)")
+    parser.add_argument("--base-branch", default=DEFAULT_BASE_BRANCH, help="Base branch for the PR (always 'develop')")
     parser.add_argument("--dry-run", action="store_true", help="Print planned actions without cloning/pushing")
     args = parser.parse_args()
 
@@ -198,17 +199,14 @@ def main() -> None:
 
     if run(["git", "commit", "-m", PR_TITLE], cwd=str(work), check=False).returncode != 0:
         sys.exit("commit failed")
-    if run(["git", "push", "-u", "origin", branch], cwd=str(work), check=False).returncode != 0:
+
+    if run(["git", "push", "-u", "origin", "HEAD"], cwd=str(work), check=False).returncode != 0:
         sys.exit("push failed")
 
-    pr_args = ["gh", "pr", "create", "--base", base_branch, "--head", branch, "--title", PR_TITLE, "--body", PR_BODY]
+    pr_cmd = ["gh", "pr", "create", "--title", PR_TITLE, "--body", PR_BODY, "--base", base_branch]
     for label in PR_LABELS:
-        pr_args += ["--label", label]
-    result = run(pr_args, cwd=str(work), check=False)
-    if result.returncode != 0:
-        sys.exit("pr create failed")
-    print(result.stdout.strip())
-
+        pr_cmd += ["--label", label]
+    run(pr_cmd, cwd=str(work))
 
 if __name__ == "__main__":
     main()
