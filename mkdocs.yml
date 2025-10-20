@@ -1,0 +1,24 @@
+site_name: AI Engineer Contract
+site_url: https://pvliesdonk.github.io/ai_engineer_contract/
+repo_url: https://github.com/pvliesdonk/ai_engineer_contract
+edit_uri: edit/develop/
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.action.edit
+nav:
+  - Home: index.md
+  - Contract:
+      - Engineering Contract: design/ENGINEERING_CONTRACT.md
+  - How-tos:
+      - Phase Gates: kb/howtos/phase-gates.md
+      - Model Recommendations: kb/howtos/model-recommendations.md
+      - Advise-Only Templates: kb/howtos/advise-only-templates.md
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - tables
+  - footnotes
