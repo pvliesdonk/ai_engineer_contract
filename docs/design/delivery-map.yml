@@ -1,1 +1,9 @@
-units: []
+units:
+  - name: P0 hardening batch
+    milestone: next
+    tags: ["v2.2.1"]
+    docs:
+      - path: docs/kb/howtos/model-recommendations.md
+        summary: Model routes table and provider guidance
+      - path: docs/kb/howtos/phase-gates.md
+        summary: Quick-Escape how-to
