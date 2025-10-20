@@ -1,0 +1,20 @@
+id: D2025-10-20-01
+date: 2025-10-20
+prompt: How do we harden agent governance and documentation quality gates?
+options:
+  - label: Clarify contract guardrails only
+    summary: Update ENGINEERING_CONTRACT.md with guidance but leave CI/docs workflows optional.
+  - label: Add CI + templates only
+    summary: Require phase gate and docs-quality automation without clarifying operating guidance.
+  - label: Full governance hardening
+    summary: Ship updated guidance, workflows, and model recommendation expectations together.
+choice: Full governance hardening
+rationale: Bundling guidance, automation, and planning expectations ensures feedback #90/#87 resolve together and keeps repos auditable.
+references:
+  issues:
+    - 90
+    - 92
+    - 87
+  documents:
+    - docs/design/ENGINEERING_CONTRACT.md
+    - docs/design/DECISIONS.md

@@ -33,6 +33,15 @@
   3. **Log** any mode switch in the conversation and in the PR body if it impacts work.
 - Use the decision tree in `docs/kb/howtos/scm-mode-decision-tree.md` before running operations that require elevated access (e.g., `gh repo create`, secret updates).
 
+### Agent Operating Guardrails
+
+- Always restate the detected SCM mode and base branch (`develop`) before taking privileged actions. If the environment changes mid-session, pause and re-confirm with a human.
+- Operate behind a referenced Plan issue (unless `plan-exempt` is explicitly granted) and branch from `origin/develop` using the contract naming scheme. Document the plan with acceptance criteria and validation before editing docs/config/code.
+- Apply the required PR labels: `from-ai`, `needs-review`, and an appropriate scope label (`docs`, `chore`, etc.). Auto-create missing labels with `gh label create`.
+- Post a “Proposed solution” comment on the tracked issue before implementation. Keep it up to date as work evolves and link to the eventual PR.
+- Enforce secrets hygiene: never store or echo tokens, redact sensitive output, and request escalated permissions only when unavoidable. Decline work that would expose secrets or violate org policy.
+- If instructions conflict, would bypass `phase.yaml`, or exceed the current CI/approval guardrails, escalate via a `feedback` issue instead of proceeding. Document any deviations with `deviation-approved` and explicit rollback steps.
+
 ## 5) Artifact Delivery
 
 - **Default:** Provide deliverables as **downloadable files**. Long scripts can be hidden in chat but must be downloadable.
@@ -58,6 +67,10 @@
   - Any contract/process implications (e.g., phase vs harness alignment) and planned CI checks.
 - Keep the comment updated if the approach changes; link the PR and reference the comment in the PR body.
 - Use labels from the taxonomy (e.g., `from-ai`, `needs-review`, `docs`, `chore`).
+- Follow the feedback pipeline:
+  - `feedback` issues capture raw input and MAY close without action.
+  - Elevate accepted ideas into `feature proposal` issues to explore scope and validation.
+  - Promote vetted proposals into `design change` issues when design docs are ready to update. Cross-link each hop so history stays auditable.
 
 ### Feedback & Questions
 
@@ -157,6 +170,12 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - Confirm the choice, rationale, and owner, then log the outcome in `docs/design/DECISIONS.md`.
 - Optionally create machine-readable entries in `docs/design/decisions/*.yaml` mirroring the log table.
 - Reference decision IDs from issues/PRs and keep the log in sync with design updates and approvals.
+
+### Model Recommendations in Plans
+
+- Planning artifacts MAY recommend **model families** for AI-assisted work. Prefer the organization’s approved model catalog and reference the latest generally available versions.
+- When no org policy exists, name the family (e.g., “OpenAI GPT-5”, “OpenAI GPT-4.1”) and provide a short rationale with acceptable fallbacks that cover cost, latency, and privacy constraints.
+- Record recommendations in docs; pin exact SKUs only in deployable configuration files. Revisit the recommendations at each release or when upstream models change materially.
 
 ## 19) Issue & Project Management (AI allowed)
 
@@ -270,7 +289,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
   - requirements/design: `docs/**`, `AGENTS.md`, `ai/**`, `phase.yaml`
   - plan: above + `.github/**`
   - build: unrestricted
-- CI fails PRs that touch disallowed paths for the current phase.
+- Maintain `.github/workflows/phase-gate.yml` (or equivalent) so every PR runs the phase gate against `phase.yaml`. The workflow MUST fail fast when a change touches disallowed paths.
 - Temporary deviation: add the `deviation-approved` label and include rationale and rollback in the PR body.
 - Advancing the phase is an auditable one-file change: update `phase.yaml` in a separate PR.
 
@@ -285,6 +304,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - Adoption cadence:
   1. Wire the linter locally; run in `warn-only` mode in CI during requirements/design phases.
   2. Promote to blocking once the repository reaches `phase: build`.
+- Run `.github/workflows/docs-quality.yml` (or equivalent) on docs-affecting PRs. Include at minimum `markdownlint-cli2` and a link checker such as `lychee` configured to fail on errors and surface actionable logs.
 - Document the chosen implementation (Python/Node) and share remediation guidance in CI output.
 - Reference: `docs/kb/howtos/quality-bar-linter.md`.
 
