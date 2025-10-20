@@ -1,6 +1,6 @@
 ---
 doc_type: kb_page
-doc_version: 2025-10-18.r1
+doc_version: 2025-10-21.r1
 title: SCM Mode Decision Tree
 ---
 
@@ -19,7 +19,7 @@ Decision Flow
 ```mermaid
 flowchart TD
     A[Start Session] --> B{Can you read/write the filesystem?}
-    B -- No --> SCMC[SCM-C\nChat-Only]
+    B -- No --> SCMC[SCM-C\nAdvise-Only]
     B -- Yes --> C{Can you run git push or gh?}
     C -- No --> SCMB[SCM-B\nIDE Co-Driver]
     C -- Yes --> D{Do you have push rights / tokens?}
@@ -34,7 +34,7 @@ Mode Summary
 | ----- | ----------------------------------------------------------------------------------- | -------------------------------------- |
 | SCM-A | Create branches/PRs, push commits, run CI, create repos/projects, manage labels     | Repo creation, visibility changes, secrets updates |
 | SCM-B | Local edits, diff generation, scripts/patches, documentation updates                | Any action that mutates remote state (ask human) |
-| SCM-C | Requirements gathering, design updates, instructions, copy-paste templates          | All filesystem or git actions          |
+| SCM-C | Advise-only packages (issue/plan/PR bodies, reviews, checklists, single-file diffs) | Any filesystem or git action; multi-file or automated changes |
 
 Confirmation Checklist
 ----------------------
@@ -50,3 +50,4 @@ See Also
 
 - [Engineering Contract – Session Capability Modes](../../design/ENGINEERING_CONTRACT.md)
 - [Session-Mode Handshake Capsule](../../ai/session-mode-handshake.md)
+- [SCM-C Advise-Only Templates](./scm-c-advise.md)
