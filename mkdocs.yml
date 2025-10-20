@@ -13,7 +13,7 @@ nav:
   - Contract:
       - Overview: design/index.md
       - Engineering Contract: design/ENGINEERING_CONTRACT.md
-      - Delivery Map (YAML): design/delivery-map.yml
+      - Delivery Map: design/delivery-map.md
       - Decisions: design/DECISIONS.md
   - How-tos:
       - Getting Started: kb/howtos/getting-started.md
