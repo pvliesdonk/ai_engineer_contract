@@ -26,12 +26,32 @@
 
 - **SCM-A — Full-Stack Agent:** direct access to code, `git`, `gh`, runtimes, and tokens. Do everything automatically (branches, commits, PRs, labels, issues, projects). Merge into **`develop`** after explicit chat approval. **Releases on `main` are always manual** (human presses the button). Allowed ops include pushing branches, running CI, creating repos/projects, and editing secrets (with approval).
 - **SCM-B — IDE Co-Driver:** can edit files but cannot push. Provide ready-to-run scripts/patches and precise commands. Track readiness and tell the human when to merge or open release PRs. Allowed ops: local edits, diff generation, command suggestions, documentation updates. Disallowed: pushing, creating repos, mutating secrets.
-- **SCM-C — Chat-Only Operator:** minimal environment. Use **single-file Python templates** in `tools/` to open PRs. Optimize for copy-pasteable steps and UI click-paths. Allowed ops: requirements gathering, design updates, instructions, lightweight docs. Disallowed: any direct filesystem or git changes.
+- **SCM-C — Advise-Only Operator:** chat-only environment. Deliver structured guidance only—issue/PR bodies, review comments, checklists, and **optional inline unified diffs** for a single file. Use the templates in [`docs/kb/howtos/scm-c-advise.md`](../kb/howtos/scm-c-advise.md) so every hand-off stays copy/paste friendly.
+  - **Deliverables:** Issue/plan/PR bodies, review summaries, validation or risk checklists, and single-file inline unified diffs wrapped in fenced code blocks with application notes.
+  - **Forbidden:** Filesystem edits, git commands, running scripts, archive/patch uploads, or automated PR/branch creation.
+  - **Escalate:** When the requested change spans multiple files, requires command execution or automation, or the human asks for direct code edits beyond the documented inline diff scope.
 - Detect mode once per session following this flow:
   1. **Auto-detect** capabilities (check git push access, filesystem access, `gh` auth). If unclear, ask the human to confirm the mode.
   2. **Confirm** before performing privileged actions (creating repos, changing default branches, toggling visibility).
   3. **Log** any mode switch in the conversation and in the PR body if it impacts work.
 - Use the decision tree in `docs/kb/howtos/scm-mode-decision-tree.md` before running operations that require elevated access (e.g., `gh repo create`, secret updates).
+
+### SCM deliverables & escalation
+
+| Mode  | Primary outputs                                                                 | Escalate when…                                               |
+| ----- | -------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| SCM-A | Branches, commits, PRs, CI runs, repo/label automation                           | Human approval required for privileged ops (secrets, repos). |
+| SCM-B | Local edits, diffs/patches, scripts, documentation updates                      | Work needs direct pushes, multi-repo automation, or secrets. |
+| SCM-C | Advise-only packages via docs/kb/howtos/scm-c-advise.md templates (issues, reviews, checklists, inline diffs) | Task requires multi-file edits, command execution, automation, or non-templated assets. |
+
+### Agent Operating Guardrails
+
+- Always restate the detected SCM mode and base branch (`develop`) before taking privileged actions. If the environment changes mid-session, pause and re-confirm with a human.
+- Operate behind a referenced Plan issue (unless `plan-exempt` is explicitly granted) and branch from `origin/develop` using the contract naming scheme. Document the plan with acceptance criteria and validation before editing docs/config/code.
+- Apply the required PR labels: `from-ai`, `needs-review`, and an appropriate scope label (`docs`, `chore`, etc.). Auto-create missing labels with `gh label create`.
+- Post a “Proposed solution” comment on the tracked issue before implementation. Keep it up to date as work evolves and link to the eventual PR.
+- Enforce secrets hygiene: never store or echo tokens, redact sensitive output, and request escalated permissions only when unavoidable. Decline work that would expose secrets or violate org policy.
+- If instructions conflict, would bypass `phase.yaml`, or exceed the current CI/approval guardrails, escalate via a `feedback` issue instead of proceeding. Document any deviations with `deviation-approved` and explicit rollback steps.
 
 ## 5) Artifact Delivery
 
@@ -58,6 +78,10 @@
   - Any contract/process implications (e.g., phase vs harness alignment) and planned CI checks.
 - Keep the comment updated if the approach changes; link the PR and reference the comment in the PR body.
 - Use labels from the taxonomy (e.g., `from-ai`, `needs-review`, `docs`, `chore`).
+- Follow the feedback pipeline:
+  - `feedback` issues capture raw input and MAY close without action.
+  - Elevate accepted ideas into `feature proposal` issues to explore scope and validation.
+  - Promote vetted proposals into `design change` issues when design docs are ready to update. Cross-link each hop so history stays auditable.
 
 ### Feedback & Questions
 
@@ -158,6 +182,38 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - Optionally create machine-readable entries in `docs/design/decisions/*.yaml` mirroring the log table.
 - Reference decision IDs from issues/PRs and keep the log in sync with design updates and approvals.
 
+### Model Recommendations in Plans
+
+- Planning artifacts MAY recommend **model families** for AI-assisted work. Prefer the organization’s approved model catalog and reference the latest generally available versions.
+- When no org policy exists, name the family (e.g., “OpenAI GPT-5”, “OpenAI GPT-4.1”) and provide a short rationale with acceptable fallbacks that cover cost, latency, and privacy constraints.
+- Record recommendations in docs; pin exact SKUs only in deployable configuration files. Revisit the recommendations at each release or when upstream models change materially.
+- Use the provider matrix and task routes published in `docs/kb/howtos/model-recommendations.md`. At minimum, capture the shared provider families so downstream repos stay aligned:
+
+```yaml
+ai_assist:
+  providers:
+    openai:
+      primary: gpt-5
+      thinking: gpt-5-thinking
+      fast: o4-mini
+      long_context: gpt-4.1
+    google:
+      primary: gemini-2.5-flash
+      thinking: gemini-2.5-pro
+      fast: gemini-2.5-flash-lite
+      long_context: gemini-2.5-pro
+    ollama:
+      primary: llama3.1:8b-instruct-q4_K_M
+      thinking: deepseek-r1:7b
+      fast: mistral:7b-instruct
+      long_context: mistral:7b-instruct
+  notes: >
+    Document families in planning; pin exact SKUs only in deployable config.
+    For local models on 8 GB GPUs, prefer Q4_K_M quantizations for stability.
+```
+
+- Route guidance covers common tasks (`scm_c_advise`, `policy_edit`, `bulk_scaffold`, `long_context`, `bulk_narration`, `bulk_programming`) across OpenAI, Google AI Studio, and local Ollama options so maintainers can tailor usage per scenario.
+
 ## 19) Issue & Project Management (AI allowed)
 
 - The AI may create issues/labels/milestones/projects. **Design-impacting work must link to design docs**, otherwise label `needs-design-ref` and add the doc before implementation.
@@ -198,6 +254,20 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 
 - Markdown with YAML front matter. Commit diagram sources (Mermaid/PlantUML/Graphviz). Avoid proprietary-only formats; provide text exports if necessary.
 - Provide/update **`ai/manifest.json`** so tools find contract, design root, roadmap, KB root, labels, and versioning schemes.
+- Encode AI assistance defaults in the manifest. Mirror the provider families/routes from `docs/kb/howtos/model-recommendations.md` so automation can reason about tasks:
+
+```json
+{
+  "ai_assist": {
+    "providers": {
+      "openai": { "primary": "gpt-5", "thinking": "gpt-5-thinking", "fast": "o4-mini", "long_context": "gpt-4.1" },
+      "google": { "primary": "gemini-2.5-flash", "thinking": "gemini-2.5-pro", "fast": "gemini-2.5-flash-lite", "long_context": "gemini-2.5-pro" },
+      "ollama": { "primary": "llama3.1:8b-instruct-q4_K_M", "thinking": "deepseek-r1:7b", "fast": "mistral:7b-instruct", "long_context": "mistral:7b-instruct" }
+    },
+    "review_on_release": true
+  }
+}
+```
 
 ### Changelog
 
@@ -258,7 +328,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 
 ## Session Modes (SCM-A/B/C)
 - Detect mode once per session; confirm capabilities with the human if unclear.
-- SCM-A may push/PR (merge only with approval); SCM-B offers instructions; SCM-C uses templates in `tools/`.
+- SCM-A may push/PR (merge only with approval); SCM-B offers instructions; SCM-C delivers advise-only packages using `docs/kb/howtos/scm-c-advise.md` (no archives or direct file edits).
 ````
 
 ## 26) CI Phase Gates
@@ -270,7 +340,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
   - requirements/design: `docs/**`, `AGENTS.md`, `ai/**`, `phase.yaml`
   - plan: above + `.github/**`
   - build: unrestricted
-- CI fails PRs that touch disallowed paths for the current phase.
+- Maintain `.github/workflows/phase-gate.yml` (or equivalent) so every PR runs the phase gate against `phase.yaml`. The workflow MUST fail fast when a change touches disallowed paths.
 - Temporary deviation: add the `deviation-approved` label and include rationale and rollback in the PR body.
 - Advancing the phase is an auditable one-file change: update `phase.yaml` in a separate PR.
 
@@ -285,6 +355,7 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - Adoption cadence:
   1. Wire the linter locally; run in `warn-only` mode in CI during requirements/design phases.
   2. Promote to blocking once the repository reaches `phase: build`.
+- Run `.github/workflows/docs-quality.yml` (or equivalent) on docs-affecting PRs. Include at minimum `markdownlint-cli2` and a link checker such as `lychee` configured to fail on errors and surface actionable logs.
 - Document the chosen implementation (Python/Node) and share remediation guidance in CI output.
 - Reference: `docs/kb/howtos/quality-bar-linter.md`.
 

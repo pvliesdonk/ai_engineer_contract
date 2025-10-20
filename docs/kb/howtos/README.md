@@ -1,6 +1,6 @@
 ---
 doc_type: kb_section
-doc_version: 2025-10-19.r1
+doc_version: 2025-10-21.r1
 title: How-Tos
 ---
 
@@ -15,3 +15,5 @@ Add guides for setup, workflows, and common operations.
 - [Quality Bar Linter Specification](./quality-bar-linter.md)
 - [IP Disclaimer & Rights Attestation Template](./ip-disclaimer.md)
 - [SCM Mode Decision Tree](./scm-mode-decision-tree.md)
+- [SCM-C Advise-Only Templates](./scm-c-advise.md)
+- [AI Model Recommendation Playbook](./model-recommendations.md)

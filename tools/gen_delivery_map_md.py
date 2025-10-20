@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import sys
+
+try:
+    import yaml  # type: ignore
+except Exception as e:
+    print('Missing dependency: pyyaml is required', file=sys.stderr)
+    raise
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / 'docs' / 'design' / 'delivery-map.yml'
+OUT = ROOT / 'docs' / 'design' / 'delivery-map.md'
+
+HEADER = ("---\n"
+          "title: Delivery Map\n"
+          "---\n\n"
+          "# Delivery Map\n\n"
+          "This page is generated from `docs/design/delivery-map.yml`.\n\n")
+
+
+def unit_to_md(u: dict) -> str:
+    name = u.get('name', '')
+    milestone = u.get('milestone', '')
+    tags = ', '.join(u.get('tags', []) or [])
+    docs = u.get('docs', []) or []
+    lines = []
+    lines.append(f"## {name}\n")
+    meta_bits = []
+    if milestone:
+        meta_bits.append(f"milestone: {milestone}")
+    if tags:
+        meta_bits.append(f"tags: {tags}")
+    if meta_bits:
+        lines.append(f"_({'; '.join(meta_bits)})_\n\n")
+    if docs:
+        lines.append("| Document | Summary |\n|---|---|\n")
+        for d in docs:
+            path = d.get('path', '')
+            summary = d.get('summary', '')
+            lines.append(f"| [{path}]({path}) | {summary} |\n")
+        lines.append("\n")
+    return ''.join(lines)
+
+
+def main() -> int:
+    data = yaml.safe_load(SRC.read_text(encoding='utf-8')) or {}
+    units = data.get('units', []) or []
+    parts = [HEADER]
+    for u in units:
+        parts.append(unit_to_md(u))
+    content = ''.join(parts)
+    if OUT.exists() and OUT.read_text(encoding='utf-8') == content:
+        return 0
+    OUT.write_text(content, encoding='utf-8')
+    print(f'Wrote {OUT}')
+    return 0
+
+if __name__ == '__main__':
+    raise SystemExit(main())

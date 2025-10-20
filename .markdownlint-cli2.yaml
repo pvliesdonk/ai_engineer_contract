@@ -10,4 +10,3 @@ config:
   MD024: false  # no-duplicate-heading
   MD025: false  # multiple top-level headings
   MD036: false  # emphasis used instead of a heading
-

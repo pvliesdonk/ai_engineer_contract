@@ -1,0 +1,41 @@
+site_name: AI Engineer Contract
+site_url: https://pvliesdonk.github.io/ai_engineer_contract/
+repo_url: https://github.com/pvliesdonk/ai_engineer_contract
+edit_uri: edit/develop/
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.action.edit
+nav:
+  - Home: index.md
+  - Contract:
+      - Overview: design/index.md
+      - Engineering Contract: design/ENGINEERING_CONTRACT.md
+      - Delivery Map: design/delivery-map.md
+      - Decisions: design/DECISIONS.md
+  - How-tos:
+      - Binding prompt: kb/howtos/binding-prompt.md
+      - Getting Started: kb/howtos/getting-started.md
+      - Phase Gates: kb/howtos/phase-gates.md
+      - Plan → Build: kb/howtos/plan-to-build.md
+      - Advise-Only Templates: kb/howtos/advise-only-templates.md
+      - SCM Mode Decision Tree: kb/howtos/scm-mode-decision-tree.md
+      - Repo hygiene (pre-commit): kb/howtos/repo-hygiene-pre-commit.md
+      - Model Recommendations: kb/howtos/model-recommendations.md
+      - Release checklist: kb/howtos/release-checklist.md
+      - Sync canonical contract: kb/howtos/sync-canonical.md
+      - GitHub project integration: kb/howtos/github-project-integration.md
+      - Typical CI issues: kb/howtos/typical-ci-issues.md
+      - IP disclaimer template: kb/howtos/ip-disclaimer.md
+  - Reference:
+      - Label taxonomy: kb/labels.md
+      - Repo policies & meta: kb/repo-policies.md
+      - Dual role (canonical vs instance): kb/dual-role.md
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - tables
+  - footnotes

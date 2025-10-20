@@ -1,0 +1,27 @@
+name: Verify Docs Build
+
+on:
+  pull_request:
+    branches: [ develop ]
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install MkDocs & deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material pyyaml
+      - name: Generate derived docs (delivery map, labels)
+        run: |
+          python tools/gen_labels_md.py
+          python tools/gen_delivery_map_md.py
+          git diff --exit-code || (echo 'Docs not up-to-date. Run generators and commit.' && exit 1)
+      - name: Build with --strict
+        run: mkdocs build --strict
