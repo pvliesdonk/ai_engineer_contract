@@ -12,6 +12,8 @@
 
 # Notes
 
+> Quick reference: **Phase Gate Quick-Escape** — see `docs/kb/howtos/phase-gates.md`.
+
 ## Linked Issues
 
 - Fixes #<issue-id>
