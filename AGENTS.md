@@ -43,4 +43,4 @@ Prefer `gh` for repo automation; release-please runs automatically on pushes to 
 - Detect the active mode once, confirm capabilities with the human if unclear, and document any switch.
 - **SCM-A:** full control (branches/PRs); merge to `develop` only with explicit approval; releases are manual.
 - **SCM-B:** provide ready-to-run edits/scripts; human executes/pushes.
-- **SCM-C:** rely on templates in `tools/` for copy/paste flows; keep instructions concise and auditable.
+- **SCM-C:** deliver advise-only packages (issue/PR bodies, reviews, checklists, single-file diffs) using `docs/kb/howtos/scm-c-advise.md`; escalate if work needs automation or multi-file edits.

@@ -26,12 +26,23 @@
 
 - **SCM-A — Full-Stack Agent:** direct access to code, `git`, `gh`, runtimes, and tokens. Do everything automatically (branches, commits, PRs, labels, issues, projects). Merge into **`develop`** after explicit chat approval. **Releases on `main` are always manual** (human presses the button). Allowed ops include pushing branches, running CI, creating repos/projects, and editing secrets (with approval).
 - **SCM-B — IDE Co-Driver:** can edit files but cannot push. Provide ready-to-run scripts/patches and precise commands. Track readiness and tell the human when to merge or open release PRs. Allowed ops: local edits, diff generation, command suggestions, documentation updates. Disallowed: pushing, creating repos, mutating secrets.
-- **SCM-C — Chat-Only Operator:** minimal environment. Use **single-file Python templates** in `tools/` to open PRs. Optimize for copy-pasteable steps and UI click-paths. Allowed ops: requirements gathering, design updates, instructions, lightweight docs. Disallowed: any direct filesystem or git changes.
+- **SCM-C — Advise-Only Operator:** chat-only environment. Deliver structured guidance only—issue/PR bodies, review comments, checklists, and **optional inline unified diffs** for a single file. Use the templates in [`docs/kb/howtos/scm-c-advise.md`](../kb/howtos/scm-c-advise.md) so every hand-off stays copy/paste friendly.
+  - **Deliverables:** Issue/plan/PR bodies, review summaries, validation or risk checklists, and single-file inline unified diffs wrapped in fenced code blocks with application notes.
+  - **Forbidden:** Filesystem edits, git commands, running scripts, archive/patch uploads, or automated PR/branch creation.
+  - **Escalate:** When the requested change spans multiple files, requires command execution or automation, or the human asks for direct code edits beyond the documented inline diff scope.
 - Detect mode once per session following this flow:
   1. **Auto-detect** capabilities (check git push access, filesystem access, `gh` auth). If unclear, ask the human to confirm the mode.
   2. **Confirm** before performing privileged actions (creating repos, changing default branches, toggling visibility).
   3. **Log** any mode switch in the conversation and in the PR body if it impacts work.
 - Use the decision tree in `docs/kb/howtos/scm-mode-decision-tree.md` before running operations that require elevated access (e.g., `gh repo create`, secret updates).
+
+#### SCM deliverables & escalation
+
+| Mode  | Primary outputs                                                                 | Escalate when…                                               |
+| ----- | -------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| SCM-A | Branches, commits, PRs, CI runs, repo/label automation                           | Human approval required for privileged ops (secrets, repos). |
+| SCM-B | Local edits, diffs/patches, scripts, documentation updates                      | Work needs direct pushes, multi-repo automation, or secrets. |
+| SCM-C | Advise-only packages via docs/kb/howtos/scm-c-advise.md templates (issues, reviews, checklists, inline diffs) | Task requires multi-file edits, command execution, automation, or non-templated assets. |
 
 ### Agent Operating Guardrails
 
@@ -316,7 +327,7 @@ ai_assist:
 
 ## Session Modes (SCM-A/B/C)
 - Detect mode once per session; confirm capabilities with the human if unclear.
-- SCM-A may push/PR (merge only with approval); SCM-B offers instructions; SCM-C uses templates in `tools/`.
+- SCM-A may push/PR (merge only with approval); SCM-B offers instructions; SCM-C delivers advise-only packages using `docs/kb/howtos/scm-c-advise.md` (no archives or direct file edits).
 ````
 
 ## 26) CI Phase Gates
