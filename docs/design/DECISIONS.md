@@ -1,11 +1,11 @@
----
 doc_type: decisions_log
-doc_version: 2025-10-19.r1
+doc_version: 2025-10-20.r1
 title: Decisions Log
 ---
 
 | Date       | ID                | Prompt                                                               | Choice                                                                                  | Rationale                                                                                               | Linked Artifacts                                             |
 | ---------- | ----------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| 2025-10-20 | D2025-10-20-01    | How do we harden agent governance and documentation quality gates?  | Clarify agent guardrails, codify the feedback → proposal → design pipeline, mandate phase-gate/docs-quality workflows, and add model recommendation guidance. | Addresses feedback in #90/#87 by setting auditable guardrails and ensuring planning artifacts reference approved model families. | docs/design/ENGINEERING_CONTRACT.md, issue #90, issue #92, issue #87 |
 | 2025-10-18 | D2025-10-18-01    | What work may agents perform before implementation begins?          | Adopt explicit planning vs. build guardrails with a PR checklist and Plan issues          | Resolves ambiguity noted in #42; aligns repo operations with contract-first discipline.                  | docs/design/ENGINEERING_CONTRACT.md, issue #42               |
 | 2025-10-18 | D2025-10-18-02    | How should agents elicit and track decisions during requirements?   | Introduce Decision Elicitation Protocol + required DECISIONS.md log with optional YAML   | Ensures auditable, automation-friendly decisions trail as requested in #43.                             | docs/design/ENGINEERING_CONTRACT.md, templates/…, issue #43  |
 | 2025-10-18 | D2025-10-18-03    | What baseline content must AGENTS.md include across repositories?   | Mandate contract link, planning refs, plan/build gate, CI/labels, secrets, SCM mode section | Standardizes operator onboarding and reduces misconfiguration risk per #44.                              | docs/design/ENGINEERING_CONTRACT.md, AGENTS.md, issue #44    |
