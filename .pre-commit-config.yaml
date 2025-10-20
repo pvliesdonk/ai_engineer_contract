@@ -17,4 +17,3 @@ repos:
     rev: v0.15.0
     hooks:
       - id: markdownlint-cli2
-      - id: markdownlint-cli2-config
