@@ -26,7 +26,7 @@ Canonical engineering contract for AI × Peter. Key points:
 - Keep this contract at **`docs/design/ENGINEERING_CONTRACT.md`** and link back to the canonical repo.
 - For KB/wiki work, store content under **`docs/kb/`** with an `index.md` and structured links.
 - Open issues for work items; link PRs to issues; reference design docs where applicable.
-- In **SCM-C** (chat-only), deliver advise-only packages using the templates in `docs/kb/howtos/scm-c-advise.md`. In SCM-A, the AI can commit/push/PR directly (merge to `develop` needs chat approval; releases to `main` are manual).
+- In **advise-only** mode (formerly SCM-C), deliver advise-only packages using the templates in `docs/kb/howtos/advise-only-templates.md`. In SCM-A, the AI can commit/push/PR directly (merge to `develop` needs chat approval; releases to `main` are manual).
 - Tool templates auto-detect the current repo slug via `gh`/`git`; pass `--owner/--repo` if you need to operate against another fork.
 - Refer to [IP Disclaimer & Rights Attestation Template](docs/kb/howtos/ip-disclaimer.md) when adding third-party or quoted material.
 
