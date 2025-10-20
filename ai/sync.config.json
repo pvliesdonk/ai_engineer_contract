@@ -1,6 +1,6 @@
 {
   "sourceRepo": "pvliesdonk/ai_engineer_contract",
-  "sourceRef": "latest", 
+  "sourceRef": "latest",
   "syncContract": true,
   "syncTools": ["*_TEMPLATE.py"],
   "includeCapsule": false,

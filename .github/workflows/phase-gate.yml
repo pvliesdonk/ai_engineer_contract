@@ -93,7 +93,7 @@ jobs:
           PLAN_EXEMPT: ${{ steps.labels.outputs.plan_exempt }}
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          run: |
+        run: |
           python - <<'PY'
           import fnmatch, json, os, re, sys, urllib.error, urllib.request
 
