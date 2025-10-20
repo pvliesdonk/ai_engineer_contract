@@ -1,7 +1,13 @@
-name: Design change / feature proposal
-description: Propose or change behavior that affects design; must link to design docs.
-labels: ["design","planning"]
+name: Design change
+description: Formalize an approved design update backed by docs and prior discussion.
+labels:
+  - design
+  - planning
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template once a feature proposal or discovery work is ready to become a concrete design change. Link to supporting docs and the originating proposal when available.
   - type: textarea
     id: problem
     attributes:
@@ -11,10 +17,16 @@ body:
     validations:
       required: true
   - type: input
+    id: proposal_link
+    attributes:
+      label: Related proposal
+      description: Link to the originating feature proposal issue, if one exists.
+      placeholder: "#123"
+  - type: input
     id: design_link
     attributes:
-      label: Link to design docs
-      description: Link to requirements/architecture section or relevant ADR
+      label: Design docs
+      description: Link to requirements, architecture docs, ADRs, or PRs updating them.
       placeholder: docs/design/... (or a PR adding them)
     validations:
       required: true
@@ -30,4 +42,4 @@ body:
     id: notes
     attributes:
       label: Notes / References
-      description: Extra links, ADRs, diagrams
+      description: Extra links, ADRs, diagrams, or implementation considerations

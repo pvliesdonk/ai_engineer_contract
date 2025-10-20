@@ -1,0 +1,64 @@
+name: Feedback
+description: Capture feedback about the contract, tooling, or processes.
+title: "[Feedback] <short description>"
+labels:
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing feedback so we can keep improving. Be as specific as possible.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Feedback Area
+      description: Which part of the project does this feedback cover?
+      options:
+        - Contract content
+        - Tooling / automation
+        - Documentation
+        - Process / workflow
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary of Feedback
+      description: What happened and what would you like to see changed?
+      placeholder: Concise overview of the feedback.
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details & Examples
+      description: Add context, scenarios, or snippets that illustrate the feedback.
+      placeholder: |
+        - Scenario or workflow
+        - Impact on your work
+        - Screenshots or snippets (if safe to share)
+  - type: textarea
+    id: desired_outcome
+    attributes:
+      label: Desired Outcome
+      description: What result would address this feedback?
+      placeholder: |
+        - Updated guidance on ...
+        - Automation to help with ...
+  - type: textarea
+    id: links
+    attributes:
+      label: Related Links
+      description: Point to docs, issues, or discussions that add context.
+      placeholder: |
+        - docs/design/...
+        - Related issue #
+  - type: textarea
+    id: follow_up
+    attributes:
+      label: Follow-up Preferences
+      description: How should we follow up? Mention teams or maintainers if relevant.
+      placeholder: |
+        - cc @team
+        - Happy with async updates only

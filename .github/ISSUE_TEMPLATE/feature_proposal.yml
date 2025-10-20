@@ -1,0 +1,54 @@
+name: Feature proposal
+description: Capture an idea or enhancement for future design discussion.
+title: "[Proposal] <short description>"
+labels:
+  - proposal
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose new functionality or improvements. Proposals may evolve into formal design changes once validated.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One-sentence description of the idea.
+      placeholder: e.g., Support templated plan issues
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Opportunity
+      description: What challenge or opportunity does this address?
+      placeholder: |
+        - Current behavior
+        - Impact or motivation
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Approach
+      description: Outline the idea at a high level. Include notes on scope, unknowns, or options.
+      placeholder: |
+        - Feature outline
+        - Alternatives considered
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation Signals
+      description: What evidence or research would confirm this is worth pursuing?
+      placeholder: |
+        - Metrics or customer feedback
+        - Related issues or requests
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies & Follow-up
+      description: List related issues or steps that would follow if we accept this proposal. Link to design change issues when opened.
+      placeholder: |
+        - Depends on ...
+        - Follow up with design change issue #
