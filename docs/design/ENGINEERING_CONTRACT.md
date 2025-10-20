@@ -176,6 +176,31 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 - Planning artifacts MAY recommend **model families** for AI-assisted work. Prefer the organization’s approved model catalog and reference the latest generally available versions.
 - When no org policy exists, name the family (e.g., “OpenAI GPT-5”, “OpenAI GPT-4.1”) and provide a short rationale with acceptable fallbacks that cover cost, latency, and privacy constraints.
 - Record recommendations in docs; pin exact SKUs only in deployable configuration files. Revisit the recommendations at each release or when upstream models change materially.
+- Use the provider matrix and task routes published in `docs/kb/howtos/model-recommendations.md`. At minimum, capture the shared provider families so downstream repos stay aligned:
+
+```yaml
+ai_assist:
+  providers:
+    openai:
+      primary: gpt-5
+      thinking: gpt-5-thinking
+      fast: o4-mini
+      long_context: gpt-4.1
+    google:
+      primary: gemini-2.5-flash
+      thinking: gemini-2.5-pro
+      fast: gemini-2.5-flash-lite
+      long_context: gemini-2.5-pro
+    ollama:
+      primary: llama3.1:8b-instruct-q4_K_M
+      thinking: deepseek-r1:7b
+      fast: mistral:7b-instruct
+      long_context: mistral:7b-instruct
+  notes: >
+    Document families in planning; pin exact SKUs only in deployable config.
+    For local models on 8 GB GPUs, prefer Q4_K_M quantizations for stability.
+```
+- Route guidance covers common tasks (`scm_c_advise`, `policy_edit`, `bulk_scaffold`, `long_context`, `bulk_narration`, `bulk_programming`) across OpenAI, Google AI Studio, and local Ollama options so maintainers can tailor usage per scenario.
 
 ## 19) Issue & Project Management (AI allowed)
 
@@ -217,6 +242,20 @@ gh label create feedback --color 1d76db --description "Feedback and questions" -
 
 - Markdown with YAML front matter. Commit diagram sources (Mermaid/PlantUML/Graphviz). Avoid proprietary-only formats; provide text exports if necessary.
 - Provide/update **`ai/manifest.json`** so tools find contract, design root, roadmap, KB root, labels, and versioning schemes.
+- Encode AI assistance defaults in the manifest. Mirror the provider families/routes from `docs/kb/howtos/model-recommendations.md` so automation can reason about tasks:
+
+```json
+{
+  "ai_assist": {
+    "providers": {
+      "openai": { "primary": "gpt-5", "thinking": "gpt-5-thinking", "fast": "o4-mini", "long_context": "gpt-4.1" },
+      "google": { "primary": "gemini-2.5-flash", "thinking": "gemini-2.5-pro", "fast": "gemini-2.5-flash-lite", "long_context": "gemini-2.5-pro" },
+      "ollama": { "primary": "llama3.1:8b-instruct-q4_K_M", "thinking": "deepseek-r1:7b", "fast": "mistral:7b-instruct", "long_context": "mistral:7b-instruct" }
+    },
+    "review_on_release": true
+  }
+}
+```
 
 ### Changelog
 

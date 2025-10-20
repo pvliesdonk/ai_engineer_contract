@@ -15,3 +15,4 @@ Add guides for setup, workflows, and common operations.
 - [Quality Bar Linter Specification](./quality-bar-linter.md)
 - [IP Disclaimer & Rights Attestation Template](./ip-disclaimer.md)
 - [SCM Mode Decision Tree](./scm-mode-decision-tree.md)
+- [AI Model Recommendation Playbook](./model-recommendations.md)
