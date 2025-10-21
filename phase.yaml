@@ -1,11 +1,5 @@
 # Current phase options: design (default), plan, build
-phase: design
+phase: build
 allowed_paths:
-  # Planning artefacts only; update this file when advancing to `plan` or `build`.
-  - docs/**
-  - README.md
-  - AGENTS.md
-  - CONTRACT_REFERENCE_TEMPLATE.md
-  - .github/ISSUE_TEMPLATE/**
-  - .github/mergereadiness/**
-  - phase.yaml
+  # Build phase allows full repo access for implementation work.
+  - "**"
