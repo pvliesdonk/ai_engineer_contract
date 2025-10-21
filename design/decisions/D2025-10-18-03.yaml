@@ -1,0 +1,16 @@
+id: D2025-10-18-03
+date: 2025-10-18
+prompt: What baseline content must AGENTS.md include?
+options:
+  - label: Repository-specific discretion
+    summary: Allow teams to decide content ad hoc.
+  - label: Contract-defined baseline
+    summary: Mandate a consistent set of sections with a reusable snippet.
+choice: Contract-defined baseline
+rationale: Provides immediate alignment for agents and reduces onboarding mistakes.
+references:
+  issues:
+    - 44
+  documents:
+    - AGENTS.md
+    - docs/design/ENGINEERING_CONTRACT.md

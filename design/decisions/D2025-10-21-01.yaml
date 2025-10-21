@@ -1,0 +1,21 @@
+id: D2025-10-21-01
+date: 2025-10-21
+prompt: How do we simplify SCM-C into an advise-only workflow?
+options:
+  - label: Retain existing chat-only guidance
+    summary: Keep SCM-C focused on template scripts/zip bundles without redefining deliverables.
+  - label: Hybrid (allow advise-only or zip bundles)
+    summary: Permit both inline guidance and artifact uploads, leaving escalation rules informal.
+  - label: Advise-only with documented templates
+    summary: Limit SCM-C to structured guidance, codify escalation triggers, and publish reusable templates.
+choice: Advise-only with documented templates
+rationale: Aligning SCM-C around structured guidance eliminates zip/patch friction, clarifies escalation points, and keeps outputs auditable for humans.
+references:
+  issues:
+    - 91
+    - 97
+  documents:
+    - docs/design/ENGINEERING_CONTRACT.md
+    - docs/design/DECISIONS.md
+    - docs/kb/howtos/scm-c-advise.md
+    - AGENTS.md

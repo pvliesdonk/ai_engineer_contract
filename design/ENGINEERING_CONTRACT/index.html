@@ -1,0 +1,2785 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://pvliesdonk.github.io/ai_engineer_contract/design/ENGINEERING_CONTRACT/">
+      
+      
+        <link rel="prev" href="../roadmap/">
+      
+      
+        <link rel="next" href="../delivery-map/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Engineering Contract - AI Engineer Contract</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#engineering_contractmd-ai-peter-v230" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Engineer Contract" class="md-header__button md-logo" aria-label="AI Engineer Contract" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Engineer Contract
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Engineering Contract
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pvliesdonk/ai_engineer_contract" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Contract
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../kb/" class="md-tabs__link">
+          
+  
+  
+  Knowledge Base
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../kb/howtos/" class="md-tabs__link">
+          
+  
+  
+  How-tos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../kb/labels/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../issues/2025-10-19-align-version-refs/" class="md-tabs__link">
+          
+  
+  
+  Issues
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../release-trigger-2.0.2/" class="md-tabs__link">
+          
+  
+  
+  Release Playbooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Engineer Contract" class="md-nav__button md-logo" aria-label="AI Engineer Contract" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Engineer Contract
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pvliesdonk/ai_engineer_contract" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Contract
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Contract
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Requirements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Engineering Contract
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Engineering Contract
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-branches-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      1) Branches &amp; Flow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pr-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      2) PR Quality
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-releases-automation-tool-agnostic" class="md-nav__link">
+    <span class="md-ellipsis">
+      3) Releases &amp; Automation (Tool-Agnostic)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-session-capability-modes-scm" class="md-nav__link">
+    <span class="md-ellipsis">
+      4) Session Capability Modes (SCM)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4) Session Capability Modes (SCM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scm-deliverables-escalation" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCM deliverables &amp; escalation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent-operating-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent Operating Guardrails
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-artifact-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      5) Artifact Delivery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-robust-delimiters-escaping" class="md-nav__link">
+    <span class="md-ellipsis">
+      6) Robust Delimiters &amp; Escaping
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      7) Security
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      8) Communication
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8) Communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-hygiene-proposal-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue Hygiene &amp; Proposal Tracking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedback-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feedback &amp; Questions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-programming-adjacent-projects-docskbasewiki" class="md-nav__link">
+    <span class="md-ellipsis">
+      9) Programming-Adjacent Projects (Docs/KBase/Wiki)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-new-repo-bootstrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      10) New Repo Bootstrap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-canonical-source-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      11) Canonical Source &amp; Distribution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      12) Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-auto-upgrade-in-chat-repos" class="md-nav__link">
+    <span class="md-ellipsis">
+      13) Auto-Upgrade in Chat &amp; Repos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-todos-not-implemented-stubs" class="md-nav__link">
+    <span class="md-ellipsis">
+      14) TODOs &amp; Not-Implemented Stubs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-conventional-commit-proposals" class="md-nav__link">
+    <span class="md-ellipsis">
+      15) Conventional Commit Proposals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-changelog-release-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      16) Changelog &amp; Release Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-deviation-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      17) Deviation Protocol
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-requirements-design-phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      18) Requirements &amp; Design Phase
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18) Requirements &amp; Design Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-build-allowed-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-Build Allowed Work
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decision-elicitation-protocol-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decision Elicitation Protocol &amp; Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-recommendations-in-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Recommendations in Plans
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-issue-project-management-ai-allowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      19) Issue &amp; Project Management (AI allowed)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-planning-vs-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      20) Planning vs Releases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-branching-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      21) Branching Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-ci-tool-selection-guidance-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      25) CI Tool Selection Guidance (AI)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-merge-readiness-suggestions" class="md-nav__link">
+    <span class="md-ellipsis">
+      22) Merge-Readiness Suggestions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-human-machine-readability-self-contained" class="md-nav__link">
+    <span class="md-ellipsis">
+      23) Human + Machine Readability (Self-contained)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="23) Human + Machine Readability (Self-contained)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changelog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-agentsmd-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      24) AGENTS.md Convention
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-ci-phase-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      26) CI Phase Gates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-quality-bar-enforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      27) Quality Bar Enforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-ip-rights-attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      28) IP Rights &amp; Attestation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29-dual-role-transparency" class="md-nav__link">
+    <span class="md-ellipsis">
+      29) Dual-Role Transparency
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delivery-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Delivery Map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Decisions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Decisions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DECISIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Decision Index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decision-log/ADR-2025-01-01-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ADR Template
+    
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--Proposed"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Knowledge Base
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledge Base
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    How-tos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            How-tos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/binding-prompt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Binding prompt
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/phase-gates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase Gates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/plan-to-build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Plan → Build
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/advise-only-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advise-Only Templates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/scm-mode-decision-tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SCM Mode Decision Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/scm-c-advise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SCM-C Advise-Only
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/repo-hygiene-pre-commit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Repo hygiene (pre-commit)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/model-recommendations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Model Recommendations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/quality-bar-linter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quality Bar Linter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/release-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release checklist
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/sync-canonical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sync canonical contract
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/github-project-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GitHub project integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/typical-ci-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Typical CI issues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/howtos/ip-disclaimer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IP disclaimer template
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Label taxonomy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/repo-policies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Repo policies & meta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kb/dual-role/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dual role (canonical vs instance)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Issues
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Issues
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../issues/2025-10-19-align-version-refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Align version references
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../issues/2025-10-19-version-drift-guard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guard version drift
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Release Playbooks
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Release Playbooks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-trigger-2.0.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release trigger (2.0.2)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-trigger-2.0.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release trigger (2.0.1)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-branches-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      1) Branches &amp; Flow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pr-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      2) PR Quality
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-releases-automation-tool-agnostic" class="md-nav__link">
+    <span class="md-ellipsis">
+      3) Releases &amp; Automation (Tool-Agnostic)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-session-capability-modes-scm" class="md-nav__link">
+    <span class="md-ellipsis">
+      4) Session Capability Modes (SCM)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4) Session Capability Modes (SCM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scm-deliverables-escalation" class="md-nav__link">
+    <span class="md-ellipsis">
+      SCM deliverables &amp; escalation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent-operating-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent Operating Guardrails
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-artifact-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      5) Artifact Delivery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-robust-delimiters-escaping" class="md-nav__link">
+    <span class="md-ellipsis">
+      6) Robust Delimiters &amp; Escaping
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      7) Security
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      8) Communication
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8) Communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-hygiene-proposal-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue Hygiene &amp; Proposal Tracking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feedback-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feedback &amp; Questions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-programming-adjacent-projects-docskbasewiki" class="md-nav__link">
+    <span class="md-ellipsis">
+      9) Programming-Adjacent Projects (Docs/KBase/Wiki)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-new-repo-bootstrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      10) New Repo Bootstrap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-canonical-source-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      11) Canonical Source &amp; Distribution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      12) Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-auto-upgrade-in-chat-repos" class="md-nav__link">
+    <span class="md-ellipsis">
+      13) Auto-Upgrade in Chat &amp; Repos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-todos-not-implemented-stubs" class="md-nav__link">
+    <span class="md-ellipsis">
+      14) TODOs &amp; Not-Implemented Stubs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-conventional-commit-proposals" class="md-nav__link">
+    <span class="md-ellipsis">
+      15) Conventional Commit Proposals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-changelog-release-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      16) Changelog &amp; Release Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-deviation-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      17) Deviation Protocol
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-requirements-design-phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      18) Requirements &amp; Design Phase
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18) Requirements &amp; Design Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-build-allowed-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-Build Allowed Work
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decision-elicitation-protocol-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decision Elicitation Protocol &amp; Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-recommendations-in-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Recommendations in Plans
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-issue-project-management-ai-allowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      19) Issue &amp; Project Management (AI allowed)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-planning-vs-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      20) Planning vs Releases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-branching-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      21) Branching Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-ci-tool-selection-guidance-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      25) CI Tool Selection Guidance (AI)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-merge-readiness-suggestions" class="md-nav__link">
+    <span class="md-ellipsis">
+      22) Merge-Readiness Suggestions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-human-machine-readability-self-contained" class="md-nav__link">
+    <span class="md-ellipsis">
+      23) Human + Machine Readability (Self-contained)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="23) Human + Machine Readability (Self-contained)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changelog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-agentsmd-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      24) AGENTS.md Convention
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-ci-phase-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      26) CI Phase Gates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-quality-bar-enforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      27) Quality Bar Enforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-ip-rights-attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      28) IP Rights &amp; Attestation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29-dual-role-transparency" class="md-nav__link">
+    <span class="md-ellipsis">
+      29) Dual-Role Transparency
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/pvliesdonk/ai_engineer_contract/edit/develop/design/ENGINEERING_CONTRACT.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="engineering_contractmd-ai-peter-v230">ENGINEERING_CONTRACT.md (AI × Peter) — v2.3.0<a class="headerlink" href="#engineering_contractmd-ai-peter-v230" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Breaking change: <code>&lt;BASE_BRANCH&gt;</code> is removed. The development branch is <strong>always <code>develop</code></strong>.</p>
+</blockquote>
+<h2 id="1-branches-flow">1) Branches &amp; Flow<a class="headerlink" href="#1-branches-flow" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Work under <code>pvliesdonk/{repo_name}</code>.</li>
+<li><code>main</code> = releases only (cut from <code>develop → main</code> when requested).</li>
+<li><strong>Development branch:</strong> <code>develop</code> (no alternates).</li>
+<li>Feature branches: <code>feat/&lt;slug&gt;</code>, <code>fix/&lt;slug&gt;</code>, <code>docs/&lt;slug&gt;</code>, <code>chore/&lt;slug&gt;</code>, <code>refactor/&lt;slug&gt;</code>, <code>test/&lt;slug&gt;</code>.</li>
+<li>Always rebase on <code>origin/develop</code> before PR. Squash-merge PRs into <code>develop</code>.</li>
+</ul>
+<h2 id="2-pr-quality">2) PR Quality<a class="headerlink" href="#2-pr-quality" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Title: <strong>Conventional Commit</strong> (<code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>chore:</code>, <code>refactor:</code>, <code>ci:</code>, <code>test:</code>). Add <code>!</code> for breaking changes.</li>
+<li>Body: <strong>Summary</strong>, <strong>Why</strong>, <strong>Changes</strong>, <strong>Validation</strong>, <strong>Risk &amp; Rollback</strong>, <strong>Notes</strong>.</li>
+<li>Small focused diffs; update docs/tests with behavior changes.</li>
+</ul>
+<h2 id="3-releases-automation-tool-agnostic">3) Releases &amp; Automation (Tool-Agnostic)<a class="headerlink" href="#3-releases-automation-tool-agnostic" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use a <strong>Release Automation Tool (RAT)</strong> (e.g., release-please, semantic-release) to produce SemVer tags, release notes, and (optionally) <code>CHANGELOG.md</code>.</li>
+<li>Prefer a <strong>Release PR</strong> over direct bot commits on <code>main</code>.</li>
+<li>After release on <code>main</code>, <strong>back-merge <code>main → develop</code></strong> so development carries release artifacts (changelog/version).</li>
+</ul>
+<h2 id="4-session-capability-modes-scm">4) Session Capability Modes (SCM)<a class="headerlink" href="#4-session-capability-modes-scm" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>SCM-A — Full-Stack Agent:</strong> direct access to code, <code>git</code>, <code>gh</code>, runtimes, and tokens. Do everything automatically (branches, commits, PRs, labels, issues, projects). Merge into <strong><code>develop</code></strong> after explicit chat approval. <strong>Releases on <code>main</code> are always manual</strong> (human presses the button). Allowed ops include pushing branches, running CI, creating repos/projects, and editing secrets (with approval).</li>
+<li><strong>SCM-B — IDE Co-Driver:</strong> can edit files but cannot push. Provide ready-to-run scripts/patches and precise commands. Track readiness and tell the human when to merge or open release PRs. Allowed ops: local edits, diff generation, command suggestions, documentation updates. Disallowed: pushing, creating repos, mutating secrets.</li>
+<li><strong>SCM-C — Advise-Only Operator:</strong> chat-only environment. Deliver structured guidance only—issue/PR bodies, review comments, checklists, and <strong>optional inline unified diffs</strong> for a single file. Use the templates in <a href="../../kb/howtos/scm-c-advise/"><code>docs/kb/howtos/scm-c-advise.md</code></a> so every hand-off stays copy/paste friendly.</li>
+<li><strong>Deliverables:</strong> Issue/plan/PR bodies, review summaries, validation or risk checklists, and single-file inline unified diffs wrapped in fenced code blocks with application notes.</li>
+<li><strong>Forbidden:</strong> Filesystem edits, git commands, running scripts, archive/patch uploads, or automated PR/branch creation.</li>
+<li><strong>Escalate:</strong> When the requested change spans multiple files, requires command execution or automation, or the human asks for direct code edits beyond the documented inline diff scope.</li>
+<li>Detect mode once per session following this flow:</li>
+<li><strong>Auto-detect</strong> capabilities (check git push access, filesystem access, <code>gh</code> auth). If unclear, ask the human to confirm the mode.</li>
+<li><strong>Confirm</strong> before performing privileged actions (creating repos, changing default branches, toggling visibility).</li>
+<li><strong>Log</strong> any mode switch in the conversation and in the PR body if it impacts work.</li>
+<li>Use the decision tree in <code>docs/kb/howtos/scm-mode-decision-tree.md</code> before running operations that require elevated access (e.g., <code>gh repo create</code>, secret updates).</li>
+</ul>
+<h3 id="scm-deliverables-escalation">SCM deliverables &amp; escalation<a class="headerlink" href="#scm-deliverables-escalation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Primary outputs</th>
+<th>Escalate when…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCM-A</td>
+<td>Branches, commits, PRs, CI runs, repo/label automation</td>
+<td>Human approval required for privileged ops (secrets, repos).</td>
+</tr>
+<tr>
+<td>SCM-B</td>
+<td>Local edits, diffs/patches, scripts, documentation updates</td>
+<td>Work needs direct pushes, multi-repo automation, or secrets.</td>
+</tr>
+<tr>
+<td>SCM-C</td>
+<td>Advise-only packages via docs/kb/howtos/scm-c-advise.md templates (issues, reviews, checklists, inline diffs)</td>
+<td>Task requires multi-file edits, command execution, automation, or non-templated assets.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="agent-operating-guardrails">Agent Operating Guardrails<a class="headerlink" href="#agent-operating-guardrails" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Always restate the detected SCM mode and base branch (<code>develop</code>) before taking privileged actions. If the environment changes mid-session, pause and re-confirm with a human.</li>
+<li>Operate behind a referenced Plan issue (unless <code>plan-exempt</code> is explicitly granted) and branch from <code>origin/develop</code> using the contract naming scheme. Document the plan with acceptance criteria and validation before editing docs/config/code.</li>
+<li>Apply the required PR labels: <code>from-ai</code>, <code>needs-review</code>, and an appropriate scope label (<code>docs</code>, <code>chore</code>, etc.). Auto-create missing labels with <code>gh label create</code>.</li>
+<li>Post a “Proposed solution” comment on the tracked issue before implementation. Keep it up to date as work evolves and link to the eventual PR.</li>
+<li>Enforce secrets hygiene: never store or echo tokens, redact sensitive output, and request escalated permissions only when unavoidable. Decline work that would expose secrets or violate org policy.</li>
+<li>If instructions conflict, would bypass <code>phase.yaml</code>, or exceed the current CI/approval guardrails, escalate via a <code>feedback</code> issue instead of proceeding. Document any deviations with <code>deviation-approved</code> and explicit rollback steps.</li>
+</ul>
+<h2 id="5-artifact-delivery">5) Artifact Delivery<a class="headerlink" href="#5-artifact-delivery" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Default:</strong> Provide deliverables as <strong>downloadable files</strong>. Long scripts can be hidden in chat but must be downloadable.</li>
+<li><strong>Advice-only:</strong> When explicitly asked for advice, give guidance/snippets/commands without packaging deliverables (scoped to the current request).</li>
+</ul>
+<h2 id="6-robust-delimiters-escaping">6) Robust Delimiters &amp; Escaping<a class="headerlink" href="#6-robust-delimiters-escaping" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use raw triple-quoted strings, LF line endings, single-quoted heredocs (<code>&lt;&lt;'EOF'</code>), and base64 for fragile/binary payloads. Optional SHA-256 verification.</li>
+</ul>
+<h2 id="7-security">7) Security<a class="headerlink" href="#7-security" title="Permanent link">&para;</a></h2>
+<ul>
+<li>No secrets in repos or logs. Use <code>.env.example</code>; ignore real secrets via <code>.gitignore</code>. Redact in logs/PRs.</li>
+</ul>
+<h2 id="8-communication">8) Communication<a class="headerlink" href="#8-communication" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Concise progress logs; deterministic scripts; pin versions where sensible.</li>
+</ul>
+<h3 id="issue-hygiene-proposal-tracking">Issue Hygiene &amp; Proposal Tracking<a class="headerlink" href="#issue-hygiene-proposal-tracking" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Always open issues for next steps and discrete work items; link related design/KB sections.</li>
+<li>When picking up an issue, add a top comment titled “Proposed solution” that summarizes:</li>
+<li>Scope and approach, validation/acceptance criteria, risks/rollback, and labels.</li>
+<li>Any contract/process implications (e.g., phase vs harness alignment) and planned CI checks.</li>
+<li>Keep the comment updated if the approach changes; link the PR and reference the comment in the PR body.</li>
+<li>Use labels from the taxonomy (e.g., <code>from-ai</code>, <code>needs-review</code>, <code>docs</code>, <code>chore</code>).</li>
+<li>Follow the feedback pipeline:</li>
+<li><code>feedback</code> issues capture raw input and MAY close without action.</li>
+<li>Elevate accepted ideas into <code>feature proposal</code> issues to explore scope and validation.</li>
+<li>Promote vetted proposals into <code>design change</code> issues when design docs are ready to update. Cross-link each hop so history stays auditable.</li>
+</ul>
+<h3 id="feedback-questions">Feedback &amp; Questions<a class="headerlink" href="#feedback-questions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AIs and consumers SHOULD open issues on the canonical repository for ambiguities, questions, or improvement proposals.</li>
+<li>Use labels: <code>feedback</code> and <code>question</code> (and others as appropriate).</li>
+<li>Include concrete references (file path + heading) and a minimal reproduction or example PR where helpful.</li>
+</ul>
+<h2 id="9-programming-adjacent-projects-docskbasewiki">9) Programming-Adjacent Projects (Docs/KBase/Wiki)<a class="headerlink" href="#9-programming-adjacent-projects-docskbasewiki" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The same PR/review flow applies. Validation adapts (link checkers, Markdownlint, doc build if any).</li>
+<li><strong>Docs live under <code>docs/</code></strong>. For knowledge bases, prefer <strong><code>docs/kb/</code></strong> with an <strong><code>index.md</code></strong> (front matter + TOC).</li>
+<li>Design docs (requirements/architecture/ADRs) live under <strong><code>docs/design/</code></strong>.</li>
+<li><strong>Versioning separation:</strong> Releases use <strong>SemVer</strong>; design/kb docs use <strong>date+revision</strong> (<code>doc_version: YYYY-MM-DD.rN</code> in YAML front matter).</li>
+<li>Issues/PRs must link to the relevant doc sections; the AI may create issues/labels/milestones/projects.</li>
+</ul>
+<h2 id="10-new-repo-bootstrap">10) New Repo Bootstrap<a class="headerlink" href="#10-new-repo-bootstrap" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Confirm LICENSE (usually <strong>MIT</strong>). Create <code>LICENSE</code>, <code>README.md</code>, <code>CONTRIBUTING.md</code>, minimal <code>.gitignore</code>. Create/push <code>main</code> and <code>develop</code>. Ensure default labels exist.</li>
+<li>Set up minimal CI immediately (e.g., markdown lint, script byte-compile, basic format/type checks) so the very first commits are validated.</li>
+<li>AI selects CI tools based on the stack being introduced. At minimum include lint/format checks and a smoke run where applicable.</li>
+</ul>
+<h2 id="11-canonical-source-distribution">11) Canonical Source &amp; Distribution<a class="headerlink" href="#11-canonical-source-distribution" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Canonical repo: <code>pvliesdonk/ai_engineer_contract</code>. Keep the contract in consumer projects at <code>docs/design/ENGINEERING_CONTRACT.md</code> with a link back here.</li>
+<li>Include the latest contract and (optionally) <code>tools/</code> in new repos. You may sync updates via PR.</li>
+<li>Include a root <code>AGENTS.md</code> that summarizes how AI agents should operate in the repo (see section 24).</li>
+<li>Dual role note: This repository both hosts the generic, tool-agnostic contract and implements it for itself. Consumers should follow the contract text; workflows here (e.g., release-please) are examples, not mandates.</li>
+</ul>
+<h2 id="12-labels">12) Labels<a class="headerlink" href="#12-labels" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Commits/PRs should have labels. Agents SHALL auto-create missing labels at PR time.</li>
+<li>Scripts SHOULD create missing labels via <code>gh label create</code> (idempotent) and MAY add repo-specific labels like <code>ci</code>, <code>feedback</code>.</li>
+<li>Suggested labels: <code>from-ai</code>, <code>needs-review</code>, <code>docs</code>, <code>chore</code>, <code>security</code>, <code>blocked</code>, <code>planning</code>, <code>needs-design-ref</code>, <code>breaking-change</code>, <code>content</code>, <code>design</code>, <code>asset</code>, <code>deviation-approved</code>, <code>feedback</code>.</li>
+</ul>
+<p>Example (idempotent) label creation</p>
+<pre><code class="language-bash">gh label create from-ai --color 5319e7 --description &quot;Auto-created label - from-ai&quot; --force
+gh label create needs-review --color d93f0b --description &quot;Auto-created label - needs-review&quot; --force
+gh label create ci --color 5319e7 --description &quot;Auto-created label - ci&quot; --force
+gh label create feedback --color 1d76db --description &quot;Feedback and questions&quot; --force
+</code></pre>
+<h2 id="13-auto-upgrade-in-chat-repos">13) Auto-Upgrade in Chat &amp; Repos<a class="headerlink" href="#13-auto-upgrade-in-chat-repos" title="Permanent link">&para;</a></h2>
+<ul>
+<li>When a newer contract/tool appears in the current chat, immediately use it.</li>
+<li>Open a PR to update <code>ENGINEERING_CONTRACT.md</code> and <strong>replace only canonical</strong> <code>tools/canonical/*</code> if you’re using them; keep <code>tools/local/*</code> intact.</li>
+</ul>
+<h2 id="14-todos-not-implemented-stubs">14) TODOs &amp; Not-Implemented Stubs<a class="headerlink" href="#14-todos-not-implemented-stubs" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Stubbed code must include explicit TODO markers and fail fast (language-appropriate <code>NotImplemented</code>/exceptions or warnings). Place TODOs at call sites and function bodies.</li>
+</ul>
+<h2 id="15-conventional-commit-proposals">15) Conventional Commit Proposals<a class="headerlink" href="#15-conventional-commit-proposals" title="Permanent link">&para;</a></h2>
+<ul>
+<li>After every deliverable, propose 1–3 candidate Conventional Commit messages and a PR title.</li>
+</ul>
+<h2 id="16-changelog-release-notes">16) Changelog &amp; Release Notes<a class="headerlink" href="#16-changelog-release-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The <strong>RAT</strong> is the source of truth for release notes and <code>CHANGELOG.md</code> (if enabled). Don’t edit generated changelog entries by hand. If no RAT, PRs must update <code>CHANGELOG.md</code>.</li>
+<li>Documentation as a core deliverable (SemVer semantics): when documentation is part of the shipped product (e.g., this contract), use Conventional Commits to drive SemVer:</li>
+<li>Breaking normative change: <code>docs(contract)!: …</code> and include a <code>BREAKING CHANGE:</code> footer; release = MAJOR.</li>
+<li>New normative capability/allowance: <code>feat(contract): …</code>; release = MINOR.</li>
+<li>Clarification or non-normative bug fix: <code>fix(contract): …</code>; release = PATCH.</li>
+<li>Editorial/formatting only: <code>docs(contract): …</code> (may not trigger a release). If you need a tag, add a <code>Release-As: x.y.z</code> footer.</li>
+<li>Note: Some release tools hide <code>docs:</code> by default and do not bump versions for it. Prefer <code>feat:</code>/<code>fix:</code> when the change is normative and should bump.</li>
+</ul>
+<h2 id="17-deviation-protocol">17) Deviation Protocol<a class="headerlink" href="#17-deviation-protocol" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Request permission to deviate: include reason, scope/impact, alternatives, rollback. Approval by <strong>Peter</strong> or a <strong>CODEOWNER</strong>. Label <code>deviation-approved</code>; document in the PR and changelog if user-visible.</li>
+</ul>
+<h2 id="18-requirements-design-phase">18) Requirements &amp; Design Phase<a class="headerlink" href="#18-requirements-design-phase" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Before building, perform requirements + design and commit docs to <code>docs/design/</code>:</li>
+<li><code>requirements.md</code>, <code>architecture.md</code>, <code>decision-log/ADR-YYYYMMDD-&lt;slug&gt;.md</code></li>
+<li>Optional: <code>test-plan.md</code>, <code>roadmap.md</code>, diagrams (commit sources).</li>
+<li>Update docs with each PR that changes behavior/scope.</li>
+<li>Never eagerly start programming. Complete requirements and design first and get explicit go-ahead before implementation.</li>
+</ul>
+<h3 id="pre-build-allowed-work">Pre-Build Allowed Work<a class="headerlink" href="#pre-build-allowed-work" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Allowed:</strong> Documentation authoring (requirements, architecture, roadmap, KB), repository administration (labels, milestones, Projects), issue triage, decision logging, and contract-aligned planning artifacts.</li>
+<li><strong>Disallowed:</strong> Creating/modifying source code, tests, generated assets, or build/CI scripts; setting up scaffolding that belongs in the implementation phase; introducing binaries or vendored content.</li>
+<li><strong>Pro tip:</strong> Anything that changes runtime behavior belongs behind a tracked Plan issue before editing code/tests/config/docs.</li>
+<li>Before leaving the planning phase, open or update a Plan issue (<code>.github/ISSUE_TEMPLATE/plan.yml</code>) that captures acceptance criteria and validation. Reference that issue in subsequent PRs (<code>Fixes #ID</code>). Use the <code>plan-exempt</code> label only for maintainer-approved micro-fixes and document the rationale.</li>
+<li>Add this checklist to any PR that lands before implementation work begins (all boxes must be ✅):</li>
+</ul>
+<pre><code class="language-text">- [ ] Only docs/planning/ops work (no code/tests/assets)
+- [ ] Plan issue (#ID) drafted/updated with acceptance criteria &amp; validation
+- [ ] Linked requirements/design docs updated
+- [ ] Decisions captured in docs/design/DECISIONS.md (and YAML if used)
+</code></pre>
+<h3 id="decision-elicitation-protocol-logging">Decision Elicitation Protocol &amp; Logging<a class="headerlink" href="#decision-elicitation-protocol-logging" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ask <strong>one decision at a time</strong>, presenting 1–3 options and clearly marking the recommended default.</li>
+<li>Confirm the choice, rationale, and owner, then log the outcome in <code>docs/design/DECISIONS.md</code>.</li>
+<li>Optionally create machine-readable entries in <code>docs/design/decisions/*.yaml</code> mirroring the log table.</li>
+<li>Reference decision IDs from issues/PRs and keep the log in sync with design updates and approvals.</li>
+</ul>
+<h3 id="model-recommendations-in-plans">Model Recommendations in Plans<a class="headerlink" href="#model-recommendations-in-plans" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Planning artifacts MAY recommend <strong>model families</strong> for AI-assisted work. Prefer the organization’s approved model catalog and reference the latest generally available versions.</li>
+<li>When no org policy exists, name the family (e.g., “OpenAI GPT-5”, “OpenAI GPT-4.1”) and provide a short rationale with acceptable fallbacks that cover cost, latency, and privacy constraints.</li>
+<li>Record recommendations in docs; pin exact SKUs only in deployable configuration files. Revisit the recommendations at each release or when upstream models change materially.</li>
+<li>Use the provider matrix and task routes published in <code>docs/kb/howtos/model-recommendations.md</code>. At minimum, capture the shared provider families so downstream repos stay aligned:</li>
+</ul>
+<pre><code class="language-yaml">ai_assist:
+  providers:
+    openai:
+      primary: gpt-5
+      thinking: gpt-5-thinking
+      fast: o4-mini
+      long_context: gpt-4.1
+    google:
+      primary: gemini-2.5-flash
+      thinking: gemini-2.5-pro
+      fast: gemini-2.5-flash-lite
+      long_context: gemini-2.5-pro
+    ollama:
+      primary: llama3.1:8b-instruct-q4_K_M
+      thinking: deepseek-r1:7b
+      fast: mistral:7b-instruct
+      long_context: mistral:7b-instruct
+  notes: &gt;
+    Document families in planning; pin exact SKUs only in deployable config.
+    For local models on 8 GB GPUs, prefer Q4_K_M quantizations for stability.
+</code></pre>
+<ul>
+<li>Route guidance covers common tasks (<code>scm_c_advise</code>, <code>policy_edit</code>, <code>bulk_scaffold</code>, <code>long_context</code>, <code>bulk_narration</code>, <code>bulk_programming</code>) across OpenAI, Google AI Studio, and local Ollama options so maintainers can tailor usage per scenario.</li>
+</ul>
+<h2 id="19-issue-project-management-ai-allowed">19) Issue &amp; Project Management (AI allowed)<a class="headerlink" href="#19-issue-project-management-ai-allowed" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The AI may create issues/labels/milestones/projects. <strong>Design-impacting work must link to design docs</strong>, otherwise label <code>needs-design-ref</code> and add the doc before implementation.</li>
+<li>Link PRs to issues (<code>Fixes #123</code>). Avoid assigning people unless asked; prefer milestones/projects.</li>
+</ul>
+<h2 id="20-planning-vs-releases">20) Planning vs Releases<a class="headerlink" href="#20-planning-vs-releases" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Plan by <strong>Milestones</strong> (<code>M1</code>, <code>M2</code>, …) and optional <strong>Release Trains</strong> (<code>RYYYY.MM</code>, <code>RYYYYQn</code>), not by future SemVer.</li>
+<li>Record the <em>actual</em> shipped tags <strong>after</strong> release in <code>docs/design/delivery-map.yml</code>.</li>
+<li>Develop milestones on dedicated branches. Pull issues into the milestone branch via PRs. Avoid parallel work on potentially conflicting issues; if multiple issues converge on the same milestone, chain branches (base follow-up branches on the predecessor) to minimize conflict.</li>
+</ul>
+<h2 id="21-branching-discipline">21) Branching Discipline<a class="headerlink" href="#21-branching-discipline" title="Permanent link">&para;</a></h2>
+<ul>
+<li>All work happens on a topic branch off <code>origin/develop</code> (<code>feat/&lt;slug&gt;</code>, <code>fix/&lt;slug&gt;</code>, etc.).</li>
+<li>Keep <strong>many small commits</strong>. Squash-merge into <code>develop</code>.</li>
+<li>Keep branches <strong>rebased</strong> on <code>origin/develop</code>. Do <strong>not</strong> delete topic branches until the change is released and back-merged (<code>main</code> → <code>develop</code>).</li>
+<li>Prefer serializing changes that touch the same codepaths to reduce merge conflicts. When concurrency is required, coordinate base branches to create a linear chain.</li>
+</ul>
+<h2 id="25-ci-tool-selection-guidance-ai">25) CI Tool Selection Guidance (AI)<a class="headerlink" href="#25-ci-tool-selection-guidance-ai" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The AI chooses minimal CI appropriate to the stack introduced by the change. Examples (non-exhaustive):</li>
+<li>Python: ruff/flake8, black (or equivalent formatter) in check mode, <code>python -m py_compile tools/*.py</code>, and <code>pytest -q</code> smoke if tests exist.</li>
+<li>Node/TypeScript: eslint, prettier check, <code>tsc --noEmit</code> if TypeScript, and <code>npm test -s</code> smoke where present.</li>
+<li>Shell: shellcheck.</li>
+<li>Docs-only: markdownlint.</li>
+<li>Go: golangci-lint, <code>go test ./...</code>.</li>
+<li>Rust: <code>cargo fmt -- --check</code>, <code>cargo clippy -- -D warnings</code>, <code>cargo test</code>.</li>
+<li>Terraform: <code>terraform fmt -check</code>, <code>terraform validate</code> (with init).</li>
+<li>Dockerfiles: hadolint.</li>
+<li>Integrate CI as early as possible (bootstrap or first meaningful PR). Keep checks fast and additive over time.</li>
+</ul>
+<h2 id="22-merge-readiness-suggestions">22) Merge-Readiness Suggestions<a class="headerlink" href="#22-merge-readiness-suggestions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>PR → develop</strong> is ready when: branch rebased; CI green; design link (or <code>needs-design-ref</code> + follow-up); complete PR body; Conventional Commit title; no blocking labels; changelog handled (RAT/manual).</li>
+<li><strong>Release PR (develop → main)</strong> is ready when: meaningful changes since last tag; CI green on <code>develop</code>; release notes ready (RAT/manual); back-merge plan exists; no open P0/P1 for the scope; manual approval in GitHub.</li>
+</ul>
+<h2 id="23-human-machine-readability-self-contained">23) Human + Machine Readability (Self-contained)<a class="headerlink" href="#23-human-machine-readability-self-contained" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Markdown with YAML front matter. Commit diagram sources (Mermaid/PlantUML/Graphviz). Avoid proprietary-only formats; provide text exports if necessary.</li>
+<li>Provide/update <strong><code>ai/manifest.json</code></strong> so tools find contract, design root, roadmap, KB root, labels, and versioning schemes.</li>
+<li>Encode AI assistance defaults in the manifest. Mirror the provider families/routes from <code>docs/kb/howtos/model-recommendations.md</code> so automation can reason about tasks:</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;ai_assist&quot;: {
+    &quot;providers&quot;: {
+      &quot;openai&quot;: { &quot;primary&quot;: &quot;gpt-5&quot;, &quot;thinking&quot;: &quot;gpt-5-thinking&quot;, &quot;fast&quot;: &quot;o4-mini&quot;, &quot;long_context&quot;: &quot;gpt-4.1&quot; },
+      &quot;google&quot;: { &quot;primary&quot;: &quot;gemini-2.5-flash&quot;, &quot;thinking&quot;: &quot;gemini-2.5-pro&quot;, &quot;fast&quot;: &quot;gemini-2.5-flash-lite&quot;, &quot;long_context&quot;: &quot;gemini-2.5-pro&quot; },
+      &quot;ollama&quot;: { &quot;primary&quot;: &quot;llama3.1:8b-instruct-q4_K_M&quot;, &quot;thinking&quot;: &quot;deepseek-r1:7b&quot;, &quot;fast&quot;: &quot;mistral:7b-instruct&quot;, &quot;long_context&quot;: &quot;mistral:7b-instruct&quot; }
+    },
+    &quot;review_on_release&quot;: true
+  }
+}
+</code></pre>
+<h3 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h3>
+<ul>
+<li>v2.3.0 — Add ai-contract CLI + smoke test workflow, codify SCM-C advise-only process, and remove legacy BASE_BRANCH references.</li>
+<li>v2.2.0 — Enforce Plan → Build gating, issue template, workflow guardrails, and release automation token check.</li>
+<li>v2.1.2 — Guard contract version references and document release checklist; align release manifest updates.</li>
+<li>v2.1.1 — Document quality bar expectations, decision logging, and issue hygiene; add feedback channel, PR linked-issue reminder, and SCM phase gate workflow.</li>
+<li>v2.0.2 — Clarify dual-role hosting vs instance; add AI CI tool selection guidance; add minimal contract capsule and binding prompt.</li>
+<li>v2.0.1 — Add pre-implementation discipline, milestone branch guidance, and early CI setup recommendation.</li>
+<li>v2.0.0 — Remove <code>&lt;BASE_BRANCH&gt;</code>; standardize on <strong><code>develop</code></strong>. Tighten wording, clarify KB/wiki usage, and update tools/checklists to match.</li>
+</ul>
+<h2 id="24-agentsmd-convention">24) AGENTS.md Convention<a class="headerlink" href="#24-agentsmd-convention" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Add an <code>AGENTS.md</code> at the repository root to define agent behavior for this codebase.</li>
+<li>Scope and precedence:</li>
+<li>A root <code>AGENTS.md</code> applies to the entire repository tree.</li>
+<li>A nested <code>AGENTS.md</code> applies to its subtree and overrides rules from higher levels when in conflict.</li>
+<li>Direct instructions from a human (issue/PR/chat) take precedence over <code>AGENTS.md</code> files.</li>
+<li><strong>Mandatory sections</strong> (use these headings verbatim):</li>
+<li><code>## Contract Link &amp; Scope</code></li>
+<li><code>## Planning Sources</code></li>
+<li><code>## Plan &amp; Build Gate</code></li>
+<li><code>## Branching, PRs &amp; Labels</code></li>
+<li><code>## CI &amp; Tooling</code></li>
+<li><code>## Security &amp; Secrets</code></li>
+<li><code>## Session Modes (SCM-A/B/C)</code></li>
+<li>Each section must describe: base branch (<code>develop</code>), PR/merge rules (squash into <code>develop</code>), Conventional Commit titles, release automation, documentation roots (<code>docs/design</code>, <code>docs/kb</code>), required labels, CI expectations, secrets handling, and how to escalate/confirm SCM modes.</li>
+<li>Keep <code>AGENTS.md</code> short, actionable, and consistent with this contract. Link to <code>docs/design/ENGINEERING_CONTRACT.md</code> for details.</li>
+<li>Provide the following snippet (update repository-specific details only):</li>
+</ul>
+<pre><code class="language-markdown"># AGENTS.md — AI Agent Instructions (repo-wide)
+
+## Contract Link &amp; Scope
+- Authoritative contract: [docs/design/ENGINEERING_CONTRACT.md](docs/design/ENGINEERING_CONTRACT.md)
+- Base branch: `develop`; PRs target `develop`; releases via release-please on `main`.
+
+## Planning Sources
+- Requirements/design live in `docs/design/`; knowledge base in `docs/kb/`.
+- Keep `docs/design/requirements.md`, `architecture.md`, `DECISIONS.md`, and ADRs current before coding.
+
+## Plan &amp; Build Gate
+- Build work requires a referenced Plan issue (`Fixes #ID` / `Refs #ID`) unless the PR carries `plan-exempt`.
+- Pre-build PRs follow the contract checklist; focus on docs/planning/ops only.
+- Update the Plan issue when scope or acceptance criteria change.
+
+## Branching, PRs &amp; Labels
+- Branch naming: `feat|fix|docs|chore|refactor|test/&lt;slug&gt;`.
+- Rebase on `origin/develop`; squash-merge after approval.
+- Apply `from-ai`, `needs-review`, plus scope labels (`docs`, `chore`, etc.) as appropriate.
+
+## CI &amp; Tooling
+- Run markdownlint for docs-only changes; follow contract guidance for additional stacks.
+- Keep `ai/manifest.json` and CI workflows in sync with repo capabilities. release-please runs automatically on `main`; use workflow dispatch for manual retries if needed.
+
+## Security &amp; Secrets
+- Never commit secrets; use `.env.example`.
+- Redact tokens in logs/PRs; coordinate with maintainers for secret rotation.
+
+## Session Modes (SCM-A/B/C)
+- Detect mode once per session; confirm capabilities with the human if unclear.
+- SCM-A may push/PR (merge only with approval); SCM-B offers instructions; SCM-C delivers advise-only packages using `docs/kb/howtos/scm-c-advise.md` (no archives or direct file edits).
+</code></pre>
+<h2 id="26-ci-phase-gates">26) CI Phase Gates<a class="headerlink" href="#26-ci-phase-gates" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Enforce the repository phase using a root <code>phase.yaml</code> and CI path allowlists.</li>
+<li><code>phase: requirements|design|plan|build</code></li>
+<li>Optional <code>allowed_paths:</code> overrides default allowlists per phase.</li>
+<li>Defaults:</li>
+<li>requirements/design: <code>docs/**</code>, <code>AGENTS.md</code>, <code>ai/**</code>, <code>phase.yaml</code></li>
+<li>plan: above + <code>.github/**</code></li>
+<li>build: unrestricted</li>
+<li>Maintain <code>.github/workflows/phase-gate.yml</code> (or equivalent) so every PR runs the phase gate against <code>phase.yaml</code>. The workflow MUST fail fast when a change touches disallowed paths.</li>
+<li>Temporary deviation: add the <code>deviation-approved</code> label and include rationale and rollback in the PR body.</li>
+<li>Advancing the phase is an auditable one-file change: update <code>phase.yaml</code> in a separate PR.</li>
+</ul>
+<h2 id="27-quality-bar-enforcement">27) Quality Bar Enforcement<a class="headerlink" href="#27-quality-bar-enforcement" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Maintain a Quality Bar linter that checks:</li>
+<li>Front matter title matches first H1.</li>
+<li>Required status fields are present.</li>
+<li>No placeholder-only sections remain (e.g., bare “TODO” headings).</li>
+<li>Document links resolve (use a link checker).</li>
+<li>Citations include identifiers and page spans when quoting physical sources.</li>
+<li>Adoption cadence:</li>
+<li>Wire the linter locally; run in <code>warn-only</code> mode in CI during requirements/design phases.</li>
+<li>Promote to blocking once the repository reaches <code>phase: build</code>.</li>
+<li>Run <code>.github/workflows/docs-quality.yml</code> (or equivalent) on docs-affecting PRs. Include at minimum <code>markdownlint-cli2</code> and a link checker such as <code>lychee</code> configured to fail on errors and surface actionable logs.</li>
+<li>Document the chosen implementation (Python/Node) and share remediation guidance in CI output.</li>
+<li>Reference: <code>docs/kb/howtos/quality-bar-linter.md</code>.</li>
+</ul>
+<h2 id="28-ip-rights-attestation">28) IP Rights &amp; Attestation<a class="headerlink" href="#28-ip-rights-attestation" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Every repository MUST include an <code>IP_DISCLAIMER.md</code> (or equivalent) with the rights attestation template from <code>docs/kb/howtos/ip-disclaimer.md</code>.</li>
+<li>Contributors must state whether extended quotations are allowed and under which licence/terms.</li>
+<li>Citations require source identifiers:</li>
+<li>Physical media: include page spans (e.g., “pp. 12–15”).</li>
+<li>Online sources: include permalink + retrieval date.</li>
+<li>Catalog third-party assets with licence metadata and attribution text.</li>
+<li>Escalate novel IP questions to the policy contact listed in the disclaimer before merging.</li>
+</ul>
+<h2 id="29-dual-role-transparency">29) Dual-Role Transparency<a class="headerlink" href="#29-dual-role-transparency" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Distinguish canonical vs instance assets as described in <code>docs/kb/dual-role.md</code>.</li>
+<li>Annotate instance-only workflows and automation with header comments clarifying scope.</li>
+<li>Keep canonical templates (<code>tools/*_TEMPLATE.py</code>, design templates) free of repository-specific defaults; place instance-specific automation under <code>tools/local/</code> or equivalent.</li>
+<li>Update the README and knowledge base when new instance-specific workflows or scripts are introduced.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "content.action.edit"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

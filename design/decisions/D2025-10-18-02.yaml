@@ -1,0 +1,16 @@
+id: D2025-10-18-02
+date: 2025-10-18
+prompt: How should agents elicit and track decisions during requirements?
+options:
+  - label: Informal notes
+    summary: Capture takeaways ad hoc in issue/PR comments.
+  - label: Structured protocol + log
+    summary: Ask one-at-a-time questions with defaults and log outcomes in DECISIONS.md (plus optional YAML).
+choice: Structured protocol + log
+rationale: Creates a consistent, auditable trail usable by humans and automation.
+references:
+  issues:
+    - 43
+  documents:
+    - docs/design/DECISIONS.md
+    - docs/design/ENGINEERING_CONTRACT.md

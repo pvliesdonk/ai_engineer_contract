@@ -1,0 +1,17 @@
+id: D2025-10-18-08
+date: 2025-10-18
+prompt: How should tool templates determine owner/repo defaults?
+options:
+  - label: Hard-coded constants
+    summary: Require manual edits to OWNER/REPO in each template.
+  - label: Auto-detect with overrides
+    summary: Read git remotes or manifest, allow CLI/env overrides for portability.
+choice: Auto-detect with overrides
+rationale: Supports forks and multi-owner usage without editing the templates, satisfying issue #57.
+references:
+  issues:
+    - 57
+  documents:
+    - tools/pr_from_diff_TEMPLATE.py
+    - tools/repo_bootstrap_TEMPLATE.py
+    - tools/sync_canonical_contract_and_tools_TEMPLATE.py
