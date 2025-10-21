@@ -2,6 +2,7 @@
 
 - Base: `develop`; PRs → `develop`; squash; Conventional Commit titles.
 - Finish requirements + design, record a Plan issue, then move into build (reference it with `Fixes #ID`).
+- Build phase requires a linked Plan issue unless `plan-exempt` (with rationale) is applied; see `ai/manifest.json::policy.phase_gate`.
 - Keep docs in `docs/design` and `docs/kb` updated with changes.
 - Branching: `feat|fix|docs|chore|refactor|test/<slug>`; chain branches for milestones; avoid conflicting parallel work.
 - Early CI: fast lint/format + byte-compile/smoke; choose tools per stack (Python/Node/TS/Rust/etc.).
@@ -11,6 +12,6 @@
 - Labels: `from-ai`, `needs-review`, `docs`, `chore`, …
 - Provide progress updates; propose 1–3 Conventional Commit messages after deliverables.
 
-Reference: `docs/design/ENGINEERING_CONTRACT.md` (v2.3.0), `ai/manifest.json`.
+Reference: `docs/design/ENGINEERING_CONTRACT.md` (v2.3.0), `ai/manifest.json` (policy knobs).
 
 Acknowledge with: `ACK CONTRACT v2.3.0`. Detect SCM mode once.
