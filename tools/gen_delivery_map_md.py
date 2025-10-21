@@ -52,6 +52,7 @@ def unit_to_md(u: dict) -> str:
     if tags:
         meta_bits.append(f"tags: {tags}")
     if meta_bits:
+        lines.append("\n")
         lines.append(f"_({'; '.join(meta_bits)})_\n\n")
     if docs:
         lines.append("| Document | Summary |\n|---|---|\n")
