@@ -3,9 +3,14 @@ name: phase-gate
 on:
   pull_request:
     types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+permissions:
+  contents: read
+  pull-requests: write
 jobs:
   enforce:
     runs-on: ubuntu-latest
+    env:
+      PHASE_GATE_REPORT: ${{ runner.temp }}/phase-gate-report.json
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -14,42 +19,76 @@ jobs:
         id: phase
         run: |
           python - <<'PY'
-          import json, os
+          import os
           phase_file = "phase.yaml"
           phase = "design"
-          allowed = None
           if os.path.exists(phase_file):
             lines = open(phase_file, encoding="utf-8").read().splitlines()
-            for i, l in enumerate(lines):
-              s = l.strip()
+            for line in lines:
+              s = line.strip()
               if s.startswith("phase:"):
                 phase = s.split(":", 1)[1].strip()
-              if s.startswith("allowed_paths:"):
-                allowed = []
-                for l2 in lines[i+1:]:
-                  st = l2.strip()
-                  if st.startswith("-"):
-                    allowed.append(st.split("-", 1)[1].strip())
-                  elif st == "":
-                    continue
-                  else:
-                    break
+                break
+          out = os.environ.get("GITHUB_OUTPUT")
+          if out:
+            with open(out, "a", encoding="utf-8") as f:
+              f.write(f"phase={phase}\n")
+          print("Phase:", phase)
+          PY
+
+      - name: Load manifest policy
+        id: policy
+        run: |
+          python - <<'PY'
+          import json, os
+
+          manifest = json.loads(open("ai/manifest.json", encoding="utf-8").read())
+          policy = manifest.get("policy", {})
+          phase_gate = policy.get("phase_gate", {})
+
           defaults = {
             "requirements": ["docs/**", "AGENTS.md", "ai/**", "phase.yaml"],
             "design": ["docs/**", "AGENTS.md", "ai/**", "phase.yaml"],
             "plan": ["docs/**", "AGENTS.md", "ai/**", ".github/**", "phase.yaml"],
             "build": ["**"],
           }
-          if not allowed:
-            allowed = defaults.get(phase, defaults["design"])
-          allowed = [a.strip('\"\'') for a in allowed]
+
+          allowed = phase_gate.get("allowed_by_phase") or {}
+          merged = {}
+          for key, fallback in defaults.items():
+            patterns = allowed.get(key, fallback)
+            norm = []
+            for entry in patterns:
+              if isinstance(entry, str):
+                norm.append(entry.strip('\"\''))
+              else:
+                norm.append(str(entry))
+            merged[key] = norm
+
+          for key, patterns in allowed.items():
+            if key in merged:
+              continue
+            norm = []
+            for entry in patterns:
+              if isinstance(entry, str):
+                norm.append(entry.strip('\"\''))
+              else:
+                norm.append(str(entry))
+            merged[key] = norm
+
+          plan_exempt_label = (phase_gate.get("override_labels") or {}).get("plan_exempt", "plan-exempt")
+          deviation_label = (phase_gate.get("override_labels") or {}).get("deviation", "deviation-approved")
+          require_plan = bool(phase_gate.get("require_plan_ref_in_build", True))
+
           out = os.environ.get("GITHUB_OUTPUT")
           if out:
-            with open(out, "a") as f:
-              f.write(f"phase={phase}\n")
-              f.write(f"allowed={json.dumps(allowed)}\n")
-          print("Phase:", phase)
-          print("Allowed:", allowed)
+            with open(out, "a", encoding="utf-8") as f:
+              f.write(f"allowed={json.dumps(merged)}\n")
+              f.write(f"plan_exempt_label={plan_exempt_label}\n")
+              f.write(f"deviation_label={deviation_label}\n")
+              f.write(f"require_plan_ref={json.dumps(require_plan)}\n")
+
+          print("Policy override labels:", {"plan_exempt": plan_exempt_label, "deviation": deviation_label})
           PY
 
       - name: List changed files
@@ -74,8 +113,10 @@ jobs:
           import json, os
           event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
           labels = {lbl["name"] for lbl in event.get("pull_request", {}).get("labels", [])}
-          override = "true" if "deviation-approved" in labels else "false"
-          plan_exempt = "true" if "plan-exempt" in labels else "false"
+          deviation_label = os.environ.get("DEVIATION_LABEL", "deviation-approved")
+          plan_exempt_label = os.environ.get("PLAN_EXEMPT_LABEL", "plan-exempt")
+          override = "true" if deviation_label in labels else "false"
+          plan_exempt = "true" if plan_exempt_label in labels else "false"
           out = os.environ.get("GITHUB_OUTPUT")
           if out:
             with open(out, "a", encoding="utf-8") as fh:
@@ -83,26 +124,48 @@ jobs:
               fh.write(f"plan_exempt={plan_exempt}\n")
           print("Labels:", ", ".join(sorted(labels)) or "<none>")
           PY
+        env:
+          PLAN_EXEMPT_LABEL: ${{ steps.policy.outputs.plan_exempt_label }}
+          DEVIATION_LABEL: ${{ steps.policy.outputs.deviation_label }}
 
       - name: Enforce phase gate
         if: steps.labels.outputs.override != 'true'
         env:
-          ALLOWED_PATTERNS: ${{ steps.phase.outputs.allowed }}
+          ALLOWED_BY_PHASE: ${{ steps.policy.outputs.allowed }}
           CHANGED_FILES: ${{ steps.diff.outputs.changed }}
           PHASE: ${{ steps.phase.outputs.phase }}
           PLAN_EXEMPT: ${{ steps.labels.outputs.plan_exempt }}
+          REQUIRE_PLAN_REF: ${{ steps.policy.outputs.require_plan_ref }}
+          REPORT_FILE: ${{ env.PHASE_GATE_REPORT }}
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python - <<'PY'
           import fnmatch, json, os, re, sys, urllib.error, urllib.request
 
-          allowed = json.loads(os.environ.get("ALLOWED_PATTERNS", "[]"))
+          allowed_by_phase = json.loads(os.environ.get("ALLOWED_BY_PHASE", "{}"))
           changed = os.environ.get("CHANGED_FILES", "").split()
-          phase = os.environ.get("PHASE", "").strip().lower()
+          phase = os.environ.get("PHASE", "").strip().lower() or "design"
           plan_exempt = os.environ.get("PLAN_EXEMPT", "").lower() == "true"
+          require_plan = os.environ.get("REQUIRE_PLAN_REF", "true").lower() == "true"
+          report_path = os.environ.get("REPORT_FILE")
+
+          def write_report(status, **details):
+            if not report_path:
+              return
+            try:
+              with open(report_path, "w", encoding="utf-8") as fh:
+                json.dump({"status": status, "phase": phase, **details}, fh)
+            except OSError:
+              pass
+
+          if isinstance(allowed_by_phase, list):
+            allowed = allowed_by_phase
+          else:
+            allowed = allowed_by_phase.get(phase) or allowed_by_phase.get("design") or []
           if not changed:
             print("No changed files detected vs base; passing")
+            write_report("passed", changed=0)
             sys.exit(0)
           def match_any(path, patterns):
             return any(fnmatch.fnmatch(path, p) for p in patterns)
@@ -111,19 +174,29 @@ jobs:
             print("Disallowed changes for current phase:")
             for f in disallowed:
               print("-", f)
+            write_report(
+              "disallowed",
+              file=disallowed[0],
+              guidance="Move the change into an allowed path for this phase or advance the phase.",
+            )
             sys.exit(1)
-          if phase == "build" and not plan_exempt:
+          if phase == "build" and not plan_exempt and require_plan:
             event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
             body = event.get("pull_request", {}).get("body") or ""
             issue_ids = sorted({m.group(1) for m in re.finditer(r"#(\d+)", body)})
             if not issue_ids:
               print("Build phase requires a referenced Plan issue (e.g. `Fixes #123`).")
               print("Add the reference or apply the `plan-exempt` label with justification.")
+              write_report(
+                "missing_plan",
+                guidance="Add a Plan issue link (Fixes #ID) or apply the `plan-exempt` label with justification.",
+              )
               sys.exit(1)
             token = os.environ.get("GITHUB_TOKEN", "")
             repo = os.environ.get("GITHUB_REPOSITORY", "")
             if "/" not in repo:
               print("Unable to determine repository name for issue validation.")
+              write_report("missing_plan", guidance="Repository name unavailable for validating Plan issues.")
               sys.exit(1)
             owner, name = repo.split("/", 1)
             headers = {"Accept": "application/vnd.github+json"}
@@ -138,9 +211,70 @@ jobs:
                     raise urllib.error.HTTPError(url, resp.status, resp.reason, resp.headers, None)
               except urllib.error.HTTPError as exc:
                 print(f"Failed to load issue #{issue_id}: {exc}")
+                write_report(
+                  "missing_plan",
+                  guidance=f"Plan issue #{issue_id} could not be retrieved; verify the link or permissions.",
+                )
                 sys.exit(1)
             print("Plan issues referenced:", ", ".join(f"#{i}" for i in issue_ids))
           elif phase == "build" and plan_exempt:
             print("Build phase running under plan-exempt override.")
+            write_report("plan_exempt_override", info="plan-exempt label applied")
+            sys.exit(0)
+          else:
+            write_report("passed", changed=len(changed))
           print("Phase gate passed")
           PY
+
+      - name: Comment on phase-gate failure
+        if: failure() && steps.labels.outputs.override != 'true'
+        uses: actions/github-script@v7
+        env:
+          REPORT_FILE: ${{ env.PHASE_GATE_REPORT }}
+        with:
+          script: |
+            const fs = require('fs');
+            const path = process.env.REPORT_FILE;
+            if (!path || !fs.existsSync(path)) {
+              core.info('No phase gate report found; skipping comment.');
+              return;
+            }
+            let data;
+            try {
+              data = JSON.parse(fs.readFileSync(path, 'utf8'));
+            } catch (error) {
+              core.warning(`Unable to parse phase gate report: ${error}`);
+              return;
+            }
+            const status = data.status;
+            if (!status || status === 'passed' || status === 'plan_exempt_override') {
+              core.info(`Status ${status} does not require a comment.`);
+              return;
+            }
+            const phase = data.phase || 'unknown';
+            const lines = [
+              '<!-- phase-gate-report -->',
+              `⚠️ Phase gate blocked this pull request while in **${phase}** phase.`
+            ];
+            if (status === 'disallowed') {
+              if (data.file) {
+                lines.push(`• First offending file: \`${data.file}\``);
+              }
+              lines.push(`• Guidance: ${data.guidance || 'Move the change into an allowed path or advance the phase.'}`);
+            } else if (status === 'missing_plan') {
+              lines.push('• Missing Plan issue reference for build phase.');
+              lines.push(`• Guidance: ${data.guidance || 'Add a Fixes #ID link or apply plan-exempt with rationale.'}`);
+            } else {
+              lines.push(`• Guidance: ${data.guidance || 'Review phase-gate requirements.'}`);
+            }
+            const body = lines.join('\n');
+            const {owner, repo} = context.repo;
+            const issue_number = context.issue.number;
+            const marker = '<!-- phase-gate-report -->';
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const existing = comments.find(comment => comment.body && comment.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
