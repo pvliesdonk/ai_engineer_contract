@@ -72,7 +72,7 @@ def main() -> int:
     parts = [HEADER]
     for u in units:
         parts.append(unit_to_md(u))
-    content = ''.join(parts)
+    content = ''.join(parts).rstrip() + "\n"
     if OUT.exists() and OUT.read_text(encoding='utf-8') == content:
         return 0
     OUT.write_text(content, encoding='utf-8')
