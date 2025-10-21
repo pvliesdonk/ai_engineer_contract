@@ -1,4 +1,4 @@
-# ENGINEERING_CONTRACT.md (AI × Peter) — v2.2.0
+# ENGINEERING_CONTRACT.md (AI × Peter) — v2.3.0
 
 > Breaking change: `<BASE_BRANCH>` is removed. The development branch is **always `develop`**.
 
@@ -271,6 +271,7 @@ ai_assist:
 
 ### Changelog
 
+- v2.3.0 — Add ai-contract CLI + smoke test workflow, codify SCM-C advise-only process, and remove legacy BASE_BRANCH references.
 - v2.2.0 — Enforce Plan → Build gating, issue template, workflow guardrails, and release automation token check.
 - v2.1.2 — Guard contract version references and document release checklist; align release manifest updates.
 - v2.1.1 — Document quality bar expectations, decision logging, and issue hygiene; add feedback channel, PR linked-issue reminder, and SCM phase gate workflow.

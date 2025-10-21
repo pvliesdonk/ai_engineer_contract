@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple
 
-# Contract v2.2.0: base branch is always 'develop' (no env override).
+# Contract v2.3.0: base branch is always 'develop' (no env override).
 DEFAULT_BASE_BRANCH = "develop"
 PR_TITLE = "feat: <edit me>"
 PR_BODY = "# Summary\n<why/changes/validation/risk>"

@@ -29,7 +29,7 @@ def manifest_base_branch() -> str:
     return "develop"
 
 
-DEFAULT_BASE_BRANCH = "develop"  # contract v2.2.0
+DEFAULT_BASE_BRANCH = "develop"  # contract v2.3.0
 
 # Canonical source (defaults; may be overridden by ai/sync.config.json or CLI)
 SRC_OWNER = "pvliesdonk"

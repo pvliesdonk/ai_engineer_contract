@@ -58,6 +58,7 @@ python tools/sync_canonical_contract_and_tools_TEMPLATE.py --include-tools
 This repo’s `main` branch publishes a MkDocs site via GitHub Pages. Enable Pages for the `gh-pages` branch in repo settings.
 
 **Related how‑tos:**
+
 - [Phase Gates](phase-gates.md)
 - [Model Recommendations](model-recommendations.md)
 - [Advise‑Only Templates](advise-only-templates.md)
