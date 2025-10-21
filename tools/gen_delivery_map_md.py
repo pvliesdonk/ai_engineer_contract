@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import sys
 
 try:
@@ -17,6 +17,26 @@ HEADER = ("---\n"
           "---\n\n"
           "# Delivery Map\n\n"
           "This page is generated from `docs/design/delivery-map.yml`.\n\n")
+
+
+def display_label(path: str, override: str | None = None) -> str:
+    if override:
+        return override
+    candidate = path.rsplit('/', 1)[-1] if path else ''
+    if candidate.endswith('.md'):
+        candidate = candidate[:-3]
+    candidate = candidate.replace('-', ' ').replace('_', ' ').strip()
+    return candidate.title() if candidate else path
+
+
+def normalize_href(path: str) -> str:
+    if not path:
+        return path
+    posix = PurePosixPath(path)
+    if posix.parts and posix.parts[0] == 'docs':
+        rel = PurePosixPath(*posix.parts[1:])
+        return str(PurePosixPath('..') / rel)
+    return path
 
 
 def unit_to_md(u: dict) -> str:
@@ -38,7 +58,9 @@ def unit_to_md(u: dict) -> str:
         for d in docs:
             path = d.get('path', '')
             summary = d.get('summary', '')
-            lines.append(f"| [{path}]({path}) | {summary} |\n")
+            title = display_label(path, d.get('title'))
+            href = normalize_href(path)
+            lines.append(f"| [{title}]({href}) | {summary} |\n")
         lines.append("\n")
     return ''.join(lines)
 
