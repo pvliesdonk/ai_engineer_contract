@@ -68,6 +68,7 @@ pre-commit run --all-files
 ```
 
 Tips:
+
 - Re-run on staged files only: `pre-commit run`
 - Skip a hook once: `SKIP=markdownlint-cli2 pre-commit run`
 - Update hook versions: `pre-commit autoupdate` (then commit the rev bumps)
