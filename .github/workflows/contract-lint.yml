@@ -1,0 +1,23 @@
+name: contract-lint
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Check version references
+        run: python ai/check_version_refs.py
+
+      - name: Run contract lint
+        run: python tools/contract_lint.py

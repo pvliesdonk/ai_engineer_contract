@@ -11,6 +11,7 @@ Canonical engineering contract for AI × Peter. Key points:
 - Docs use **date+rev**; releases use **SemVer**.
 - Plan by **Milestones/Release Trains**, reconcile shipped tags in `docs/design/delivery-map.yml`.
 - Self-contained & machine-readable (YAML front matter + `ai/manifest.json`).
+- Build-phase PRs must reference a Plan issue (or carry a justified `plan-exempt` label) per `ai/manifest.json::policy`.
 
 ## Dual Role: Contract + Host Repo
 
@@ -73,6 +74,7 @@ You are bound by this repository’s Engineering Contract. Treat the following a
 Contract Capsule v2.3.0 (see ai/contract_capsule.md)
 - Base: develop. PRs → develop. Squash. Conventional Commit titles.
 - Finish requirements + design, record a Plan issue, then move into build (reference it with `Fixes #ID`).
+- Build PRs require a Plan reference unless the PR carries `plan-exempt` with rationale (policy-driven).
 - Keep docs in docs/design and docs/kb in sync with changes.
 - Branching: feat|fix|docs|chore|refactor|test/<slug>; chain for milestones; avoid conflicting parallel work.
 - Early CI: fast lint/format + byte-compile/smoke; choose tools per stack (Python/Node/TS/Rust/etc.).

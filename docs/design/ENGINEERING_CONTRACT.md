@@ -10,6 +10,21 @@
 - Feature branches: `feat/<slug>`, `fix/<slug>`, `docs/<slug>`, `chore/<slug>`, `refactor/<slug>`, `test/<slug>`.
 - Always rebase on `origin/develop` before PR. Squash-merge PRs into `develop`.
 
+## 1a) Policy Knobs
+
+This repository publishes its governance knobs in `ai/manifest.json` under the `policy` key. Tooling **must** read this configuration rather than re-encoding defaults.
+
+- `base_branch` – authoritative development branch (currently `develop`).
+- `contract_version` – published contract version for downstream consumers.
+- `docs` – roots for distributable documentation (`docs/`, `docs/design`, `docs/kb`).
+- `releases` – automation and back-merge expectations (release-please, merge back to `develop`).
+- `phase_gate` – declarative enforcement:
+  - `override_labels.plan_exempt` / `.deviation` (defaults: `plan-exempt`, `deviation-approved`).
+  - `allowed_by_phase` overrides per phase (requirements/design/plan/build).
+  - `require_plan_ref_in_build` toggles whether build-phase PRs must link to a Plan issue.
+
+Automation (phase gate, contract-lint, CLI) must respect these values and expose helpful errors when they are missing.
+
 ## 2) PR Quality
 
 - Title: **Conventional Commit** (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `ci:`, `test:`). Add `!` for breaking changes.

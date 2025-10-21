@@ -12,6 +12,36 @@
     "tool": "release-please",
     "mode": "release-pr"
   },
+  "policy": {
+    "base_branch": "develop",
+    "contract_version": "v2.3.0",
+    "docs": {
+      "root": "docs",
+      "design_root": "docs/design",
+      "kb_root": "docs/kb"
+    },
+    "releases": {
+      "automation": "release-please",
+      "backmerge": {
+        "enabled": true,
+        "strategy": "merge",
+        "target": "develop"
+      }
+    },
+    "phase_gate": {
+      "override_labels": {
+        "plan_exempt": "plan-exempt",
+        "deviation": "deviation-approved"
+      },
+      "allowed_by_phase": {
+        "requirements": ["docs/**", "AGENTS.md", "ai/**", "phase.yaml"],
+        "design": ["docs/**", "AGENTS.md", "ai/**", "phase.yaml"],
+        "plan": ["docs/**", "AGENTS.md", "ai/**", ".github/**", "phase.yaml"],
+        "build": ["**"]
+      },
+      "require_plan_ref_in_build": true
+    }
+  },
   "labelTaxonomy": [
     "from-ai",
     "needs-review",
