@@ -591,6 +591,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#1a-policy-knobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      1a) Policy Knobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2-pr-quality" class="md-nav__link">
     <span class="md-ellipsis">
       2) PR Quality
@@ -1968,6 +1977,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#1a-policy-knobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      1a) Policy Knobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2-pr-quality" class="md-nav__link">
     <span class="md-ellipsis">
       2) PR Quality
@@ -2351,6 +2369,19 @@
 <li>Feature branches: <code>feat/&lt;slug&gt;</code>, <code>fix/&lt;slug&gt;</code>, <code>docs/&lt;slug&gt;</code>, <code>chore/&lt;slug&gt;</code>, <code>refactor/&lt;slug&gt;</code>, <code>test/&lt;slug&gt;</code>.</li>
 <li>Always rebase on <code>origin/develop</code> before PR. Squash-merge PRs into <code>develop</code>.</li>
 </ul>
+<h2 id="1a-policy-knobs">1a) Policy Knobs<a class="headerlink" href="#1a-policy-knobs" title="Permanent link">&para;</a></h2>
+<p>This repository publishes its governance knobs in <code>ai/manifest.json</code> under the <code>policy</code> key. Tooling <strong>must</strong> read this configuration rather than re-encoding defaults.</p>
+<ul>
+<li><code>base_branch</code> – authoritative development branch (currently <code>develop</code>).</li>
+<li><code>contract_version</code> – published contract version for downstream consumers.</li>
+<li><code>docs</code> – roots for distributable documentation (<code>docs/</code>, <code>docs/design</code>, <code>docs/kb</code>).</li>
+<li><code>releases</code> – automation and back-merge expectations (release-please, merge back to <code>develop</code>).</li>
+<li><code>phase_gate</code> – declarative enforcement:</li>
+<li><code>override_labels.plan_exempt</code> / <code>.deviation</code> (defaults: <code>plan-exempt</code>, <code>deviation-approved</code>).</li>
+<li><code>allowed_by_phase</code> overrides per phase (requirements/design/plan/build).</li>
+<li><code>require_plan_ref_in_build</code> toggles whether build-phase PRs must link to a Plan issue.</li>
+</ul>
+<p>Automation (phase gate, contract-lint, CLI) must respect these values and expose helpful errors when they are missing.</p>
 <h2 id="2-pr-quality">2) PR Quality<a class="headerlink" href="#2-pr-quality" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Title: <strong>Conventional Commit</strong> (<code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>chore:</code>, <code>refactor:</code>, <code>ci:</code>, <code>test:</code>). Add <code>!</code> for breaking changes.</li>
