@@ -12,18 +12,30 @@ nav:
   - Home: index.md
   - Contract:
       - Overview: design/index.md
+      - Requirements: design/requirements.md
+      - Architecture: design/architecture.md
+      - Roadmap: design/roadmap.md
       - Engineering Contract: design/ENGINEERING_CONTRACT.md
       - Delivery Map: design/delivery-map.md
-      - Decisions: design/DECISIONS.md
+      - Decisions:
+          - Decision Index: design/DECISIONS.md
+          - ADR Template: design/decision-log/ADR-2025-01-01-template.md
+  - Knowledge Base:
+      - Overview: kb/index.md
+      - Architecture Overview: kb/architecture/README.md
+      - Getting Started Guide: kb/getting-started.md
   - How-tos:
+      - Overview: kb/howtos/README.md
       - Binding prompt: kb/howtos/binding-prompt.md
       - Getting Started: kb/howtos/getting-started.md
       - Phase Gates: kb/howtos/phase-gates.md
       - Plan → Build: kb/howtos/plan-to-build.md
       - Advise-Only Templates: kb/howtos/advise-only-templates.md
       - SCM Mode Decision Tree: kb/howtos/scm-mode-decision-tree.md
+      - SCM-C Advise-Only: kb/howtos/scm-c-advise.md
       - Repo hygiene (pre-commit): kb/howtos/repo-hygiene-pre-commit.md
       - Model Recommendations: kb/howtos/model-recommendations.md
+      - Quality Bar Linter: kb/howtos/quality-bar-linter.md
       - Release checklist: kb/howtos/release-checklist.md
       - Sync canonical contract: kb/howtos/sync-canonical.md
       - GitHub project integration: kb/howtos/github-project-integration.md
@@ -33,6 +45,12 @@ nav:
       - Label taxonomy: kb/labels.md
       - Repo policies & meta: kb/repo-policies.md
       - Dual role (canonical vs instance): kb/dual-role.md
+  - Issues:
+      - Align version references: issues/2025-10-19-align-version-refs.md
+      - Guard version drift: issues/2025-10-19-version-drift-guard.md
+  - Release Playbooks:
+      - Release trigger (2.0.2): release-trigger-2.0.2.md
+      - Release trigger (2.0.1): release-trigger-2.0.1.md
 markdown_extensions:
   - admonition
   - toc:

@@ -11,6 +11,7 @@ Start with the **Engineering Contract**, then use these as working design artifa
 - ✅ [DECISIONS.md](DECISIONS.md) and detailed entries in [`decisions/`](decisions/) and [`decision-log/`](decision-log/)
 
 *Optional stubs for future sections:*
+
 - 🧭 requirements.md
 - 🧱 architecture.md
 - 🗺️ roadmap.md

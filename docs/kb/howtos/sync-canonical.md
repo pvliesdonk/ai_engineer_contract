@@ -22,7 +22,7 @@ python tools/sync_canonical_contract_and_tools_TEMPLATE.py --dry-run
 
 ```bash
 # Pin to a specific tag/ref
-python tools/sync_canonical_contract_and_tools_TEMPLATE.py --source-ref ai_engineer_contract-v2.2.0
+    python tools/sync_canonical_contract_and_tools_TEMPLATE.py --source-ref ai_engineer_contract-v2.3.0
 
 # Include canonical tool templates (*_TEMPLATE.py only)
 python tools/sync_canonical_contract_and_tools_TEMPLATE.py --include-tools

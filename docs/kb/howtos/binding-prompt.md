@@ -21,7 +21,7 @@ Primary sources:
 
 Tasks:
 1) Read those files.
-2) Reply EXACTLY: ACK CONTRACT v2.2.0
+2) Reply EXACTLY: ACK CONTRACT v2.3.0
 3) Detect and state SCM mode (SCM-A / SCM-B / advise-only).
 4) List the contract obligations you will follow here.
 5) Propose 3 next steps.
@@ -52,7 +52,7 @@ Primary sources:
 
 Do this now:
 1) Fetch and read the above files.
-2) Reply EXACTLY with: ACK CONTRACT v2.2.0
+2) Reply EXACTLY with: ACK CONTRACT v2.3.0
 3) State SCM mode (SCM-A/SCM-B/advise-only) and proceed.
 4) Summarize obligations you will follow.
 5) Propose your first 3 concrete next steps.

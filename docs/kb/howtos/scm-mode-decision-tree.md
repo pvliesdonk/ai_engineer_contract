@@ -49,5 +49,5 @@ See Also
 --------
 
 - [Engineering Contract – Session Capability Modes](../../design/ENGINEERING_CONTRACT.md)
-- [Session-Mode Handshake Capsule](../../ai/session-mode-handshake.md)
+- [Session-Mode Handshake Capsule](https://github.com/pvliesdonk/ai_engineer_contract/blob/develop/ai/session-mode-handshake.md)
 - [SCM-C Advise-Only Templates](./scm-c-advise.md)

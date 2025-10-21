@@ -4,6 +4,19 @@ All notable changes to this project are documented here. Versions follow tags in
 The project uses Conventional Commits and release-please.
 
 
+## [2.3.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.2.0...ai_engineer_contract-v2.3.0) (2025-10-20)
+
+
+### Features
+
+* add minimal ai-contract CLI + smoke test workflow (Fixes [#111](https://github.com/pvliesdonk/ai_engineer_contract/issues/111)) ([#114](https://github.com/pvliesdonk/ai_engineer_contract/issues/114)) ([824abd1](https://github.com/pvliesdonk/ai_engineer_contract/commit/824abd1694d322e18db797dfc4fe62233619306e))
+* **contract:** codify advise-only scm-c workflow ([#98](https://github.com/pvliesdonk/ai_engineer_contract/issues/98)) ([7279b3b](https://github.com/pvliesdonk/ai_engineer_contract/commit/7279b3b479d78a7026ea44fb3aa701eb4a063a7f))
+
+
+### Bug Fixes
+
+* remove BASE_BRANCH references; enforce develop as sole base (Fixes [#100](https://github.com/pvliesdonk/ai_engineer_contract/issues/100)) ([#105](https://github.com/pvliesdonk/ai_engineer_contract/issues/105)) ([5ea2530](https://github.com/pvliesdonk/ai_engineer_contract/commit/5ea2530527852ed66aa045799c1b2c948b5de211))
+
 ## [2.2.0](https://github.com/pvliesdonk/ai_engineer_contract/compare/ai_engineer_contract-v2.1.2...ai_engineer_contract-v2.2.0) (2025-10-19)
 
 
